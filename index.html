@@ -7,155 +7,266 @@
 <title>タイチとハナの冒険ワールド</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
-  background: linear-gradient(#65c8ff, #dff8ff);
-  min-height: 100vh;
-  overflow: hidden;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#7bc4e8;
+  overflow:hidden;
 }
 
-#game {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 空 */
-.sky {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 15%, white 0 4%, transparent 5%),
-    radial-gradient(circle at 75% 20%, white 0 5%, transparent 6%),
-    linear-gradient(#6ed0ff 0%, #b9ecff 55%, #8ed16a 56%, #5eaf48 100%);
+#game{
+  width:100vw;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(#65b9e3 0%,#9ed7ec 55%,#7dc55a 56%,#4f9b3f 100%);
 }
 
 /* タイトル */
-#title {
-  position: absolute;
-  top: 25px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  text-shadow: 0 3px 5px rgba(0,0,0,.35);
-  font-size: 28px;
-  font-weight: 900;
-  z-index: 5;
+#title{
+  position:absolute;
+  top:5%;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:clamp(24px,7vw,42px);
+  font-weight:900;
+  text-shadow:0 4px 8px rgba(0,0,0,.35);
+  z-index:10;
 }
 
-/* マップ */
-#map {
-  position: absolute;
-  inset: 0;
+/* 雲 */
+.cloud{
+  position:absolute;
+  width:100px;
+  height:60px;
+  background:white;
+  border-radius:50px;
+  opacity:.9;
+  filter:blur(2px);
 }
 
-/* キャラクター */
-.character {
-  position: absolute;
-  width: 85px;
-  text-align: center;
-  transition: .2s;
-  z-index: 3;
+.cloud:before,
+.cloud:after{
+  content:"";
+  position:absolute;
+  background:white;
+  border-radius:50%;
 }
 
-.face {
-  width: 65px;
-  height: 65px;
-  margin: auto;
-  border-radius: 50%;
-  border: 4px solid white;
-  box-shadow: 0 5px 8px rgba(0,0,0,.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
+.cloud:before{
+  width:55px;
+  height:55px;
+  left:15px;
+  top:-25px;
 }
 
-#taichi .face {
-  background: #4aa3ff;
+.cloud:after{
+  width:70px;
+  height:70px;
+  right:5px;
+  top:-35px;
 }
 
-#hana .face {
-  background: #ff83bd;
+#cloud1{
+  top:18%;
+  left:8%;
 }
 
-.character-name {
-  margin-top: 5px;
-  background: rgba(255,255,255,.9);
-  border-radius: 20px;
-  padding: 4px;
-  font-weight: bold;
-}
-
-/* ボタン */
-#controls {
-  position: absolute;
-  bottom: 25px;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  z-index: 10;
-}
-
-button {
-  border: none;
-  border-radius: 22px;
-  padding: 16px 22px;
-  font-size: 18px;
-  font-weight: bold;
-  background: white;
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
-}
-
-button:active {
-  transform: scale(.94);
-}
-
-/* メッセージ */
-#message {
-  position: absolute;
-  left: 15px;
-  right: 15px;
-  bottom: 115px;
-  background: rgba(255,255,255,.95);
-  border-radius: 20px;
-  padding: 18px;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0 5px 15px rgba(0,0,0,.2);
-  z-index: 8;
-}
-
-/* 敵 */
-.enemy {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 50px;
-  box-shadow: 0 5px 10px rgba(0,0,0,.25);
-}
-
-#enemy {
-  right: 12%;
-  top: 40%;
-  background: #9c68ff;
+#cloud2{
+  top:23%;
+  right:12%;
+  transform:scale(1.3);
 }
 
 /* 木 */
-.tree {
-  position: absolute;
-  font-size: 70px;
+.tree{
+  position:absolute;
+  font-size:70px;
+  filter:drop-shadow(0 6px 5px rgba(0,0,0,.25));
+}
+
+#tree1{
+  top:30%;
+  left:5%;
+}
+
+#tree2{
+  top:25%;
+  right:7%;
+}
+
+#tree3{
+  top:60%;
+  left:3%;
+  font-size:60px;
+}
+
+/* キャラクター */
+.character{
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:52px;
+  border:6px solid white;
+  box-shadow:0 8px 15px rgba(0,0,0,.3);
+  transition:.15s;
+  z-index:5;
+}
+
+#taichi{
+  background:#3d8cff;
+  left:20%;
+  top:60%;
+}
+
+#hana{
+  background:#ff7fba;
+  left:55%;
+  top:60%;
+}
+
+.character.selected{
+  transform:scale(1.15);
+  box-shadow:
+    0 0 0 7px #ffe34d,
+    0 8px 18px rgba(0,0,0,.4);
+}
+
+/* 虫 */
+#bug{
+  position:absolute;
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6e36d6,#9f61f2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  box-shadow:0 8px 18px rgba(0,0,0,.3);
+  left:62%;
+  top:38%;
+  z-index:4;
+  animation:bugMove 2s infinite alternate ease-in-out;
+}
+
+@keyframes bugMove{
+  from{
+    transform:translateY(0);
+  }
+  to{
+    transform:translateY(-10px);
+  }
+}
+
+/* 情報ボックス */
+#info{
+  position:absolute;
+  left:5%;
+  right:5%;
+  bottom:22%;
+  background:rgba(255,255,255,.93);
+  padding:18px;
+  border-radius:28px;
+  font-size:clamp(18px,5vw,25px);
+  font-weight:800;
+  line-height:1.5;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+  z-index:10;
+}
+
+/* ステータス */
+#status{
+  position:absolute;
+  top:12%;
+  right:5%;
+  background:rgba(255,255,255,.9);
+  padding:10px 16px;
+  border-radius:20px;
+  font-weight:800;
+  z-index:10;
+}
+
+/* 操作ボタン */
+#controls{
+  position:absolute;
+  bottom:4%;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  z-index:20;
+}
+
+.control{
+  border:none;
+  border-radius:24px;
+  background:white;
+  min-height:68px;
+  font-size:clamp(20px,6vw,32px);
+  font-weight:900;
+  color:#2672b8;
+  box-shadow:0 6px 12px rgba(0,0,0,.2);
+}
+
+.control:active{
+  transform:scale(.94);
+}
+
+#up{
+  grid-column:2;
+}
+
+#left{
+  grid-column:1;
+  grid-row:2;
+}
+
+#down{
+  grid-column:2;
+  grid-row:2;
+}
+
+#right{
+  grid-column:3;
+  grid-row:2;
+}
+
+/* キャラクター選択 */
+#characterSelect{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:38%;
+  display:flex;
+  gap:30px;
+  z-index:10;
+}
+
+.selectButton{
+  border:none;
+  background:rgba(255,255,255,.9);
+  border-radius:20px;
+  padding:10px 18px;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 5px 10px rgba(0,0,0,.2);
+}
+
+.selectButton.active{
+  background:#ffe34d;
 }
 </style>
 </head>
@@ -164,129 +275,318 @@ button:active {
 
 <div id="game">
 
-  <div class="sky"></div>
+<div id="title">タイチとハナの冒険ワールド</div>
 
-  <div id="title">
-    タイチとハナの冒険ワールド
-  </div>
+<div class="cloud" id="cloud1"></div>
+<div class="cloud" id="cloud2"></div>
 
-  <div id="map">
+<div class="tree" id="tree1">🌳</div>
+<div class="tree" id="tree2">🌳</div>
+<div class="tree" id="tree3">🌲</div>
 
-    <div class="tree" style="left:5%; top:25%;">🌳</div>
-    <div class="tree" style="right:5%; top:18%;">🌳</div>
-    <div class="tree" style="left:15%; bottom:28%;">🌲</div>
+<div id="status">
+  ⭐ 虫ポイント：<span id="score">0</span>
+</div>
 
-    <div id="enemy" class="enemy">
-      🐛
-    </div>
+<div
+  id="taichi"
+  class="character selected"
+  data-name="タイチ"
+>
+  👦
+</div>
 
-    <div id="taichi" class="character" style="left:20%; bottom:28%;">
-      <div class="face">👦</div>
-      <div class="character-name">タイチ</div>
-    </div>
+<div
+  id="hana"
+  class="character"
+  data-name="ハナ"
+>
+  👧
+</div>
 
-    <div id="hana" class="character" style="left:42%; bottom:28%;">
-      <div class="face">👧</div>
-      <div class="character-name">ハナ</div>
-    </div>
+<div id="bug">🐛</div>
 
-  </div>
+<div id="characterSelect">
 
-  <div id="message">
-    タイチとハナの冒険がはじまる！
-    前へ進んでみよう！🎮
-  </div>
+<button
+  class="selectButton active"
+  id="selectTaichi"
+>
+  👦 タイチ
+</button>
 
-  <div id="controls">
-    <button onclick="move('left')">⬅️ 左</button>
-    <button onclick="move('forward')">⬆️ 前へ</button>
-    <button onclick="move('right')">右 ➡️</button>
-  </div>
+<button
+  class="selectButton"
+  id="selectHana"
+>
+  👧 ハナ
+</button>
+
+</div>
+
+<div id="info">
+タイチとハナの冒険がはじまる！<br>
+好きなキャラクターを選んで、虫を探そう！🐛
+</div>
+
+<div id="controls">
+
+<button class="control" id="up">⬆️</button>
+
+<button class="control" id="left">⬅️</button>
+
+<button class="control" id="down">⬇️</button>
+
+<button class="control" id="right">➡️</button>
+
+</div>
 
 </div>
 
 <script>
 
-let position = 0;
-let battleStarted = false;
-
-const message = document.getElementById("message");
 const taichi = document.getElementById("taichi");
 const hana = document.getElementById("hana");
-const enemy = document.getElementById("enemy");
+const bug = document.getElementById("bug");
 
-function move(direction) {
+const info = document.getElementById("info");
+const scoreText = document.getElementById("score");
 
-  if (battleStarted) {
-    return;
+const selectTaichi =
+document.getElementById("selectTaichi");
+
+const selectHana =
+document.getElementById("selectHana");
+
+let selected = taichi;
+
+let score = 0;
+
+/* キャラクター選択 */
+
+function selectCharacter(character){
+
+  selected = character;
+
+  taichi.classList.remove("selected");
+  hana.classList.remove("selected");
+
+  character.classList.add("selected");
+
+  selectTaichi.classList.remove("active");
+  selectHana.classList.remove("active");
+
+  if(character === taichi){
+
+    selectTaichi.classList.add("active");
+
+    info.innerHTML =
+    "👦 タイチを選んだ！<br>虫を探しに行こう！🐛";
+
+  }else{
+
+    selectHana.classList.add("active");
+
+    info.innerHTML =
+    "👧 ハナを選んだ！<br>一緒に冒険へ出発！✨";
+
   }
 
-  if (direction === "left") {
-    position -= 20;
-    message.innerHTML = "タイチ「左の方に何かありそうだ！」";
-  }
-
-  if (direction === "right") {
-    position += 20;
-    message.innerHTML = "ハナ「こっちに行ってみよう！」";
-  }
-
-  if (direction === "forward") {
-    position += 10;
-
-    let taichiBottom =
-      parseInt(taichi.style.bottom || "28");
-
-    let hanaBottom =
-      parseInt(hana.style.bottom || "28");
-
-    taichi.style.bottom = (taichiBottom + 4) + "%";
-    hana.style.bottom = (hanaBottom + 4) + "%";
-
-    message.innerHTML =
-      "タイチとハナは冒険ワールドを進んでいる…";
-  }
-
-  taichi.style.left = (20 + position) + "%";
-  hana.style.left = (42 + position) + "%";
-
-  checkBattle();
 }
 
-function checkBattle() {
+selectTaichi.addEventListener(
+"click",
+()=>selectCharacter(taichi)
+);
 
-  if (position >= 50 && !battleStarted) {
+selectHana.addEventListener(
+"click",
+()=>selectCharacter(hana)
+);
 
-    battleStarted = true;
 
-    message.innerHTML =
-      "⚠️ あやしいモンスターが現れた！<br><br>" +
-      "🐛 たこたこ「ここから先には行かせないぞ！」<br><br>" +
-      "画面をタップしてバトル開始！";
+/* 移動 */
 
-    document.getElementById("game")
-      .onclick = startBattle;
+function move(dx,dy){
+
+  const game =
+  document.getElementById("game");
+
+  const gameRect =
+  game.getBoundingClientRect();
+
+  const charRect =
+  selected.getBoundingClientRect();
+
+  let newLeft =
+  selected.offsetLeft + dx;
+
+  let newTop =
+  selected.offsetTop + dy;
+
+  /* 画面外に出ないようにする */
+
+  newLeft =
+  Math.max(
+    0,
+    Math.min(
+      gameRect.width - charRect.width,
+      newLeft
+    )
+  );
+
+  newTop =
+  Math.max(
+    80,
+    Math.min(
+      gameRect.height - 220,
+      newTop
+    )
+  );
+
+  selected.style.left =
+  newLeft + "px";
+
+  selected.style.top =
+  newTop + "px";
+
+  checkBug();
+
+}
+
+
+/* 虫との当たり判定 */
+
+function checkBug(){
+
+  const charRect =
+  selected.getBoundingClientRect();
+
+  const bugRect =
+  bug.getBoundingClientRect();
+
+  const distanceX =
+  Math.abs(
+    charRect.left -
+    bugRect.left
+  );
+
+  const distanceY =
+  Math.abs(
+    charRect.top -
+    bugRect.top
+  );
+
+  if(
+    distanceX < 80 &&
+    distanceY < 80
+  ){
+
+    score++;
+
+    scoreText.textContent =
+    score;
+
+    info.innerHTML =
+    "🐛 虫を発見！！<br>" +
+    selected.dataset.name +
+    "は虫ポイントをゲット！⭐";
+
+    moveBug();
+
   }
+
 }
 
-function startBattle() {
 
-  if (!battleStarted) return;
+/* 虫を別の場所へ移動 */
 
-  message.innerHTML =
-    "⚔️ バトル開始！<br><br>" +
-    "タイチのクワガタパワー！🪲<br>" +
-    "ハナのピンクパワー！✨<br><br>" +
-    "🐛 たこたこを倒した！🎉<br><br>" +
-    "次のワールドへ進もう！";
+function moveBug(){
 
-  enemy.style.transform = "scale(0)";
-  enemy.style.transition = "0.5s";
+  const game =
+  document.getElementById("game");
 
-  document.getElementById("game").onclick = null;
+  const maxX =
+  game.clientWidth - 100;
 
-  battleStarted = false;
+  const minY = 180;
+
+  const maxY =
+  game.clientHeight - 380;
+
+  const randomX =
+  Math.random() * maxX;
+
+  const randomY =
+  minY +
+  Math.random() *
+  (maxY - minY);
+
+  bug.style.left =
+  randomX + "px";
+
+  bug.style.top =
+  randomY + "px";
+
 }
+
+
+/* ボタン操作 */
+
+document
+.getElementById("up")
+.addEventListener(
+"click",
+()=>move(0,-35)
+);
+
+document
+.getElementById("down")
+.addEventListener(
+"click",
+()=>move(0,35)
+);
+
+document
+.getElementById("left")
+.addEventListener(
+"click",
+()=>move(-35,0)
+);
+
+document
+.getElementById("right")
+.addEventListener(
+"click",
+()=>move(35,0)
+);
+
+
+/* キーボード操作
+Windows PC用 */
+
+document.addEventListener(
+"keydown",
+(event)=>{
+
+  if(event.key === "ArrowUp"){
+    move(0,-35);
+  }
+
+  if(event.key === "ArrowDown"){
+    move(0,35);
+  }
+
+  if(event.key === "ArrowLeft"){
+    move(-35,0);
+  }
+
+  if(event.key === "ArrowRight"){
+    move(35,0);
+  }
+
+}
+);
 
 </script>
 

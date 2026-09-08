@@ -404,6 +404,17 @@ function catchBug(){
   setTimeout(()=>{
 
     moveBug();
+moveBug();
+
+bug.addEventListener("click", () => {
+  score++;
+  scoreText.textContent = "⭐ 虫ポイント：" + score;
+  moveBug();
+});
+
+</script>
+</body>
+</html>
 
     bug.style.transform = "scale(1)";
 

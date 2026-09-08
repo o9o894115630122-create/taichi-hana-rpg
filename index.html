@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>タイチとハナの大冒険</title>
 
@@ -17,65 +15,61 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+html,
 body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
   font-family:
     -apple-system,
     BlinkMacSystemFont,
     "Hiragino Kaku Gothic ProN",
     "Hiragino Sans",
     sans-serif;
-
-  background:#1d3557;
-
-  overflow:hidden;
 }
 
+body{
+  background:#1d3557;
+}
 
-/* =========================
-   ゲーム全体
-========================= */
+button{
+  font-family:inherit;
+}
 
 #game{
   width:100vw;
   height:100vh;
-
   position:relative;
-
   overflow:hidden;
+  touch-action:none;
 
   background:
-
-  radial-gradient(
-    circle at 20% 20%,
-    rgba(255,255,255,.5),
-    transparent 25%
-  ),
-
-  linear-gradient(
-    #87ceeb 0%,
-    #87ceeb 45%,
-    #72b64a 45%,
-    #4f9138 100%
-  );
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255,255,255,.45),
+      transparent 25%
+    ),
+    linear-gradient(
+      #87ceeb 0%,
+      #87ceeb 45%,
+      #72b64a 45%,
+      #4f9138 100%
+    );
 }
 
 
-/* =========================
+/* =====================
    タイトル
-========================= */
+===================== */
 
 #title{
-
   position:absolute;
-
   top:12px;
-
   left:50%;
-
   transform:translateX(-50%);
-
-  z-index:20;
+  z-index:30;
 
   width:95%;
 
@@ -83,46 +77,36 @@ body{
 
   color:white;
 
+  font-size:clamp(20px, 5vw, 28px);
   font-weight:bold;
-
-  font-size:22px;
 
   text-shadow:
     2px 2px 0 #234,
     0 0 8px rgba(0,0,0,.4);
 
   pointer-events:none;
-
 }
 
 
-/* =========================
+/* =====================
    ステータス
-========================= */
+===================== */
 
 #status{
-
   position:absolute;
-
-  top:55px;
-
+  top:60px;
   left:50%;
-
   transform:translateX(-50%);
-
-  z-index:20;
+  z-index:30;
 
   display:flex;
-
   gap:10px;
 
-  color:#333;
-
+  width:max-content;
+  max-width:95%;
 }
 
-
 .statusBox{
-
   background:rgba(255,255,255,.92);
 
   padding:8px 14px;
@@ -133,16 +117,14 @@ body{
 
   box-shadow:
     0 4px 10px rgba(0,0,0,.2);
-
 }
 
 
-/* =========================
-   キャラ選択
-========================= */
+/* =====================
+   キャラクター選択
+===================== */
 
 #characterSelect{
-
   position:absolute;
 
   top:110px;
@@ -151,24 +133,21 @@ body{
 
   transform:translateX(-50%);
 
-  z-index:20;
+  z-index:30;
 
   display:flex;
 
   gap:10px;
-
 }
 
-
 .characterButton{
-
   border:none;
 
   border-radius:18px;
 
   padding:10px 16px;
 
-  font-size:15px;
+  font-size:16px;
 
   font-weight:bold;
 
@@ -177,79 +156,73 @@ body{
   box-shadow:
     0 4px 10px rgba(0,0,0,.25);
 
+  touch-action:manipulation;
 }
 
-
 .characterButton.active{
-
   background:#ffd54f;
 
   transform:scale(1.05);
-
 }
 
 
-/* =========================
-   雲
-========================= */
+/* =====================
+   背景
+===================== */
 
 .cloud{
-
   position:absolute;
 
   font-size:55px;
 
-  opacity:.8;
+  opacity:.85;
 
   pointer-events:none;
 
+  z-index:1;
 }
 
-
-/* =========================
-   木
-========================= */
-
 .tree{
-
   position:absolute;
 
   font-size:65px;
 
   pointer-events:none;
 
+  z-index:2;
 }
 
 
-/* =========================
+/* =====================
    虫
-========================= */
+===================== */
 
 .bug{
-
   position:absolute;
 
-  width:48px;
-
-  height:48px;
+  width:55px;
+  height:55px;
 
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
-  font-size:38px;
+  font-size:42px;
 
-  z-index:5;
+  z-index:15;
 
   user-select:none;
 
-  pointer-events:none;
+  pointer-events:auto;
+
+  cursor:pointer;
+
+  touch-action:manipulation;
 
   filter:
     drop-shadow(
-      2px 4px 2px rgba(0,0,0,.25)
+      2px 4px 2px rgba(0,0,0,.3)
     );
 
   animation:
@@ -257,40 +230,41 @@ body{
     1.5s
     ease-in-out
     infinite;
+}
 
+.bug:active{
+  transform:scale(.85);
 }
 
 
 @keyframes bugFloat{
 
   0%{
-    transform:translateY(0);
+    margin-top:0;
   }
 
   50%{
-    transform:translateY(-5px);
+    margin-top:-5px;
   }
 
   100%{
-    transform:translateY(0);
+    margin-top:0;
   }
 
 }
 
 
-/* =========================
+/* =====================
    プレイヤー
-========================= */
+===================== */
 
 #player{
-
   position:absolute;
 
-  width:62px;
+  width:72px;
+  height:78px;
 
-  height:62px;
-
-  z-index:10;
+  z-index:20;
 
   display:flex;
 
@@ -306,14 +280,12 @@ body{
 
   user-select:none;
 
+  pointer-events:none;
 }
 
-
 #playerFace{
-
-  width:48px;
-
-  height:48px;
+  width:54px;
+  height:54px;
 
   border-radius:50%;
 
@@ -322,59 +294,90 @@ body{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
-  font-size:28px;
+  font-size:32px;
 
   border:3px solid white;
 
   box-shadow:
-
     0 5px 8px rgba(0,0,0,.25);
-
 }
 
-
 #playerName{
-
-  margin-top:2px;
+  margin-top:3px;
 
   background:white;
 
   border-radius:12px;
 
-  padding:2px 8px;
+  padding:3px 10px;
 
-  font-size:12px;
+  font-size:14px;
 
   font-weight:bold;
 
   box-shadow:
     0 3px 6px rgba(0,0,0,.2);
-
 }
 
 
-/* =========================
-   メッセージ
-========================= */
+/* =====================
+   GETメッセージ
+===================== */
+
+#getEffect{
+  position:absolute;
+
+  z-index:100;
+
+  font-size:28px;
+
+  font-weight:bold;
+
+  color:#ffca28;
+
+  text-shadow:
+    2px 2px 0 white,
+    0 0 8px rgba(0,0,0,.3);
+
+  pointer-events:none;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  transition:.2s;
+
+  opacity:0;
+}
+
+#getEffect.show{
+  transform:
+    translate(-50%, -80%)
+    scale(1);
+
+  opacity:1;
+}
+
+
+/* =====================
+   クリアメッセージ
+===================== */
 
 #message{
-
   position:absolute;
 
   left:50%;
-
   top:45%;
 
   transform:
     translate(-50%,-50%)
     scale(0);
 
-  z-index:50;
+  z-index:100;
 
-  width:80%;
+  width:82%;
 
   text-align:center;
 
@@ -384,43 +387,37 @@ body{
 
   padding:25px;
 
-  font-size:22px;
+  font-size:24px;
 
   font-weight:bold;
 
   box-shadow:
     0 10px 30px rgba(0,0,0,.35);
 
-  transition:
-    .3s;
-
+  transition:.3s;
 }
 
-
 #message.show{
-
   transform:
     translate(-50%,-50%)
     scale(1);
-
 }
 
 
-/* =========================
+/* =====================
    操作ボタン
-========================= */
+===================== */
 
 #controls{
-
   position:absolute;
 
-  bottom:20px;
+  bottom:25px;
 
   left:50%;
 
   transform:translateX(-50%);
 
-  z-index:30;
+  z-index:40;
 
   width:250px;
 
@@ -430,105 +427,82 @@ body{
     1fr 1fr 1fr;
 
   grid-template-rows:
-    60px 60px;
+    70px 70px;
 
   gap:8px;
-
 }
 
-
 .controlButton{
-
   border:none;
 
-  border-radius:18px;
+  border-radius:20px;
 
-  font-size:28px;
+  font-size:34px;
 
   font-weight:bold;
 
   background:
+    rgba(255,255,255,.92);
 
-    rgba(
-      255,
-      255,
-      255,
-      .92
-    );
+  color:#1976d2;
 
   box-shadow:
-
     0 5px 12px
     rgba(0,0,0,.25);
 
+  touch-action:manipulation;
 }
 
-
 .controlButton:active{
-
   transform:scale(.92);
 
   background:#ffd54f;
-
 }
-
 
 #up{
-
   grid-column:2;
-
 }
-
 
 #left{
-
   grid-column:1;
-
   grid-row:2;
-
 }
-
 
 #down{
-
   grid-column:2;
-
   grid-row:2;
-
 }
-
 
 #right{
-
   grid-column:3;
-
   grid-row:2;
-
 }
 
 
-/* =========================
-   スマホが小さい時
-========================= */
+/* =====================
+   小さい画面
+===================== */
 
 @media(max-height:700px){
 
   #controls{
-
     bottom:8px;
-
   }
 
   #characterSelect{
+    top:105px;
+  }
 
-    top:100px;
-
+  #player{
+    width:65px;
+    height:70px;
   }
 
 }
 
 
 </style>
+
 </head>
 
 
@@ -538,52 +512,34 @@ body{
 <div id="game">
 
 
-  <!-- タイトル -->
-
   <div id="title">
-
     🌍 タイチとハナの大冒険 🌍
-
   </div>
 
 
-
-  <!-- ステータス -->
 
   <div id="status">
 
     <div class="statusBox">
-
       ⭐ ポイント：
-      <span id="score">
-        0
-      </span>
-
+      <span id="score">0</span>
     </div>
 
     <div class="statusBox">
-
       🐞
-      <span id="remaining">
-        6
-      </span>
-
+      <span id="remaining">6</span>
       匹
-
     </div>
 
   </div>
 
 
-
-  <!-- キャラ選択 -->
 
   <div id="characterSelect">
 
     <button
       id="taichiButton"
-      class="characterButton active"
-    >
+      class="characterButton active">
 
       🧒 タイチ
 
@@ -592,8 +548,7 @@ body{
 
     <button
       id="hanaButton"
-      class="characterButton"
-    >
+      class="characterButton">
 
       👧 ハナ
 
@@ -607,11 +562,7 @@ body{
 
   <div
     class="cloud"
-    style="
-      left:5%;
-      top:18%;
-    "
-  >
+    style="left:5%; top:20%;">
 
     ☁️
 
@@ -620,11 +571,7 @@ body{
 
   <div
     class="cloud"
-    style="
-      right:5%;
-      top:25%;
-    "
-  >
+    style="right:5%; top:28%;">
 
     ☁️
 
@@ -633,11 +580,7 @@ body{
 
   <div
     class="tree"
-    style="
-      left:5%;
-      bottom:180px;
-    "
-  >
+    style="left:5%; bottom:180px;">
 
     🌳
 
@@ -646,11 +589,7 @@ body{
 
   <div
     class="tree"
-    style="
-      right:5%;
-      bottom:170px;
-    "
-  >
+    style="right:5%; bottom:170px;">
 
     🌲
 
@@ -663,15 +602,11 @@ body{
   <div id="player">
 
     <div id="playerFace">
-
       🧒
-
     </div>
 
     <div id="playerName">
-
       タイチ
-
     </div>
 
   </div>
@@ -682,11 +617,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:15%;
-      top:35%;
-    "
-  >
+    style="left:15%; top:35%;">
 
     🪲
 
@@ -695,11 +626,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:70%;
-      top:32%;
-    "
-  >
+    style="left:70%; top:32%;">
 
     🦋
 
@@ -708,11 +635,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:40%;
-      top:48%;
-    "
-  >
+    style="left:40%; top:48%;">
 
     🐛
 
@@ -721,11 +644,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:75%;
-      top:55%;
-    "
-  >
+    style="left:75%; top:55%;">
 
     🐞
 
@@ -734,11 +653,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:18%;
-      top:62%;
-    "
-  >
+    style="left:18%; top:62%;">
 
     🦗
 
@@ -747,11 +662,7 @@ body{
 
   <div
     class="bug"
-    style="
-      left:52%;
-      top:68%;
-    "
-  >
+    style="left:52%; top:68%;">
 
     🪲
 
@@ -759,7 +670,15 @@ body{
 
 
 
-  <!-- メッセージ -->
+  <!-- GET表示 -->
+
+  <div id="getEffect">
+    ⭐ GET! ⭐
+  </div>
+
+
+
+  <!-- クリア -->
 
   <div id="message">
 
@@ -780,8 +699,7 @@ body{
 
     <button
       id="up"
-      class="controlButton"
-    >
+      class="controlButton">
 
       ↑
 
@@ -790,8 +708,7 @@ body{
 
     <button
       id="left"
-      class="controlButton"
-    >
+      class="controlButton">
 
       ←
 
@@ -800,8 +717,7 @@ body{
 
     <button
       id="down"
-      class="controlButton"
-    >
+      class="controlButton">
 
       ↓
 
@@ -810,8 +726,7 @@ body{
 
     <button
       id="right"
-      class="controlButton"
-    >
+      class="controlButton">
 
       →
 
@@ -828,88 +743,68 @@ body{
 <script>
 
 
-/* =========================
-   変数
-========================= */
-
-
 const player =
-  document.getElementById(
-    "player"
-  );
+  document.getElementById("player");
 
 
 const playerFace =
-  document.getElementById(
-    "playerFace"
-  );
+  document.getElementById("playerFace");
 
 
 const playerName =
-  document.getElementById(
-    "playerName"
-  );
+  document.getElementById("playerName");
 
 
 const scoreText =
-  document.getElementById(
-    "score"
-  );
+  document.getElementById("score");
 
 
 const remainingText =
-  document.getElementById(
-    "remaining"
-  );
+  document.getElementById("remaining");
 
 
 const message =
-  document.getElementById(
-    "message"
-  );
+  document.getElementById("message");
+
+
+const getEffect =
+  document.getElementById("getEffect");
 
 
 const taichiButton =
-  document.getElementById(
-    "taichiButton"
-  );
+  document.getElementById("taichiButton");
 
 
 const hanaButton =
-  document.getElementById(
-    "hanaButton"
-  );
+  document.getElementById("hanaButton");
 
 
-/* =========================
-   プレイヤー位置
-========================= */
+const game =
+  document.getElementById("game");
 
 
 let playerX =
-  window.innerWidth / 2 - 30;
+  window.innerWidth / 2 - 36;
 
 
 let playerY =
-  window.innerHeight - 250;
+  window.innerHeight - 260;
 
 
 let score = 0;
 
 
-/* =========================
-   キャラクター
-========================= */
+const totalBugs =
+  document.querySelectorAll(".bug").length;
 
 
-let character =
-  "taichi";
+updatePlayer();
 
 
-/* =========================
-   最初の位置
-========================= */
 
+/* =====================
+   プレイヤー表示更新
+===================== */
 
 function updatePlayer(){
 
@@ -923,14 +818,10 @@ function updatePlayer(){
 }
 
 
-updatePlayer();
 
-
-
-/* =========================
+/* =====================
    移動
-========================= */
-
+===================== */
 
 function move(dx, dy){
 
@@ -945,7 +836,12 @@ function move(dx, dy){
     dy * speed;
 
 
-  /* 左右の画面外防止 */
+  const playerWidth =
+    player.offsetWidth;
+
+
+  const playerHeight =
+    player.offsetHeight;
 
 
   if(playerX < 0){
@@ -957,32 +853,32 @@ function move(dx, dy){
 
   if(
     playerX >
-    window.innerWidth - 62
+    window.innerWidth - playerWidth
   ){
 
     playerX =
-      window.innerWidth - 62;
+      window.innerWidth -
+      playerWidth;
 
   }
 
 
-  /* 上下の画面外防止 */
+  if(playerY < 170){
 
-
-  if(playerY < 95){
-
-    playerY = 95;
+    playerY = 170;
 
   }
 
 
-  if(
-    playerY >
-    window.innerHeight - 210
-  ){
+  const maxY =
+    window.innerHeight -
+    playerHeight -
+    185;
 
-    playerY =
-      window.innerHeight - 210;
+
+  if(playerY > maxY){
+
+    playerY = maxY;
 
   }
 
@@ -996,108 +892,114 @@ function move(dx, dy){
 
 
 
-/* =========================
-   虫チェック
-========================= */
-
+/* =====================
+   虫との距離チェック
+===================== */
 
 function checkBugs(){
 
   const bugs =
-    document.querySelectorAll(
-      ".bug"
-    );
+    document.querySelectorAll(".bug");
 
 
-  bugs.forEach(
-    function(bug){
+  bugs.forEach(function(bug){
 
-      if(
-        bug.dataset.collected ===
-        "true"
-      ){
-
-        return;
-
-      }
+    if(
+      bug.dataset.collected ===
+      "true"
+    ){
+      return;
+    }
 
 
-      const bugRect =
-        bug.getBoundingClientRect();
+    const bugRect =
+      bug.getBoundingClientRect();
 
 
-      const playerRect =
-        player.getBoundingClientRect();
+    const playerRect =
+      player.getBoundingClientRect();
 
 
-      const playerCenterX =
-        playerRect.left +
-        playerRect.width / 2;
+    const playerCenterX =
+      playerRect.left +
+      playerRect.width / 2;
 
 
-      const playerCenterY =
-        playerRect.top +
-        playerRect.height / 2;
+    const playerCenterY =
+      playerRect.top +
+      playerRect.height / 2;
 
 
-      const bugCenterX =
-        bugRect.left +
-        bugRect.width / 2;
+    const bugCenterX =
+      bugRect.left +
+      bugRect.width / 2;
 
 
-      const bugCenterY =
-        bugRect.top +
-        bugRect.height / 2;
+    const bugCenterY =
+      bugRect.top +
+      bugRect.height / 2;
 
 
-      const distance =
-        Math.sqrt(
+    const distance =
+      Math.sqrt(
 
-          Math.pow(
-            playerCenterX -
-            bugCenterX,
-            2
-          )
+        Math.pow(
+          playerCenterX -
+          bugCenterX,
+          2
+        )
 
-          +
+        +
 
-          Math.pow(
-            playerCenterY -
-            bugCenterY,
-            2
-          )
+        Math.pow(
+          playerCenterY -
+          bugCenterY,
+          2
+        )
 
-        );
+      );
 
 
-      if(
-        distance < 55
-      ){
+    if(distance < 55){
 
-        collectBug(
-          bug
-        );
-
-      }
+      collectBug(bug);
 
     }
-  );
+
+  });
 
 }
 
 
 
-/* =========================
-   虫ゲット
-========================= */
+/* =====================
+   虫をゲット
+===================== */
 
+function collectBug(bug){
 
-function collectBug(
-  bug
-){
+  if(
+    bug.dataset.collected ===
+    "true"
+  ){
+    return;
+  }
+
 
   bug.dataset.collected =
     "true";
+
+
+  const bugRect =
+    bug.getBoundingClientRect();
+
+
+  showGetEffect(
+    bugRect.left +
+    bugRect.width / 2,
+
+    bugRect.top
+  );
 
 
   bug.style.display =
@@ -1111,12 +1013,6 @@ function collectBug(
     score;
 
 
-  const totalBugs =
-    document.querySelectorAll(
-      ".bug"
-    ).length;
-
-
   const remaining =
     totalBugs -
     score;
@@ -1126,9 +1022,7 @@ function collectBug(
     remaining;
 
 
-  if(
-    remaining === 0
-  ){
+  if(remaining === 0){
 
     setTimeout(
       function(){
@@ -1138,7 +1032,7 @@ function collectBug(
         );
 
       },
-      300
+      500
     );
 
   }
@@ -1147,102 +1041,168 @@ function collectBug(
 
 
 
-/* =========================
+/* =====================
+   GETエフェクト
+===================== */
+
+function showGetEffect(x, y){
+
+  getEffect.style.left =
+    x + "px";
+
+
+  getEffect.style.top =
+    y + "px";
+
+
+  getEffect.classList.remove(
+    "show"
+  );
+
+
+  void getEffect.offsetWidth;
+
+
+  getEffect.classList.add(
+    "show"
+  );
+
+
+  setTimeout(
+    function(){
+
+      getEffect.classList.remove(
+        "show"
+      );
+
+    },
+    700
+  );
+
+}
+
+
+
+/* =====================
+   虫タップ
+===================== */
+
+document
+.querySelectorAll(".bug")
+.forEach(function(bug){
+
+  bug.addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      collectBug(bug);
+
+    }
+  );
+
+
+  bug.addEventListener(
+    "touchstart",
+    function(event){
+
+      event.preventDefault();
+
+      collectBug(bug);
+
+    },
+    {
+      passive:false
+    }
+  );
+
+});
+
+
+
+/* =====================
    画面の矢印
-========================= */
+===================== */
+
+function setupControl(id, dx, dy){
+
+  const button =
+    document.getElementById(id);
 
 
-document
-.getElementById(
-  "up"
-)
-.addEventListener(
-  "click",
-  function(){
+  button.addEventListener(
+    "click",
+    function(){
 
-    move(
-      0,
-      -1
-    );
+      move(dx, dy);
 
-  }
+    }
+  );
+
+
+  button.addEventListener(
+    "touchstart",
+    function(event){
+
+      event.preventDefault();
+
+      move(dx, dy);
+
+    },
+    {
+      passive:false
+    }
+  );
+
+}
+
+
+setupControl(
+  "up",
+  0,
+  -1
+);
+
+
+setupControl(
+  "down",
+  0,
+  1
+);
+
+
+setupControl(
+  "left",
+  -1,
+  0
+);
+
+
+setupControl(
+  "right",
+  1,
+  0
 );
 
 
 
-document
-.getElementById(
-  "down"
-)
-.addEventListener(
-  "click",
-  function(){
-
-    move(
-      0,
-      1
-    );
-
-  }
-);
-
-
-
-document
-.getElementById(
-  "left"
-)
-.addEventListener(
-  "click",
-  function(){
-
-    move(
-      -1,
-      0
-    );
-
-  }
-);
-
-
-
-document
-.getElementById(
-  "right"
-)
-.addEventListener(
-  "click",
-  function(){
-
-    move(
-      1,
-      0
-    );
-
-  }
-);
-
-
-
-/* =========================
+/* =====================
    キーボード操作
-========================= */
-
+===================== */
 
 document.addEventListener(
   "keydown",
   function(event){
-
 
     if(
       event.key ===
       "ArrowUp"
     ){
 
-      move(
-        0,
-        -1
-      );
+      event.preventDefault();
+
+      move(0, -1);
 
     }
 
@@ -1252,10 +1212,9 @@ document.addEventListener(
       "ArrowDown"
     ){
 
-      move(
-        0,
-        1
-      );
+      event.preventDefault();
+
+      move(0, 1);
 
     }
 
@@ -1265,10 +1224,9 @@ document.addEventListener(
       "ArrowLeft"
     ){
 
-      move(
-        -1,
-        0
-      );
+      event.preventDefault();
+
+      move(-1, 0);
 
     }
 
@@ -1278,10 +1236,9 @@ document.addEventListener(
       "ArrowRight"
     ){
 
-      move(
-        1,
-        0
-      );
+      event.preventDefault();
+
+      move(1, 0);
 
     }
 
@@ -1290,18 +1247,13 @@ document.addEventListener(
 
 
 
-/* =========================
-   タイチ
-========================= */
-
+/* =====================
+   タイチ選択
+===================== */
 
 taichiButton.addEventListener(
   "click",
   function(){
-
-    character =
-      "taichi";
-
 
     playerFace.textContent =
       "🧒";
@@ -1325,18 +1277,13 @@ taichiButton.addEventListener(
 
 
 
-/* =========================
-   ハナ
-========================= */
-
+/* =====================
+   ハナ選択
+===================== */
 
 hanaButton.addEventListener(
   "click",
   function(){
-
-    character =
-      "hana";
-
 
     playerFace.textContent =
       "👧";
@@ -1360,33 +1307,35 @@ hanaButton.addEventListener(
 
 
 
-/* =========================
+/* =====================
    画面サイズ変更
-========================= */
-
+===================== */
 
 window.addEventListener(
   "resize",
   function(){
 
-    if(
-      playerX >
-      window.innerWidth - 62
-    ){
+    const maxX =
+      window.innerWidth -
+      player.offsetWidth;
 
-      playerX =
-        window.innerWidth - 62;
+
+    if(playerX > maxX){
+
+      playerX = maxX;
 
     }
 
 
-    if(
-      playerY >
-      window.innerHeight - 210
-    ){
+    const maxY =
+      window.innerHeight -
+      player.offsetHeight -
+      185;
 
-      playerY =
-        window.innerHeight - 210;
+
+    if(playerY > maxY){
+
+      playerY = maxY;
 
     }
 

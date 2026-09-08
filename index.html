@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 >
 
-<title>タイチとハナの冒険ワールド</title>
+<title>タイチとハナの大冒険</title>
 
 <style>
 
-/* =========================
-   基本設定
-========================= */
-
 *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
-    margin:0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Hiragino Kaku Gothic ProN",
-        "Hiragino Sans",
-        sans-serif;
+  margin:0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    sans-serif;
 
-    overflow:hidden;
+  background:#1d3557;
 
-    background:
-        linear-gradient(
-            to bottom,
-            #5fb5e5 0%,
-            #8bd2ee 60%,
-            #66b13d 60%,
-            #4d9c31 100%
-        );
-
-    height:100vh;
+  overflow:hidden;
 }
 
 
 /* =========================
-   ゲーム画面
+   ゲーム全体
 ========================= */
 
 #game{
-    position:relative;
+  width:100vw;
+  height:100vh;
 
-    width:100%;
-    height:100vh;
+  position:relative;
 
-    overflow:hidden;
+  overflow:hidden;
+
+  background:
+
+  radial-gradient(
+    circle at 20% 20%,
+    rgba(255,255,255,.5),
+    transparent 25%
+  ),
+
+  linear-gradient(
+    #87ceeb 0%,
+    #87ceeb 45%,
+    #72b64a 45%,
+    #4f9138 100%
+  );
 }
 
 
@@ -65,60 +66,126 @@ body{
 ========================= */
 
 #title{
-    position:absolute;
 
-    top:40px;
-    left:0;
+  position:absolute;
 
-    width:100%;
+  top:12px;
 
-    text-align:center;
+  left:50%;
 
-    color:white;
+  transform:translateX(-50%);
 
-    font-size:clamp(28px, 7vw, 48px);
+  z-index:20;
 
-    font-weight:900;
+  width:95%;
 
-    text-shadow:
-        0 4px 8px rgba(0,0,0,0.35);
+  text-align:center;
 
-    z-index:10;
+  color:white;
+
+  font-weight:bold;
+
+  font-size:22px;
+
+  text-shadow:
+    2px 2px 0 #234,
+    0 0 8px rgba(0,0,0,.4);
+
+  pointer-events:none;
+
 }
 
 
 /* =========================
-   スコア
+   ステータス
 ========================= */
 
-#scoreText{
+#status{
 
-    position:absolute;
+  position:absolute;
 
-    top:130px;
-    left:50%;
+  top:55px;
 
-    transform:translateX(-50%);
+  left:50%;
 
-    background:
-        rgba(255,255,255,0.9);
+  transform:translateX(-50%);
 
-    padding:
-        16px 30px;
+  z-index:20;
 
-    border-radius:40px;
+  display:flex;
 
-    font-size:
-        clamp(22px,5vw,32px);
+  gap:10px;
 
-    font-weight:900;
+  color:#333;
 
-    white-space:nowrap;
+}
 
-    z-index:10;
 
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.15);
+.statusBox{
+
+  background:rgba(255,255,255,.92);
+
+  padding:8px 14px;
+
+  border-radius:20px;
+
+  font-weight:bold;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.2);
+
+}
+
+
+/* =========================
+   キャラ選択
+========================= */
+
+#characterSelect{
+
+  position:absolute;
+
+  top:110px;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:20;
+
+  display:flex;
+
+  gap:10px;
+
+}
+
+
+.characterButton{
+
+  border:none;
+
+  border-radius:18px;
+
+  padding:10px 16px;
+
+  font-size:15px;
+
+  font-weight:bold;
+
+  background:white;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.25);
+
+}
+
+
+.characterButton.active{
+
+  background:#ffd54f;
+
+  transform:scale(1.05);
+
 }
 
 
@@ -128,43 +195,14 @@ body{
 
 .cloud{
 
-    position:absolute;
+  position:absolute;
 
-    background:white;
+  font-size:55px;
 
-    opacity:0.85;
+  opacity:.8;
 
-    border-radius:100px;
+  pointer-events:none;
 
-    filter:
-        blur(1px);
-
-    box-shadow:
-        40px 0 0 white,
-        80px 10px 0 white,
-        30px -30px 0 white;
-
-    z-index:1;
-}
-
-
-.cloud1{
-
-    width:130px;
-    height:60px;
-
-    top:270px;
-    left:-50px;
-}
-
-
-.cloud2{
-
-    width:150px;
-    height:70px;
-
-    top:350px;
-    right:-70px;
 }
 
 
@@ -174,26 +212,12 @@ body{
 
 .tree{
 
-    position:absolute;
+  position:absolute;
 
-    font-size:
-        clamp(70px,16vw,130px);
+  font-size:65px;
 
-    z-index:2;
-}
+  pointer-events:none;
 
-
-.tree1{
-
-    top:360px;
-    left:5%;
-}
-
-
-.tree2{
-
-    top:330px;
-    right:5%;
 }
 
 
@@ -201,161 +225,134 @@ body{
    虫
 ========================= */
 
-#bug{
+.bug{
 
-    position:absolute;
+  position:absolute;
 
-    left:45%;
+  width:48px;
 
-    top:45%;
+  height:48px;
 
-    font-size:
-        clamp(70px,16vw,130px);
+  display:flex;
 
-    cursor:pointer;
+  align-items:center;
 
-    user-select:none;
+  justify-content:center;
 
-    z-index:8;
+  font-size:38px;
 
-    transition:
-        left 0.25s ease,
-        top 0.25s ease,
-        transform 0.15s ease;
+  z-index:5;
 
-    filter:
-        drop-shadow(
-            0 10px 10px rgba(0,0,0,0.3)
-        );
+  user-select:none;
+
+  pointer-events:none;
+
+  filter:
+    drop-shadow(
+      2px 4px 2px rgba(0,0,0,.25)
+    );
+
+  animation:
+    bugFloat
+    1.5s
+    ease-in-out
+    infinite;
+
 }
 
 
-#bug:active{
+@keyframes bugFloat{
 
-    transform:
-        scale(0.75)
-        rotate(15deg);
-}
+  0%{
+    transform:translateY(0);
+  }
 
+  50%{
+    transform:translateY(-5px);
+  }
 
-/* =========================
-   キャラクター
-========================= */
+  100%{
+    transform:translateY(0);
+  }
 
-#character{
-
-    position:absolute;
-
-    left:50%;
-
-    top:52%;
-
-    transform:
-        translate(-50%,-50%);
-
-    width:
-        clamp(110px,28vw,180px);
-
-    height:
-        clamp(110px,28vw,180px);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #4ba3ff,
-            #1d65d6
-        );
-
-    border:
-        8px solid white;
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.3);
-
-    font-size:
-        clamp(70px,18vw,120px);
-
-    z-index:5;
 }
 
 
 /* =========================
-   キャラ選択ボタン
+   プレイヤー
 ========================= */
 
-#characterSelect{
+#player{
 
-    position:absolute;
+  position:absolute;
 
-    top:58%;
+  width:62px;
 
-    left:50%;
+  height:62px;
 
-    transform:
-        translateX(-50%);
+  z-index:10;
 
-    display:flex;
+  display:flex;
 
-    gap:25px;
+  flex-direction:column;
 
-    z-index:20;
+  align-items:center;
+
+  justify-content:center;
+
+  transition:
+    left .08s linear,
+    top .08s linear;
+
+  user-select:none;
+
 }
 
 
-.characterButton{
+#playerFace{
 
-    border:none;
+  width:48px;
 
-    padding:
-        16px 25px;
+  height:48px;
 
-    border-radius:
-        25px;
+  border-radius:50%;
 
-    font-size:
-        clamp(18px,4.5vw,26px);
+  background:#ffd7b5;
 
-    font-weight:900;
+  display:flex;
 
-    background:
-        rgba(255,255,255,0.9);
+  align-items:center;
 
-    cursor:pointer;
+  justify-content:center;
 
-    box-shadow:
-        0 8px 18px rgba(0,0,0,0.2);
+  font-size:28px;
 
-    transition:
-        0.2s;
+  border:3px solid white;
+
+  box-shadow:
+
+    0 5px 8px rgba(0,0,0,.25);
+
 }
 
 
-.characterButton.active{
+#playerName{
 
-    background:
-        linear-gradient(
-            135deg,
-            #fff8b0,
-            #ffd83d
-        );
+  margin-top:2px;
 
-    transform:
-        scale(1.1);
-}
+  background:white;
 
+  border-radius:12px;
 
-.characterButton:active{
+  padding:2px 8px;
 
-    transform:
-        scale(0.95);
+  font-size:12px;
+
+  font-weight:bold;
+
+  box-shadow:
+    0 3px 6px rgba(0,0,0,.2);
+
 }
 
 
@@ -363,46 +360,49 @@ body{
    メッセージ
 ========================= */
 
-#info{
+#message{
 
-    position:absolute;
+  position:absolute;
 
-    left:5%;
+  left:50%;
 
-    bottom:190px;
+  top:45%;
 
-    width:90%;
+  transform:
+    translate(-50%,-50%)
+    scale(0);
 
-    min-height:110px;
+  z-index:50;
 
-    padding:
-        25px;
+  width:80%;
 
-    display:flex;
+  text-align:center;
 
-    align-items:center;
+  background:white;
 
-    justify-content:center;
+  border-radius:25px;
 
-    text-align:center;
+  padding:25px;
 
-    font-size:
-        clamp(20px,5vw,30px);
+  font-size:22px;
 
-    font-weight:900;
+  font-weight:bold;
 
-    line-height:1.5;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.35);
 
-    background:
-        rgba(255,255,255,0.88);
+  transition:
+    .3s;
 
-    border-radius:
-        35px;
+}
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.15);
 
-    z-index:15;
+#message.show{
+
+  transform:
+    translate(-50%,-50%)
+    scale(1);
+
 }
 
 
@@ -412,111 +412,123 @@ body{
 
 #controls{
 
-    position:absolute;
+  position:absolute;
 
-    bottom:30px;
+  bottom:20px;
 
-    left:50%;
+  left:50%;
 
-    transform:
-        translateX(-50%);
+  transform:translateX(-50%);
 
-    width:
-        min(600px,90%);
+  z-index:30;
 
-    z-index:20;
+  width:250px;
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  grid-template-rows:
+    60px 60px;
+
+  gap:8px;
+
 }
 
 
-/* 上ボタン */
+.controlButton{
 
-.controlRowTop{
+  border:none;
 
-    display:flex;
+  border-radius:18px;
 
-    justify-content:center;
+  font-size:28px;
 
-    margin-bottom:10px;
+  font-weight:bold;
+
+  background:
+
+    rgba(
+      255,
+      255,
+      255,
+      .92
+    );
+
+  box-shadow:
+
+    0 5px 12px
+    rgba(0,0,0,.25);
+
 }
 
 
-/* 下3つ */
+.controlButton:active{
 
-.controlRowBottom{
+  transform:scale(.92);
 
-    display:flex;
+  background:#ffd54f;
 
-    justify-content:space-between;
 }
 
 
-.control{
+#up{
 
-    width:
-        clamp(90px,22vw,150px);
+  grid-column:2;
 
-    height:
-        clamp(75px,18vw,120px);
-
-    border:none;
-
-    border-radius:
-        28px;
-
-    background:
-        rgba(255,255,255,0.92);
-
-    box-shadow:
-        0 8px 18px rgba(0,0,0,0.2);
-
-    font-size:
-        clamp(40px,10vw,70px);
-
-    cursor:pointer;
-
-    user-select:none;
-
-    transition:
-        transform 0.1s;
 }
 
 
-.control:active{
+#left{
 
-    transform:
-        scale(0.9);
+  grid-column:1;
+
+  grid-row:2;
+
+}
+
+
+#down{
+
+  grid-column:2;
+
+  grid-row:2;
+
+}
+
+
+#right{
+
+  grid-column:3;
+
+  grid-row:2;
+
 }
 
 
 /* =========================
-   小さい画面用
+   スマホが小さい時
 ========================= */
 
-@media(max-height:750px){
+@media(max-height:700px){
 
-    #title{
-        top:20px;
-    }
+  #controls{
 
-    #scoreText{
-        top:90px;
-    }
+    bottom:8px;
 
-    #info{
-        bottom:150px;
-        min-height:90px;
-        padding:15px;
-    }
+  }
 
-    #characterSelect{
-        top:55%;
-    }
+  #characterSelect{
+
+    top:100px;
+
+  }
 
 }
 
 
 </style>
-
 </head>
 
 
@@ -526,171 +538,287 @@ body{
 <div id="game">
 
 
-    <!-- タイトル -->
+  <!-- タイトル -->
 
-    <div id="title">
+  <div id="title">
 
-        タイチとハナの冒険ワールド
+    🌍 タイチとハナの大冒険 🌍
 
-    </div>
-
-
-
-    <!-- スコア -->
-
-    <div id="scoreText">
-
-        ⭐ 虫ポイント：0
-
-    </div>
+  </div>
 
 
 
-    <!-- 雲 -->
+  <!-- ステータス -->
 
-    <div class="cloud cloud1"></div>
+  <div id="status">
 
-    <div class="cloud cloud2"></div>
+    <div class="statusBox">
 
-
-
-    <!-- 木 -->
-
-    <div class="tree tree1">
-
-        🌳
+      ⭐ ポイント：
+      <span id="score">
+        0
+      </span>
 
     </div>
 
+    <div class="statusBox">
 
-    <div class="tree tree2">
+      🐞
+      <span id="remaining">
+        6
+      </span>
 
-        🌳
-
-    </div>
-
-
-
-    <!-- 虫 -->
-
-    <div id="bug">
-
-        🐛
+      匹
 
     </div>
 
+  </div>
 
 
-    <!-- キャラクター -->
 
-    <div id="character">
+  <!-- キャラ選択 -->
 
-        👦
+  <div id="characterSelect">
+
+    <button
+      id="taichiButton"
+      class="characterButton active"
+    >
+
+      🧒 タイチ
+
+    </button>
+
+
+    <button
+      id="hanaButton"
+      class="characterButton"
+    >
+
+      👧 ハナ
+
+    </button>
+
+  </div>
+
+
+
+  <!-- 背景 -->
+
+  <div
+    class="cloud"
+    style="
+      left:5%;
+      top:18%;
+    "
+  >
+
+    ☁️
+
+  </div>
+
+
+  <div
+    class="cloud"
+    style="
+      right:5%;
+      top:25%;
+    "
+  >
+
+    ☁️
+
+  </div>
+
+
+  <div
+    class="tree"
+    style="
+      left:5%;
+      bottom:180px;
+    "
+  >
+
+    🌳
+
+  </div>
+
+
+  <div
+    class="tree"
+    style="
+      right:5%;
+      bottom:170px;
+    "
+  >
+
+    🌲
+
+  </div>
+
+
+
+  <!-- プレイヤー -->
+
+  <div id="player">
+
+    <div id="playerFace">
+
+      🧒
+
+    </div>
+
+    <div id="playerName">
+
+      タイチ
 
     </div>
 
-
-
-    <!-- キャラ選択 -->
-
-    <div id="characterSelect">
-
-
-        <button
-            class="characterButton active"
-            id="selectTaichi"
-        >
-
-            👦 タイチ
-
-        </button>
-
-
-        <button
-            class="characterButton"
-            id="selectHana"
-        >
-
-            👧 ハナ
-
-        </button>
-
-
-    </div>
+  </div>
 
 
 
-    <!-- メッセージ -->
+  <!-- 虫 -->
 
-    <div id="info">
+  <div
+    class="bug"
+    style="
+      left:15%;
+      top:35%;
+    "
+  >
 
-        タイチとハナの冒険がはじまる！<br>
+    🪲
 
-        好きなキャラクターを選んで、虫を探そう！🐛
-
-    </div>
-
-
-
-    <!-- 操作ボタン -->
-
-    <div id="controls">
+  </div>
 
 
-        <div class="controlRowTop">
+  <div
+    class="bug"
+    style="
+      left:70%;
+      top:32%;
+    "
+  >
 
-            <button
-                class="control"
-                id="up"
-            >
+    🦋
 
-                ⬆️
-
-            </button>
-
-        </div>
-
+  </div>
 
 
-        <div class="controlRowBottom">
+  <div
+    class="bug"
+    style="
+      left:40%;
+      top:48%;
+    "
+  >
+
+    🐛
+
+  </div>
 
 
-            <button
-                class="control"
-                id="left"
-            >
+  <div
+    class="bug"
+    style="
+      left:75%;
+      top:55%;
+    "
+  >
 
-                ⬅️
+    🐞
 
-            </button>
-
-
-
-            <button
-                class="control"
-                id="down"
-            >
-
-                ⬇️
-
-            </button>
+  </div>
 
 
+  <div
+    class="bug"
+    style="
+      left:18%;
+      top:62%;
+    "
+  >
 
-            <button
-                class="control"
-                id="right"
-            >
+    🦗
 
-                ➡️
-
-            </button>
+  </div>
 
 
-        </div>
+  <div
+    class="bug"
+    style="
+      left:52%;
+      top:68%;
+    "
+  >
+
+    🪲
+
+  </div>
 
 
-    </div>
+
+  <!-- メッセージ -->
+
+  <div id="message">
+
+    🎉 すべての虫を見つけた！ 🎉
+
+    <br><br>
+
+    ⭐ 大冒険クリア！ ⭐
+
+  </div>
+
+
+
+  <!-- 操作ボタン -->
+
+  <div id="controls">
+
+
+    <button
+      id="up"
+      class="controlButton"
+    >
+
+      ↑
+
+    </button>
+
+
+    <button
+      id="left"
+      class="controlButton"
+    >
+
+      ←
+
+    </button>
+
+
+    <button
+      id="down"
+      class="controlButton"
+    >
+
+      ↓
+
+    </button>
+
+
+    <button
+      id="right"
+      class="controlButton"
+    >
+
+      →
+
+    </button>
+
+
+  </div>
 
 
 </div>
@@ -701,530 +829,571 @@ body{
 
 
 /* =========================
-   要素を取得
+   変数
 ========================= */
 
 
-const taichi =
-document.getElementById("selectTaichi");
+const player =
+  document.getElementById(
+    "player"
+  );
 
 
-const hana =
-document.getElementById("selectHana");
+const playerFace =
+  document.getElementById(
+    "playerFace"
+  );
 
 
-const bug =
-document.getElementById("bug");
-
-
-const info =
-document.getElementById("info");
+const playerName =
+  document.getElementById(
+    "playerName"
+  );
 
 
 const scoreText =
-document.getElementById("scoreText");
+  document.getElementById(
+    "score"
+  );
 
 
-const character =
-document.getElementById("character");
+const remainingText =
+  document.getElementById(
+    "remaining"
+  );
 
 
-const up =
-document.getElementById("up");
+const message =
+  document.getElementById(
+    "message"
+  );
 
 
-const down =
-document.getElementById("down");
+const taichiButton =
+  document.getElementById(
+    "taichiButton"
+  );
 
 
-const left =
-document.getElementById("left");
-
-
-const right =
-document.getElementById("right");
-
-
-
-/* =========================
-   選択中キャラクター
-========================= */
-
-
-let selectedCharacter = "taichi";
+const hanaButton =
+  document.getElementById(
+    "hanaButton"
+  );
 
 
 /* =========================
-   虫ポイント
+   プレイヤー位置
 ========================= */
+
+
+let playerX =
+  window.innerWidth / 2 - 30;
+
+
+let playerY =
+  window.innerHeight - 250;
 
 
 let score = 0;
 
 
-
 /* =========================
-   キャラクター選択
+   キャラクター
 ========================= */
 
 
-function selectCharacter(name){
+let character =
+  "taichi";
 
 
-    selectedCharacter = name;
+/* =========================
+   最初の位置
+========================= */
 
 
-    taichi.classList.remove("active");
+function updatePlayer(){
 
-    hana.classList.remove("active");
-
-
-
-    if(name === "taichi"){
+  player.style.left =
+    playerX + "px";
 
 
-        taichi.classList.add("active");
+  player.style.top =
+    playerY + "px";
+
+}
 
 
-        character.textContent = "👦";
-
-
-        info.innerHTML =
-        "👦 タイチを選んだ！<br>虫を探しに行こう！🐛";
-
-
-    }
+updatePlayer();
 
 
 
-    if(name === "hana"){
+/* =========================
+   移動
+========================= */
 
 
-        hana.classList.add("active");
+function move(dx, dy){
+
+  const speed = 35;
 
 
-        character.textContent = "👧";
+  playerX +=
+    dx * speed;
 
 
-        info.innerHTML =
-        "👧 ハナを選んだ！<br>一緒に冒険へ出発！✨";
+  playerY +=
+    dy * speed;
 
 
-    }
+  /* 左右の画面外防止 */
 
+
+  if(playerX < 0){
+
+    playerX = 0;
+
+  }
+
+
+  if(
+    playerX >
+    window.innerWidth - 62
+  ){
+
+    playerX =
+      window.innerWidth - 62;
+
+  }
+
+
+  /* 上下の画面外防止 */
+
+
+  if(playerY < 95){
+
+    playerY = 95;
+
+  }
+
+
+  if(
+    playerY >
+    window.innerHeight - 210
+  ){
+
+    playerY =
+      window.innerHeight - 210;
+
+  }
+
+
+  updatePlayer();
+
+
+  checkBugs();
 
 }
 
 
 
 /* =========================
-   タイチ選択
+   虫チェック
 ========================= */
 
 
-taichi.addEventListener(
-    "click",
-    () => {
+function checkBugs(){
+
+  const bugs =
+    document.querySelectorAll(
+      ".bug"
+    );
 
 
-        selectCharacter("taichi");
+  bugs.forEach(
+    function(bug){
 
+      if(
+        bug.dataset.collected ===
+        "true"
+      ){
+
+        return;
+
+      }
+
+
+      const bugRect =
+        bug.getBoundingClientRect();
+
+
+      const playerRect =
+        player.getBoundingClientRect();
+
+
+      const playerCenterX =
+        playerRect.left +
+        playerRect.width / 2;
+
+
+      const playerCenterY =
+        playerRect.top +
+        playerRect.height / 2;
+
+
+      const bugCenterX =
+        bugRect.left +
+        bugRect.width / 2;
+
+
+      const bugCenterY =
+        bugRect.top +
+        bugRect.height / 2;
+
+
+      const distance =
+        Math.sqrt(
+
+          Math.pow(
+            playerCenterX -
+            bugCenterX,
+            2
+          )
+
+          +
+
+          Math.pow(
+            playerCenterY -
+            bugCenterY,
+            2
+          )
+
+        );
+
+
+      if(
+        distance < 55
+      ){
+
+        collectBug(
+          bug
+        );
+
+      }
 
     }
-);
-
-
-
-/* =========================
-   ハナ選択
-========================= */
-
-
-hana.addEventListener(
-    "click",
-    () => {
-
-
-        selectCharacter("hana");
-
-
-    }
-);
-
-
-
-
-
-/* =========================
-   虫を移動
-========================= */
-
-
-function moveBugRandom(){
-
-
-    const game =
-    document.getElementById("game");
-
-
-    const maxX =
-    game.clientWidth - bug.offsetWidth;
-
-
-    const maxY =
-    game.clientHeight - bug.offsetHeight - 250;
-
-
-    const x =
-    Math.random() * Math.max(maxX, 0);
-
-
-    const y =
-    180 + Math.random() * Math.max(maxY - 180, 0);
-
-
-
-    bug.style.left =
-    x + "px";
-
-
-    bug.style.top =
-    y + "px";
-
+  );
 
 }
 
 
 
-
-
 /* =========================
-   虫をタップ
+   虫ゲット
 ========================= */
 
 
-bug.addEventListener(
-    "click",
-    () => {
+function collectBug(
+  bug
+){
 
+  bug.dataset.collected =
+    "true";
 
-        /* ポイントを増やす */
 
-        score++;
+  bug.style.display =
+    "none";
 
 
+  score++;
 
-        /* 表示を更新 */
 
-        scoreText.textContent =
-        "⭐ 虫ポイント：" + score;
+  scoreText.textContent =
+    score;
 
 
+  const totalBugs =
+    document.querySelectorAll(
+      ".bug"
+    ).length;
 
-        /* メッセージ */
 
-        if(selectedCharacter === "taichi"){
+  const remaining =
+    totalBugs -
+    score;
 
 
-            info.innerHTML =
-            "🎉 タイチが虫を発見！<br>虫ポイントGET！✨";
+  remainingText.textContent =
+    remaining;
 
 
-        }
+  if(
+    remaining === 0
+  ){
 
+    setTimeout(
+      function(){
 
-        else{
+        message.classList.add(
+          "show"
+        );
 
+      },
+      300
+    );
 
-            info.innerHTML =
-            "🎉 ハナが虫を発見！<br>虫ポイントGET！✨";
-
-
-        }
-
-
-
-        /* 虫を移動 */
-
-        moveBugRandom();
-
-
-    }
-);
-
-
-
-
-
-/* =========================
-   虫を指定方向に移動
-========================= */
-
-
-function move(x, y){
-
-
-    const game =
-    document.getElementById("game");
-
-
-
-    let currentX =
-    parseFloat(bug.style.left);
-
-
-
-    let currentY =
-    parseFloat(bug.style.top);
-
-
-
-    /* 初期値が%の場合の対策 */
-
-    if(
-        Number.isNaN(currentX)
-    ){
-
-
-        currentX =
-        game.clientWidth * 0.45;
-
-
-    }
-
-
-
-    if(
-        Number.isNaN(currentY)
-    ){
-
-
-        currentY =
-        game.clientHeight * 0.45;
-
-
-    }
-
-
-
-    currentX += x;
-
-    currentY += y;
-
-
-
-    const maxX =
-    game.clientWidth - bug.offsetWidth;
-
-
-    const minY =
-    170;
-
-
-    const maxY =
-    game.clientHeight - bug.offsetHeight - 280;
-
-
-
-    /* 画面外に行かないようにする */
-
-
-    if(currentX < 0){
-
-        currentX = 0;
-
-    }
-
-
-    if(currentX > maxX){
-
-        currentX = maxX;
-
-    }
-
-
-    if(currentY < minY){
-
-        currentY = minY;
-
-    }
-
-
-    if(currentY > maxY){
-
-        currentY = maxY;
-
-    }
-
-
-
-    bug.style.left =
-    currentX + "px";
-
-
-    bug.style.top =
-    currentY + "px";
-
+  }
 
 }
 
 
 
-
-
 /* =========================
-   画面ボタン操作
+   画面の矢印
 ========================= */
 
 
-up.addEventListener(
-    "click",
-    () => {
+document
+.getElementById(
+  "up"
+)
+.addEventListener(
+  "click",
+  function(){
 
+    move(
+      0,
+      -1
+    );
 
-        move(0, -35);
-
-
-    }
+  }
 );
 
 
 
-down.addEventListener(
-    "click",
-    () => {
+document
+.getElementById(
+  "down"
+)
+.addEventListener(
+  "click",
+  function(){
 
+    move(
+      0,
+      1
+    );
 
-        move(0, 35);
-
-
-    }
+  }
 );
 
 
 
-left.addEventListener(
-    "click",
-    () => {
+document
+.getElementById(
+  "left"
+)
+.addEventListener(
+  "click",
+  function(){
 
+    move(
+      -1,
+      0
+    );
 
-        move(-35, 0);
-
-
-    }
+  }
 );
 
 
 
-right.addEventListener(
-    "click",
-    () => {
+document
+.getElementById(
+  "right"
+)
+.addEventListener(
+  "click",
+  function(){
 
+    move(
+      1,
+      0
+    );
 
-        move(35, 0);
-
-
-    }
+  }
 );
-
-
 
 
 
 /* =========================
-   Windows PC用
    キーボード操作
 ========================= */
 
 
 document.addEventListener(
-    "keydown",
-    (event) => {
+  "keydown",
+  function(event){
 
 
-        if(event.key === "ArrowUp"){
+    if(
+      event.key ===
+      "ArrowUp"
+    ){
 
-
-            event.preventDefault();
-
-
-            move(0, -35);
-
-
-        }
-
-
-
-        if(event.key === "ArrowDown"){
-
-
-            event.preventDefault();
-
-
-            move(0, 35);
-
-
-        }
-
-
-
-        if(event.key === "ArrowLeft"){
-
-
-            event.preventDefault();
-
-
-            move(-35, 0);
-
-
-        }
-
-
-
-        if(event.key === "ArrowRight"){
-
-
-            event.preventDefault();
-
-
-            move(35, 0);
-
-
-        }
-
+      move(
+        0,
+        -1
+      );
 
     }
+
+
+    if(
+      event.key ===
+      "ArrowDown"
+    ){
+
+      move(
+        0,
+        1
+      );
+
+    }
+
+
+    if(
+      event.key ===
+      "ArrowLeft"
+    ){
+
+      move(
+        -1,
+        0
+      );
+
+    }
+
+
+    if(
+      event.key ===
+      "ArrowRight"
+    ){
+
+      move(
+        1,
+        0
+      );
+
+    }
+
+  }
 );
 
 
 
+/* =========================
+   タイチ
+========================= */
+
+
+taichiButton.addEventListener(
+  "click",
+  function(){
+
+    character =
+      "taichi";
+
+
+    playerFace.textContent =
+      "🧒";
+
+
+    playerName.textContent =
+      "タイチ";
+
+
+    taichiButton.classList.add(
+      "active"
+    );
+
+
+    hanaButton.classList.remove(
+      "active"
+    );
+
+  }
+);
+
 
 
 /* =========================
-   最初に虫の位置を設定
+   ハナ
+========================= */
+
+
+hanaButton.addEventListener(
+  "click",
+  function(){
+
+    character =
+      "hana";
+
+
+    playerFace.textContent =
+      "👧";
+
+
+    playerName.textContent =
+      "ハナ";
+
+
+    hanaButton.classList.add(
+      "active"
+    );
+
+
+    taichiButton.classList.remove(
+      "active"
+    );
+
+  }
+);
+
+
+
+/* =========================
+   画面サイズ変更
 ========================= */
 
 
 window.addEventListener(
-    "load",
-    () => {
+  "resize",
+  function(){
 
+    if(
+      playerX >
+      window.innerWidth - 62
+    ){
 
-        const game =
-        document.getElementById("game");
-
-
-
-        bug.style.left =
-        (game.clientWidth * 0.2) + "px";
-
-
-
-        bug.style.top =
-        (game.clientHeight * 0.32) + "px";
-
+      playerX =
+        window.innerWidth - 62;
 
     }
+
+
+    if(
+      playerY >
+      window.innerHeight - 210
+    ){
+
+      playerY =
+        window.innerHeight - 210;
+
+    }
+
+
+    updatePlayer();
+
+  }
 );
 
 
@@ -1232,6 +1401,4 @@ window.addEventListener(
 
 
 </body>
-
-
 </html>

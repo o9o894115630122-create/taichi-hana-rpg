@@ -40,6 +40,7 @@ body{
   width:100vw;
   height:100vh;
   overflow:hidden;
+
   background:
     linear-gradient(
       to bottom,
@@ -58,14 +59,22 @@ body{
   position:absolute;
   top:18px;
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   width:100%;
+
   text-align:center;
+
   font-size:24px;
   font-weight:900;
+
   color:white;
+
   text-shadow:
     0 3px 5px rgba(0,0,0,.45);
+
   z-index:20;
 }
 
@@ -75,9 +84,13 @@ body{
 
 #stageLabel{
   position:absolute;
+
   top:48px;
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   z-index:20;
 
   background:
@@ -103,14 +116,22 @@ body{
 
 #status{
   position:absolute;
+
   top:80px;
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   display:flex;
   flex-wrap:wrap;
+
   justify-content:center;
+
   gap:10px;
+
   width:310px;
+
   z-index:20;
 }
 
@@ -138,25 +159,39 @@ body{
 
 #characterSelect{
   position:absolute;
+
   top:165px;
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   display:flex;
+
   gap:10px;
+
   z-index:20;
 }
 
 .characterButton{
   border:none;
+
   border-radius:22px;
+
   padding:
     12px 18px;
+
   font-size:20px;
+
   font-weight:900;
+
   background:white;
+
   color:#2870bb;
+
   box-shadow:
     0 5px 14px rgba(0,0,0,.2);
+
   cursor:pointer;
 }
 
@@ -177,11 +212,14 @@ body{
 
 .cloud{
   position:absolute;
+
   font-size:62px;
+
   filter:
     drop-shadow(
       0 5px 4px rgba(0,0,0,.15)
     );
+
   pointer-events:none;
 }
 
@@ -201,8 +239,11 @@ body{
 
 .tree{
   position:absolute;
+
   font-size:100px;
+
   bottom:290px;
+
   pointer-events:none;
 }
 
@@ -220,8 +261,11 @@ body{
 
 .bug{
   position:absolute;
+
   font-size:62px;
+
   cursor:pointer;
+
   z-index:10;
 
   transition:
@@ -229,6 +273,7 @@ body{
     opacity .25s;
 
   user-select:none;
+
   -webkit-user-select:none;
 }
 
@@ -269,10 +314,16 @@ body{
 
 #player{
   position:absolute;
+
   left:50%;
+
   bottom:210px;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   z-index:15;
+
   text-align:center;
 
   transition:
@@ -283,12 +334,18 @@ body{
 #playerFace{
   width:82px;
   height:82px;
+
   display:flex;
+
   justify-content:center;
   align-items:center;
+
   font-size:52px;
+
   background:white;
+
   border-radius:50%;
+
   border:
     5px solid
     rgba(255,255,255,.9);
@@ -300,13 +357,20 @@ body{
 
 #playerName{
   display:inline-block;
+
   margin-top:5px;
+
   background:white;
+
   padding:
     6px 18px;
+
   border-radius:20px;
+
   font-size:18px;
+
   font-weight:900;
+
   box-shadow:
     0 4px 10px
     rgba(0,0,0,.2);
@@ -318,35 +382,48 @@ body{
 
 #controls{
   position:absolute;
+
   bottom:20px;
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   width:100%;
+
   z-index:30;
 }
 
 #upRow{
   display:flex;
+
   justify-content:center;
+
   margin-bottom:10px;
 }
 
 #downRow{
   display:flex;
+
   justify-content:center;
+
   gap:12px;
 }
 
 .controlButton{
   width:95px;
+
   height:85px;
+
   border:none;
+
   border-radius:22px;
 
   background:
     rgba(255,255,255,.9);
 
   font-size:46px;
+
   color:#2477bd;
 
   box-shadow:
@@ -356,12 +433,14 @@ body{
   cursor:pointer;
 
   user-select:none;
+
   -webkit-user-select:none;
 }
 
 .controlButton:active{
   transform:
     scale(.94);
+
   background:#e6f2ff;
 }
 
@@ -371,6 +450,7 @@ body{
 
 #message{
   position:absolute;
+
   top:225px;
   left:50%;
 
@@ -389,6 +469,7 @@ body{
   border-radius:25px;
 
   font-weight:900;
+
   font-size:20px;
 
   opacity:0;
@@ -413,11 +494,12 @@ body{
 }
 
 /* =========================
-   ステージクリア画面
+   ステージクリア
 ========================= */
 
 #clearScreen{
   position:absolute;
+
   inset:0;
 
   display:none;
@@ -457,40 +539,33 @@ body{
   box-shadow:
     0 12px 35px
     rgba(0,0,0,.35);
-
-  animation:
-    clearPop .4s ease-out;
-}
-
-@keyframes clearPop{
-  from{
-    transform:scale(.6);
-    opacity:0;
-  }
-
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
 }
 
 #clearTitle{
   font-size:32px;
+
   font-weight:900;
+
   color:#d88900;
 }
 
 #clearText{
   margin-top:15px;
+
   font-size:19px;
+
   font-weight:800;
+
   line-height:1.6;
 }
 
 #clearPoints{
   margin-top:15px;
+
   font-size:22px;
+
   font-weight:900;
+
   color:#e05d00;
 }
 
@@ -526,7 +601,8 @@ body{
 }
 
 #restartButton:active{
-  transform:scale(.97);
+  transform:
+    scale(.97);
 }
 
 /* =========================
@@ -563,7 +639,6 @@ body{
 </style>
 </head>
 
-
 <body>
 
 <div id="game">
@@ -576,7 +651,6 @@ body{
     🌲 ステージ1：虫の森
   </div>
 
-
   <div id="status">
 
     <div class="statusBox">
@@ -588,7 +662,6 @@ body{
     </div>
 
   </div>
-
 
   <div id="characterSelect">
 
@@ -608,7 +681,6 @@ body{
 
   </div>
 
-
   <div
     id="cloud1"
     class="cloud"
@@ -623,7 +695,6 @@ body{
     ☁️
   </div>
 
-
   <div
     id="tree1"
     class="tree"
@@ -637,7 +708,6 @@ body{
   >
     🌲
   </div>
-
 
   <!-- 虫 -->
 
@@ -686,7 +756,6 @@ body{
     🐛
   </div>
 
-
   <!-- プレイヤー -->
 
   <div id="player">
@@ -701,13 +770,11 @@ body{
 
   </div>
 
-
   <!-- メッセージ -->
 
   <div id="message">
     虫をゲット！
   </div>
-
 
   <!-- 操作ボタン -->
 
@@ -723,7 +790,6 @@ body{
       </button>
 
     </div>
-
 
     <div id="downRow">
 
@@ -752,7 +818,6 @@ body{
 
   </div>
 
-
   <!-- ステージクリア -->
 
   <div id="clearScreen">
@@ -779,7 +844,6 @@ body{
     </div>
 
   </div>
-
 
 </div>
 
@@ -831,8 +895,12 @@ let bugCount = 0;
 
 const totalBugs = 5;
 
+let gameCleared = false;
 
-/* プレイヤー位置 */
+
+/* =========================
+   プレイヤー位置
+========================= */
 
 let playerX = 50;
 
@@ -847,13 +915,23 @@ taichiButton.addEventListener(
   "click",
   function(){
 
-    playerFace.textContent = "🧒";
+    if(gameCleared){
+      return;
+    }
 
-    playerName.textContent = "タイチ";
+    playerFace.textContent =
+      "🧒";
 
-    taichiButton.classList.add("active");
+    playerName.textContent =
+      "タイチ";
 
-    hanaButton.classList.remove("active");
+    taichiButton.classList.add(
+      "active"
+    );
+
+    hanaButton.classList.remove(
+      "active"
+    );
 
     showMessage(
       "🧒 タイチに交代！"
@@ -867,13 +945,23 @@ hanaButton.addEventListener(
   "click",
   function(){
 
-    playerFace.textContent = "👧";
+    if(gameCleared){
+      return;
+    }
 
-    playerName.textContent = "ハナ";
+    playerFace.textContent =
+      "👧";
 
-    hanaButton.classList.add("active");
+    playerName.textContent =
+      "ハナ";
 
-    taichiButton.classList.remove("active");
+    hanaButton.classList.add(
+      "active"
+    );
+
+    taichiButton.classList.remove(
+      "active"
+    );
 
     showMessage(
       "👧 ハナに交代！"
@@ -891,75 +979,63 @@ function movePlayer(
   direction
 ){
 
+  if(gameCleared){
+    return;
+  }
+
   const step = 7;
 
 
-  if(
-    direction === "left"
-  ){
+  if(direction === "left"){
 
     playerX -= step;
 
   }
 
 
-  if(
-    direction === "right"
-  ){
+  if(direction === "right"){
 
     playerX += step;
 
   }
 
 
-  if(
-    direction === "up"
-  ){
+  if(direction === "up"){
 
     playerBottom += 55;
 
   }
 
 
-  if(
-    direction === "down"
-  ){
+  if(direction === "down"){
 
     playerBottom -= 55;
 
   }
 
 
-  if(
-    playerX < 10
-  ){
+  if(playerX < 10){
 
     playerX = 10;
 
   }
 
 
-  if(
-    playerX > 90
-  ){
+  if(playerX > 90){
 
     playerX = 90;
 
   }
 
 
-  if(
-    playerBottom < 170
-  ){
+  if(playerBottom < 170){
 
     playerBottom = 170;
 
   }
 
 
-  if(
-    playerBottom > 520
-  ){
+  if(playerBottom > 520){
 
     playerBottom = 520;
 
@@ -972,6 +1048,240 @@ function movePlayer(
 
   player.style.bottom =
     playerBottom + "px";
+
+
+  /* =========================
+     移動後に虫との当たり判定
+  ========================= */
+
+  checkBugCollisions();
+
+}
+
+
+/* =========================
+   虫をゲットする共通処理
+========================= */
+
+function catchBug(
+  bug
+){
+
+  /* すでに捕まえた虫なら終了 */
+
+  if(
+    !bug ||
+    bug.dataset.caught === "true" ||
+    gameCleared
+  ){
+
+    return;
+
+  }
+
+
+  /* 捕獲済みにする */
+
+  bug.dataset.caught =
+    "true";
+
+
+  const bugName =
+    bug.dataset.name;
+
+
+  const bugPoints =
+    Number(
+      bug.dataset.points
+    );
+
+
+  /* ポイント追加 */
+
+  points +=
+    bugPoints;
+
+
+  bugCount += 1;
+
+
+  /* 表示更新 */
+
+  pointsDisplay.textContent =
+    points;
+
+
+  bugCountDisplay.textContent =
+    bugCount;
+
+
+  /* 捕獲演出 */
+
+  bug.style.pointerEvents =
+    "none";
+
+
+  bug.style.transform =
+    "scale(1.7) rotate(20deg)";
+
+
+  bug.style.opacity =
+    "0";
+
+
+  showMessage(
+    "🎉 " +
+    bugName +
+    "をゲット！ +" +
+    bugPoints
+  );
+
+
+  /* 少し後に消す */
+
+  setTimeout(
+    function(){
+
+      if(
+        bug.parentNode
+      ){
+
+        bug.remove();
+
+      }
+
+
+      /* 全部捕まえたか確認 */
+
+      if(
+        bugCount >=
+        totalBugs
+      ){
+
+        stageClear();
+
+      }
+
+    },
+    250
+  );
+
+}
+
+
+/* =========================
+   虫をタップしてゲット
+========================= */
+
+function setupBugTap(){
+
+  const bugs =
+    document.querySelectorAll(
+      ".bug"
+    );
+
+
+  bugs.forEach(
+    function(bug){
+
+      bug.addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          catchBug(
+            bug
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+setupBugTap();
+
+
+/* =========================
+   虫との当たり判定
+========================= */
+
+function checkBugCollisions(){
+
+  const bugs =
+    document.querySelectorAll(
+      ".bug"
+    );
+
+
+  const playerRect =
+    player.getBoundingClientRect();
+
+
+  bugs.forEach(
+    function(bug){
+
+      /* 捕獲済みは無視 */
+
+      if(
+        bug.dataset.caught ===
+        "true"
+      ){
+
+        return;
+
+      }
+
+
+      const bugRect =
+        bug.getBoundingClientRect();
+
+
+      /*
+        当たり判定
+
+        プレイヤーと虫の
+        四角形が重なったら
+        ゲット
+      */
+
+      const isColliding =
+
+        playerRect.left <
+        bugRect.right
+
+        &&
+
+        playerRect.right >
+        bugRect.left
+
+        &&
+
+        playerRect.top <
+        bugRect.bottom
+
+        &&
+
+        playerRect.bottom >
+        bugRect.top;
+
+
+      if(
+        isColliding
+      ){
+
+        catchBug(
+          bug
+        );
+
+      }
+
+    }
+  );
 
 }
 
@@ -986,7 +1296,9 @@ document
   "click",
   function(){
 
-    movePlayer("up");
+    movePlayer(
+      "up"
+    );
 
   }
 );
@@ -998,7 +1310,9 @@ document
   "click",
   function(){
 
-    movePlayer("down");
+    movePlayer(
+      "down"
+    );
 
   }
 );
@@ -1010,7 +1324,9 @@ document
   "click",
   function(){
 
-    movePlayer("left");
+    movePlayer(
+      "left"
+    );
 
   }
 );
@@ -1022,103 +1338,8 @@ document
   "click",
   function(){
 
-    movePlayer("right");
-
-  }
-);
-
-
-/* =========================
-   虫を捕まえる
-========================= */
-
-const bugs =
-  document.querySelectorAll(
-    ".bug"
-  );
-
-
-bugs.forEach(
-  function(bug){
-
-    bug.addEventListener(
-      "click",
-      function(event){
-
-        event.stopPropagation();
-
-
-        const bugName =
-          bug.dataset.name;
-
-
-        const bugPoints =
-          Number(
-            bug.dataset.points
-          );
-
-
-        /* ポイント */
-
-        points +=
-          bugPoints;
-
-
-        bugCount += 1;
-
-
-        /* 表示 */
-
-        pointsDisplay.textContent =
-          points;
-
-
-        bugCountDisplay.textContent =
-          bugCount;
-
-
-        /* 演出 */
-
-        bug.style.transform =
-          "scale(1.7) rotate(20deg)";
-
-
-        bug.style.opacity =
-          "0";
-
-
-        showMessage(
-          "🎉 " +
-          bugName +
-          "をゲット！ +" +
-          bugPoints
-        );
-
-
-        /* 消す */
-
-        setTimeout(
-          function(){
-
-            bug.remove();
-
-
-            /* 全部捕まえたか確認 */
-
-            if(
-              bugCount >=
-              totalBugs
-            ){
-
-              stageClear();
-
-            }
-
-          },
-          250
-        );
-
-      }
+    movePlayer(
+      "right"
     );
 
   }
@@ -1131,10 +1352,20 @@ bugs.forEach(
 
 function stageClear(){
 
+  if(gameCleared){
+    return;
+  }
+
+
+  gameCleared =
+    true;
+
+
   setTimeout(
     function(){
 
-      points += 100;
+      points +=
+        100;
 
 
       pointsDisplay.textContent =
@@ -1198,45 +1429,45 @@ function showMessage(
 
 
 /* =========================
-   PCキーボード
+   PCキーボード操作
 ========================= */
 
 document.addEventListener(
   "keydown",
   function(event){
 
-    if(
-      event.key === "ArrowUp"
-    ){
+    if(event.key === "ArrowUp"){
 
-      movePlayer("up");
-
-    }
-
-
-    if(
-      event.key === "ArrowDown"
-    ){
-
-      movePlayer("down");
+      movePlayer(
+        "up"
+      );
 
     }
 
 
-    if(
-      event.key === "ArrowLeft"
-    ){
+    if(event.key === "ArrowDown"){
 
-      movePlayer("left");
+      movePlayer(
+        "down"
+      );
 
     }
 
 
-    if(
-      event.key === "ArrowRight"
-    ){
+    if(event.key === "ArrowLeft"){
 
-      movePlayer("right");
+      movePlayer(
+        "left"
+      );
+
+    }
+
+
+    if(event.key === "ArrowRight"){
+
+      movePlayer(
+        "right"
+      );
 
     }
 

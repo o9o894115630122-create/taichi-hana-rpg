@@ -501,7 +501,11 @@ document.addEventListener(
 });
 
 moveBug();
-
+bug.addEventListener("click", () => {
+  score++;
+  scoreText.textContent = "⭐ 虫ポイント：" + score;
+  moveBug();
+});
 </script>
 
 </body>

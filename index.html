@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>タイチとハナの冒険ワールド</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
+  background: linear-gradient(#65c8ff, #dff8ff);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#game {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 空 */
+.sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 15%, white 0 4%, transparent 5%),
+    radial-gradient(circle at 75% 20%, white 0 5%, transparent 6%),
+    linear-gradient(#6ed0ff 0%, #b9ecff 55%, #8ed16a 56%, #5eaf48 100%);
+}
+
+/* タイトル */
+#title {
+  position: absolute;
+  top: 25px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  text-shadow: 0 3px 5px rgba(0,0,0,.35);
+  font-size: 28px;
+  font-weight: 900;
+  z-index: 5;
+}
+
+/* マップ */
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+/* キャラクター */
+.character {
+  position: absolute;
+  width: 85px;
+  text-align: center;
+  transition: .2s;
+  z-index: 3;
+}
+
+.face {
+  width: 65px;
+  height: 65px;
+  margin: auto;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 5px 8px rgba(0,0,0,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+#taichi .face {
+  background: #4aa3ff;
+}
+
+#hana .face {
+  background: #ff83bd;
+}
+
+.character-name {
+  margin-top: 5px;
+  background: rgba(255,255,255,.9);
+  border-radius: 20px;
+  padding: 4px;
+  font-weight: bold;
+}
+
+/* ボタン */
+#controls {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 10;
+}
+
+button {
+  border: none;
+  border-radius: 22px;
+  padding: 16px 22px;
+  font-size: 18px;
+  font-weight: bold;
+  background: white;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+button:active {
+  transform: scale(.94);
+}
+
+/* メッセージ */
+#message {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 115px;
+  background: rgba(255,255,255,.95);
+  border-radius: 20px;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+  z-index: 8;
+}
+
+/* 敵 */
+.enemy {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+}
+
+#enemy {
+  right: 12%;
+  top: 40%;
+  background: #9c68ff;
+}
+
+/* 木 */
+.tree {
+  position: absolute;
+  font-size: 70px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+  <div class="sky"></div>
+
+  <div id="title">
+    タイチとハナの冒険ワールド
+  </div>
+
+  <div id="map">
+
+    <div class="tree" style="left:5%; top:25%;">🌳</div>
+    <div class="tree" style="right:5%; top:18%;">🌳</div>
+    <div class="tree" style="left:15%; bottom:28%;">🌲</div>
+
+    <div id="enemy" class="enemy">
+      🐛
+    </div>
+
+    <div id="taichi" class="character" style="left:20%; bottom:28%;">
+      <div class="face">👦</div>
+      <div class="character-name">タイチ</div>
+    </div>
+
+    <div id="hana" class="character" style="left:42%; bottom:28%;">
+      <div class="face">👧</div>
+      <div class="character-name">ハナ</div>
+    </div>
+
+  </div>
+
+  <div id="message">
+    タイチとハナの冒険がはじまる！
+    前へ進んでみよう！🎮
+  </div>
+
+  <div id="controls">
+    <button onclick="move('left')">⬅️ 左</button>
+    <button onclick="move('forward')">⬆️ 前へ</button>
+    <button onclick="move('right')">右 ➡️</button>
+  </div>
+
+</div>
+
+<script>
+
+let position = 0;
+let battleStarted = false;
+
+const message = document.getElementById("message");
+const taichi = document.getElementById("taichi");
+const hana = document.getElementById("hana");
+const enemy = document.getElementById("enemy");
+
+function move(direction) {
+
+  if (battleStarted) {
+    return;
+  }
+
+  if (direction === "left") {
+    position -= 20;
+    message.innerHTML = "タイチ「左の方に何かありそうだ！」";
+  }
+
+  if (direction === "right") {
+    position += 20;
+    message.innerHTML = "ハナ「こっちに行ってみよう！」";
+  }
+
+  if (direction === "forward") {
+    position += 10;
+
+    let taichiBottom =
+      parseInt(taichi.style.bottom || "28");
+
+    let hanaBottom =
+      parseInt(hana.style.bottom || "28");
+
+    taichi.style.bottom = (taichiBottom + 4) + "%";
+    hana.style.bottom = (hanaBottom + 4) + "%";
+
+    message.innerHTML =
+      "タイチとハナは冒険ワールドを進んでいる…";
+  }
+
+  taichi.style.left = (20 + position) + "%";
+  hana.style.left = (42 + position) + "%";
+
+  checkBattle();
+}
+
+function checkBattle() {
+
+  if (position >= 50 && !battleStarted) {
+
+    battleStarted = true;
+
+    message.innerHTML =
+      "⚠️ あやしいモンスターが現れた！<br><br>" +
+      "🐛 たこたこ「ここから先には行かせないぞ！」<br><br>" +
+      "画面をタップしてバトル開始！";
+
+    document.getElementById("game")
+      .onclick = startBattle;
+  }
+}
+
+function startBattle() {
+
+  if (!battleStarted) return;
+
+  message.innerHTML =
+    "⚔️ バトル開始！<br><br>" +
+    "タイチのクワガタパワー！🪲<br>" +
+    "ハナのピンクパワー！✨<br><br>" +
+    "🐛 たこたこを倒した！🎉<br><br>" +
+    "次のワールドへ進もう！";
+
+  enemy.style.transform = "scale(0)";
+  enemy.style.transition = "0.5s";
+
+  document.getElementById("game").onclick = null;
+
+  battleStarted = false;
+}
+
+</script>
+
+</body>
+</html>

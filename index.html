@@ -587,7 +587,14 @@ document.addEventListener(
 
 }
 );
+/* 虫をタップ */
+bug.addEventListener("click", () => {
+  score++;
+  scoreText.textContent = "⭐ 虫ポイント：" + score;
 
+  bug.style.left = Math.random() * 70 + 10 + "%";
+  bug.style.top = Math.random() * 45 + 25 + "%";
+});
 </script>
 
 </body>

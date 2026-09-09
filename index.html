@@ -36,16 +36,15 @@ body{
   background:#222;
 }
 
+
 /* =====================
    ゲーム画面
 ===================== */
 
 #game{
   position:relative;
-
   width:100vw;
   height:100vh;
-
   overflow:hidden;
 
   background:
@@ -57,22 +56,23 @@ body{
       #3f7f2d 100%
     );
 
-  transition:
-    background .7s;
+  transition:background .7s;
 }
 
-/* 海ステージ */
+
+/* 海 */
 
 #game.seaStage{
   background:
     linear-gradient(
       to bottom,
-      #49bce8 0%,
-      #63d0f2 35%,
-      #167bc0 36%,
-      #07528f 100%
+      #46b9e8 0%,
+      #67d5f4 32%,
+      #1887c9 33%,
+      #064f89 100%
     );
 }
+
 
 /* =====================
    タイトル
@@ -80,12 +80,10 @@ body{
 
 #title{
   position:absolute;
-
-  top:15px;
+  top:12px;
   left:50%;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   width:100%;
 
@@ -102,8 +100,9 @@ body{
   z-index:20;
 }
 
+
 /* =====================
-   ステージ
+   ステージ表示
 ===================== */
 
 #stageLabel{
@@ -112,16 +111,14 @@ body{
   top:48px;
   left:50%;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   background:
     rgba(33,100,35,.85);
 
   color:white;
 
-  padding:
-    6px 18px;
+  padding:6px 18px;
 
   border-radius:20px;
 
@@ -129,15 +126,13 @@ body{
   font-weight:900;
 
   z-index:20;
-
-  transition:
-    background .5s;
 }
 
 .seaStage #stageLabel{
   background:
-    rgba(0,73,140,.85);
+    rgba(0,73,140,.9);
 }
+
 
 /* =====================
    ステータス
@@ -146,11 +141,10 @@ body{
 #status{
   position:absolute;
 
-  top:80px;
+  top:82px;
   left:50%;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   display:flex;
 
@@ -163,19 +157,17 @@ body{
   background:
     rgba(255,255,255,.92);
 
-  padding:
-    10px 14px;
+  padding:10px 14px;
 
   border-radius:20px;
 
   font-size:17px;
-
   font-weight:900;
 
   box-shadow:
-    0 5px 14px
-    rgba(0,0,0,.2);
+    0 5px 14px rgba(0,0,0,.2);
 }
+
 
 /* =====================
    キャラクター選択
@@ -184,14 +176,12 @@ body{
 #characterSelect{
   position:absolute;
 
-  top:135px;
+  top:137px;
   left:50%;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   display:flex;
-
   gap:10px;
 
   z-index:20;
@@ -202,11 +192,9 @@ body{
 
   border-radius:20px;
 
-  padding:
-    10px 16px;
+  padding:10px 16px;
 
   font-size:18px;
-
   font-weight:900;
 
   background:white;
@@ -214,8 +202,7 @@ body{
   color:#2870bb;
 
   box-shadow:
-    0 5px 14px
-    rgba(0,0,0,.2);
+    0 5px 14px rgba(0,0,0,.2);
 }
 
 .characterButton.active{
@@ -229,6 +216,49 @@ body{
   color:white;
 }
 
+
+/* =====================
+   仲間表示
+===================== */
+
+#friends{
+  position:absolute;
+
+  top:190px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  display:flex;
+
+  gap:8px;
+
+  z-index:20;
+}
+
+.friend{
+  display:none;
+
+  background:
+    rgba(255,255,255,.9);
+
+  padding:6px 12px;
+
+  border-radius:20px;
+
+  font-size:17px;
+
+  font-weight:900;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.2);
+}
+
+.friend.show{
+  display:block;
+}
+
+
 /* =====================
    背景
 ===================== */
@@ -239,7 +269,6 @@ body{
   pointer-events:none;
 
   user-select:none;
-
   -webkit-user-select:none;
 }
 
@@ -248,19 +277,18 @@ body{
 }
 
 #cloud1{
-  top:230px;
-  left:25px;
+  top:240px;
+  left:20px;
 }
 
 #cloud2{
-  top:310px;
-  right:25px;
+  top:320px;
+  right:20px;
 }
 
 .tree{
   font-size:95px;
-
-  bottom:300px;
+  bottom:290px;
 }
 
 #tree1{
@@ -271,38 +299,40 @@ body{
   right:20px;
 }
 
-/* 海の背景 */
+
+/* 海背景 */
+
+.wave,
+.fishBackground{
+  display:none;
+}
 
 .wave{
-  display:none;
-
   font-size:70px;
 }
 
 .fishBackground{
-  display:none;
-
-  font-size:55px;
+  font-size:52px;
 }
 
 #seaWave1{
   top:270px;
-  left:10px;
+  left:5px;
 }
 
 #seaWave2{
-  top:390px;
-  right:10px;
+  top:410px;
+  right:5px;
 }
 
 #seaFish1{
-  top:240px;
-  left:30px;
+  top:250px;
+  left:20px;
 }
 
 #seaFish2{
-  top:330px;
-  right:30px;
+  top:350px;
+  right:20px;
 }
 
 .seaStage .wave,
@@ -315,8 +345,9 @@ body{
 }
 
 .seaStage .cloud{
-  opacity:.5;
+  opacity:.45;
 }
+
 
 /* =====================
    アイテム
@@ -340,7 +371,6 @@ body{
   cursor:pointer;
 
   user-select:none;
-
   -webkit-user-select:none;
 
   transition:
@@ -352,6 +382,36 @@ body{
   transform:
     scale(1.25);
 }
+
+
+/* シャーキュン */
+
+.bossItem{
+  font-size:70px;
+
+  filter:
+    drop-shadow(
+      0 5px 6px rgba(0,0,0,.35)
+    );
+
+  animation:
+    sharkMove 1.2s infinite alternate;
+}
+
+@keyframes sharkMove{
+
+  from{
+    transform:
+      translateX(-8px);
+  }
+
+  to{
+    transform:
+      translateX(8px);
+  }
+
+}
+
 
 /* =====================
    プレイヤー
@@ -396,8 +456,7 @@ body{
   border-radius:50%;
 
   box-shadow:
-    0 6px 15px
-    rgba(0,0,0,.3);
+    0 6px 15px rgba(0,0,0,.3);
 }
 
 #playerName{
@@ -407,15 +466,14 @@ body{
 
   background:white;
 
-  padding:
-    5px 14px;
+  padding:5px 14px;
 
   border-radius:20px;
 
   font-size:17px;
-
   font-weight:900;
 }
+
 
 /* =====================
    メッセージ
@@ -424,25 +482,23 @@ body{
 #message{
   position:absolute;
 
-  top:205px;
+  top:225px;
   left:50%;
 
   transform:
     translateX(-50%)
     translateY(-15px);
 
-  padding:
-    12px 20px;
+  padding:12px 20px;
 
   border-radius:25px;
 
   background:
-    rgba(0,0,0,.75);
+    rgba(0,0,0,.78);
 
   color:white;
 
   font-size:19px;
-
   font-weight:900;
 
   opacity:0;
@@ -466,6 +522,7 @@ body{
     translateY(0);
 }
 
+
 /* =====================
    操作ボタン
 ===================== */
@@ -476,8 +533,7 @@ body{
   bottom:20px;
   left:50%;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   width:100%;
 
@@ -516,16 +572,16 @@ body{
   color:#2477bd;
 
   box-shadow:
-    0 6px 16px
-    rgba(0,0,0,.25);
-
-  user-select:none;
-
-  -webkit-user-select:none;
+    0 6px 16px rgba(0,0,0,.25);
 }
 
+.controlButton:active{
+  transform:scale(.94);
+}
+
+
 /* =====================
-   ステージ画面
+   ステージクリア画面
 ===================== */
 
 #stageScreen{
@@ -539,7 +595,7 @@ body{
   align-items:center;
 
   background:
-    rgba(0,0,0,.55);
+    rgba(0,0,0,.58);
 
   z-index:100;
 
@@ -553,8 +609,7 @@ body{
 #stageBox{
   width:min(370px,100%);
 
-  padding:
-    32px 24px;
+  padding:32px 24px;
 
   text-align:center;
 
@@ -568,12 +623,11 @@ body{
     );
 
   box-shadow:
-    0 12px 35px
-    rgba(0,0,0,.35);
+    0 12px 35px rgba(0,0,0,.35);
 }
 
 #stageTitle{
-  font-size:30px;
+  font-size:29px;
 
   font-weight:900;
 
@@ -584,7 +638,6 @@ body{
   margin-top:15px;
 
   font-size:19px;
-
   font-weight:800;
 
   line-height:1.6;
@@ -594,7 +647,6 @@ body{
   margin-top:15px;
 
   font-size:22px;
-
   font-weight:900;
 
   color:#e05d00;
@@ -615,7 +667,6 @@ body{
   color:white;
 
   font-size:20px;
-
   font-weight:900;
 }
 
@@ -639,6 +690,119 @@ body{
     );
 }
 
+
+/* =====================
+   シャーキュンイベント
+===================== */
+
+#eventScreen{
+  position:absolute;
+
+  inset:0;
+
+  display:none;
+
+  justify-content:center;
+  align-items:center;
+
+  background:
+    rgba(0,30,60,.65);
+
+  z-index:200;
+
+  padding:20px;
+}
+
+#eventScreen.show{
+  display:flex;
+}
+
+#eventBox{
+  width:min(380px,100%);
+
+  text-align:center;
+
+  padding:30px 22px;
+
+  border-radius:30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b8f0ff,
+      #ffffff
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.4);
+}
+
+#eventCharacter{
+  font-size:90px;
+
+  animation:
+    eventShark 1s infinite alternate;
+}
+
+@keyframes eventShark{
+
+  from{
+    transform:
+      translateY(-5px);
+  }
+
+  to{
+    transform:
+      translateY(5px);
+  }
+
+}
+
+#eventTitle{
+  margin-top:8px;
+
+  font-size:28px;
+
+  font-weight:900;
+
+  color:#075ca5;
+}
+
+#eventText{
+  margin-top:15px;
+
+  font-size:19px;
+
+  font-weight:800;
+
+  line-height:1.7;
+}
+
+#joinButton{
+  margin-top:24px;
+
+  width:100%;
+
+  padding:16px;
+
+  border:none;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff8c3a,
+      #e65100
+    );
+
+  color:white;
+
+  font-size:20px;
+  font-weight:900;
+}
+
+
 /* =====================
    小さい画面
 ===================== */
@@ -646,7 +810,7 @@ body{
 @media(max-height:700px){
 
   #title{
-    top:8px;
+    top:7px;
     font-size:20px;
   }
 
@@ -662,9 +826,14 @@ body{
     top:120px;
   }
 
+  #friends{
+    top:175px;
+  }
+
   .controlButton{
     width:78px;
     height:65px;
+
     font-size:36px;
   }
 
@@ -673,13 +842,20 @@ body{
 </style>
 </head>
 
+
 <body>
 
 <div id="game">
 
+
+  <!-- タイトル -->
+
   <div id="title">
     🌍 タイチとハナの大冒険 🌍
   </div>
+
+
+  <!-- ステージ -->
 
   <div id="stageLabel">
     🌲 ステージ1：虫の森
@@ -695,7 +871,7 @@ body{
     </div>
 
     <div class="statusBox">
-      🐞 <span id="itemCount">0</span> / <span id="totalCount">5</span>
+      🗺️ <span id="itemCount">0</span> / <span id="totalCount">5</span>
     </div>
 
   </div>
@@ -722,7 +898,21 @@ body{
   </div>
 
 
-  <!-- 森背景 -->
+  <!-- 仲間 -->
+
+  <div id="friends">
+
+    <div
+      id="sharkFriend"
+      class="friend"
+    >
+      🦈 シャーキュン
+    </div>
+
+  </div>
+
+
+  <!-- 背景 -->
 
   <div
     id="cloud1"
@@ -784,7 +974,7 @@ body{
   </div>
 
 
-  <!-- アイテム表示場所 -->
+  <!-- アイテム -->
 
   <div id="items"></div>
 
@@ -809,40 +999,41 @@ body{
   <div id="message"></div>
 
 
-  <!-- 操作ボタン -->
+  <!-- 操作 -->
 
   <div id="controls">
 
     <div id="upRow">
 
       <button
-        class="controlButton"
         id="upButton"
+        class="controlButton"
       >
         ↑
       </button>
 
     </div>
 
+
     <div id="downRow">
 
       <button
-        class="controlButton"
         id="leftButton"
+        class="controlButton"
       >
         ←
       </button>
 
       <button
-        class="controlButton"
         id="downButton"
+        class="controlButton"
       >
         ↓
       </button>
 
       <button
-        class="controlButton"
         id="rightButton"
+        class="controlButton"
       >
         →
       </button>
@@ -852,26 +1043,20 @@ body{
   </div>
 
 
-  <!-- ステージ画面 -->
+  <!-- ステージクリア -->
 
   <div id="stageScreen">
 
     <div id="stageBox">
 
-      <div id="stageTitle">
-        🎉 ステージクリア！ 🎉
-      </div>
+      <div id="stageTitle"></div>
 
-      <div id="stageText">
-        全部見つけた！
-      </div>
+      <div id="stageText"></div>
 
-      <div id="stageBonus">
-        ⭐ ボーナス +100！
-      </div>
+      <div id="stageBonus"></div>
 
       <button id="nextStageButton">
-        🌊 次のステージへ！
+        🌊 海の世界へ！
       </button>
 
       <button id="restartButton">
@@ -882,62 +1067,107 @@ body{
 
   </div>
 
+
+  <!-- シャーキュンイベント -->
+
+  <div id="eventScreen">
+
+    <div id="eventBox">
+
+      <div id="eventCharacter">
+        🦈
+      </div>
+
+      <div id="eventTitle">
+        シャーキュン登場！
+      </div>
+
+      <div id="eventText">
+        「ぼくも一緒に<br>
+        冒険していい？」
+      </div>
+
+      <button id="joinButton">
+        🤝 仲間にする！
+      </button>
+
+    </div>
+
+  </div>
+
+
 </div>
 
 
 <script>
+
 
 /* =====================
    要素
 ===================== */
 
 const game =
-  document.getElementById("game");
+document.getElementById("game");
 
 const itemsContainer =
-  document.getElementById("items");
+document.getElementById("items");
 
 const player =
-  document.getElementById("player");
+document.getElementById("player");
 
 const playerFace =
-  document.getElementById("playerFace");
+document.getElementById("playerFace");
 
 const playerName =
-  document.getElementById("playerName");
+document.getElementById("playerName");
 
 const pointsDisplay =
-  document.getElementById("points");
+document.getElementById("points");
 
 const itemCountDisplay =
-  document.getElementById("itemCount");
+document.getElementById("itemCount");
 
 const totalCountDisplay =
-  document.getElementById("totalCount");
-
-const message =
-  document.getElementById("message");
-
-const stageScreen =
-  document.getElementById("stageScreen");
-
-const stageTitle =
-  document.getElementById("stageTitle");
-
-const stageText =
-  document.getElementById("stageText");
-
-const stageBonus =
-  document.getElementById("stageBonus");
-
-const nextStageButton =
-  document.getElementById("nextStageButton");
-
-const restartButton =
-  document.getElementById("restartButton");
+document.getElementById("totalCount");
 
 const stageLabel =
-  document.getElementById("stageLabel");
+document.getElementById("stageLabel");
+
+const message =
+document.getElementById("message");
+
+const stageScreen =
+document.getElementById("stageScreen");
+
+const stageTitle =
+document.getElementById("stageTitle");
+
+const stageText =
+document.getElementById("stageText");
+
+const stageBonus =
+document.getElementById("stageBonus");
+
+const nextStageButton =
+document.getElementById("nextStageButton");
+
+const restartButton =
+document.getElementById("restartButton");
+
+const eventScreen =
+document.getElementById("eventScreen");
+
+const joinButton =
+document.getElementById("joinButton");
+
+const sharkFriend =
+document.getElementById("sharkFriend");
+
+const taichiButton =
+document.getElementById("taichiButton");
+
+const hanaButton =
+document.getElementById("hanaButton");
 
 
 /* =====================
@@ -951,6 +1181,10 @@ let itemCount = 0;
 let currentStage = 1;
 
 let stageFinished = false;
+
+let eventActive = false;
+
+let sharkEventDone = false;
 
 
 /* プレイヤー位置 */
@@ -969,10 +1203,10 @@ const stages = {
   1:{
 
     name:
-      "🌲 ステージ1：虫の森",
+    "🌲 ステージ1：虫の森",
 
     clearText:
-      "虫の森の生き物を<br>全部見つけた！",
+    "虫の森の生き物を<br>全部見つけた！",
 
     items:[
 
@@ -980,16 +1214,16 @@ const stages = {
         emoji:"🪲",
         name:"カブトムシ",
         points:10,
-        top:"250px",
-        left:"105px"
+        top:"260px",
+        left:"100px"
       },
 
       {
         emoji:"🦋",
         name:"ちょうちょ",
         points:5,
-        top:"270px",
-        right:"95px"
+        top:"250px",
+        right:"90px"
       },
 
       {
@@ -1024,10 +1258,10 @@ const stages = {
   2:{
 
     name:
-      "🌊 ステージ2：海の世界",
+    "🌊 ステージ2：海の世界",
 
     clearText:
-      "海の仲間を<br>全部見つけた！",
+    "海の仲間たちと<br>すてきな出会いがあった！",
 
     items:[
 
@@ -1059,16 +1293,17 @@ const stages = {
         emoji:"🐢",
         name:"カメ",
         points:12,
-        top:"390px",
+        top:"400px",
         right:"55px"
       },
 
       {
         emoji:"🦈",
         name:"シャーキュン",
-        points:20,
+        points:0,
         top:"500px",
-        left:"50%"
+        left:"50%",
+        event:true
       }
 
     ]
@@ -1079,45 +1314,45 @@ const stages = {
 
 
 /* =====================
-   ステージ開始
+   ステージ読み込み
 ===================== */
 
 function loadStage(
   stageNumber
 ){
 
-  const stage =
-    stages[stageNumber];
-
-
   currentStage =
-    stageNumber;
+  stageNumber;
+
+  itemCount =
+  0;
+
+  stageFinished =
+  false;
+
+  eventActive =
+  false;
 
 
-  itemCount = 0;
+  const stage =
+  stages[stageNumber];
 
-  stageFinished = false;
-
-
-  /* 表示 */
 
   stageLabel.innerHTML =
-    stage.name;
+  stage.name;
 
 
   itemCountDisplay.textContent =
-    itemCount;
+  itemCount;
 
 
   totalCountDisplay.textContent =
-    stage.items.length;
+  stage.items.length;
 
 
-  /* 背景変更 */
+  /* 海 */
 
-  if(
-    stageNumber === 2
-  ){
+  if(stageNumber === 2){
 
     game.classList.add(
       "seaStage"
@@ -1133,93 +1368,98 @@ function loadStage(
   }
 
 
-  /* 前のアイテム削除 */
+  /* アイテム削除 */
 
   itemsContainer.innerHTML =
-    "";
+  "";
 
 
-  /* 新しいアイテム作成 */
+  /* 作成 */
 
   stage.items.forEach(
-    function(itemData){
+  function(itemData){
 
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "item";
+    const item =
+    document.createElement(
+      "div"
+    );
 
 
-      item.textContent =
-        itemData.emoji;
+    item.className =
+    "item";
 
 
-      item.dataset.name =
-        itemData.name;
+    if(itemData.event){
 
-
-      item.dataset.points =
-        itemData.points;
-
-
-      if(
-        itemData.top
-      ){
-
-        item.style.top =
-          itemData.top;
-
-      }
-
-
-      if(
-        itemData.left
-      ){
-
-        item.style.left =
-          itemData.left;
-
-      }
-
-
-      if(
-        itemData.right
-      ){
-
-        item.style.right =
-          itemData.right;
-
-      }
-
-
-      item.addEventListener(
-        "click",
-        function(event){
-
-          event.stopPropagation();
-
-          catchItem(
-            item
-          );
-
-        }
+      item.classList.add(
+        "bossItem"
       );
 
+      item.dataset.event =
+      "shark";
 
-      itemsContainer.appendChild(
+    }
+
+
+    item.textContent =
+    itemData.emoji;
+
+
+    item.dataset.name =
+    itemData.name;
+
+
+    item.dataset.points =
+    itemData.points;
+
+
+    if(itemData.top){
+
+      item.style.top =
+      itemData.top;
+
+    }
+
+
+    if(itemData.left){
+
+      item.style.left =
+      itemData.left;
+
+    }
+
+
+    if(itemData.right){
+
+      item.style.right =
+      itemData.right;
+
+    }
+
+
+    item.addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      catchItem(
         item
       );
 
     }
+    );
+
+
+    itemsContainer.appendChild(
+      item
+    );
+
+  }
   );
 
 
   showMessage(
-    "🎮 " +
     stage.name +
     " スタート！"
   );
@@ -1232,62 +1472,64 @@ function loadStage(
 ===================== */
 
 taichiButton.addEventListener(
-  "click",
-  function(){
+"click",
+function(){
 
-    if(stageFinished){
-      return;
-    }
-
-    playerFace.textContent =
-      "🧒";
-
-    playerName.textContent =
-      "タイチ";
-
-    taichiButton.classList.add(
-      "active"
-    );
-
-    hanaButton.classList.remove(
-      "active"
-    );
-
-    showMessage(
-      "🧒 タイチに交代！"
-    );
-
+  if(stageFinished ||
+     eventActive){
+    return;
   }
+
+  playerFace.textContent =
+  "🧒";
+
+  playerName.textContent =
+  "タイチ";
+
+  taichiButton.classList.add(
+    "active"
+  );
+
+  hanaButton.classList.remove(
+    "active"
+  );
+
+  showMessage(
+    "🧒 タイチに交代！"
+  );
+
+}
 );
 
 
 hanaButton.addEventListener(
-  "click",
-  function(){
+"click",
+function(){
 
-    if(stageFinished){
-      return;
-    }
-
-    playerFace.textContent =
-      "👧";
-
-    playerName.textContent =
-      "ハナ";
-
-    hanaButton.classList.add(
-      "active"
-    );
-
-    taichiButton.classList.remove(
-      "active"
-    );
-
-    showMessage(
-      "👧 ハナに交代！"
-    );
-
+  if(stageFinished ||
+     eventActive){
+    return;
   }
+
+  playerFace.textContent =
+  "👧";
+
+  playerName.textContent =
+  "ハナ";
+
+  hanaButton.classList.add(
+    "active"
+  );
+
+  taichiButton.classList.remove(
+    "active"
+  );
+
+  showMessage(
+    "👧 ハナに交代！"
+  );
+
+}
 );
 
 
@@ -1298,10 +1540,10 @@ hanaButton.addEventListener(
 function updatePlayer(){
 
   player.style.left =
-    playerX + "%";
+  playerX + "%";
 
   player.style.bottom =
-    playerY + "px";
+  playerY + "px";
 
 }
 
@@ -1311,45 +1553,50 @@ function updatePlayer(){
 ===================== */
 
 function movePlayer(
-  direction
+direction
 ){
 
-  if(stageFinished){
+  if(stageFinished ||
+     eventActive){
     return;
   }
 
 
-  const horizontalStep = 7;
+  const horizontalStep =
+  7;
 
-  const verticalStep = 45;
+  const verticalStep =
+  45;
 
 
   if(direction === "left"){
 
-    playerX -= horizontalStep;
+    playerX -=
+    horizontalStep;
 
   }
 
   if(direction === "right"){
 
-    playerX += horizontalStep;
+    playerX +=
+    horizontalStep;
 
   }
 
   if(direction === "up"){
 
-    playerY += verticalStep;
+    playerY +=
+    verticalStep;
 
   }
 
   if(direction === "down"){
 
-    playerY -= verticalStep;
+    playerY -=
+    verticalStep;
 
   }
 
-
-  /* 範囲 */
 
   if(playerX < 8){
 
@@ -1380,29 +1627,44 @@ function movePlayer(
 
 
   requestAnimationFrame(
-    function(){
+  function(){
 
-      checkItemCollisions();
+    checkItemCollisions();
 
-    }
+  }
   );
 
 }
 
 
 /* =====================
-   アイテムゲット
+   アイテム取得
 ===================== */
 
 function catchItem(
-  item
+item
 ){
 
   if(
     !item ||
     item.dataset.caught === "true" ||
-    stageFinished
+    stageFinished ||
+    eventActive
   ){
+    return;
+  }
+
+
+  /* シャーキュン */
+
+  if(
+    item.dataset.event ===
+    "shark"
+  ){
+
+    startSharkEvent(
+      item
+    );
 
     return;
 
@@ -1410,44 +1672,45 @@ function catchItem(
 
 
   item.dataset.caught =
-    "true";
+  "true";
 
 
   const itemName =
-    item.dataset.name;
+  item.dataset.name;
 
 
   const itemPoints =
-    Number(
-      item.dataset.points
-    );
+  Number(
+    item.dataset.points
+  );
 
 
   points +=
-    itemPoints;
+  itemPoints;
 
 
-  itemCount += 1;
+  itemCount +=
+  1;
 
 
   pointsDisplay.textContent =
-    points;
+  points;
 
 
   itemCountDisplay.textContent =
-    itemCount;
+  itemCount;
 
 
   item.style.pointerEvents =
-    "none";
+  "none";
 
 
   item.style.transform =
-    "scale(1.6) rotate(20deg)";
+  "scale(1.6) rotate(20deg)";
 
 
   item.style.opacity =
-    "0";
+  "0";
 
 
   showMessage(
@@ -1459,36 +1722,125 @@ function catchItem(
 
 
   setTimeout(
-    function(){
+  function(){
 
-      if(
-        item.parentNode
-      ){
+    if(item.parentNode){
 
-        item.remove();
+      item.remove();
 
-      }
+    }
 
 
-      const total =
-        stages[currentStage]
-        .items
-        .length;
+    checkStageClear();
 
-
-      if(
-        itemCount >= total
-      ){
-
-        stageClear();
-
-      }
-
-    },
-    250
+  },
+  250
   );
 
 }
+
+
+/* =====================
+   シャーキュンイベント
+===================== */
+
+function startSharkEvent(
+item
+){
+
+  if(
+    sharkEventDone ||
+    eventActive
+  ){
+    return;
+  }
+
+
+  eventActive =
+  true;
+
+
+  item.style.opacity =
+  "0";
+
+
+  setTimeout(
+  function(){
+
+    eventScreen.classList.add(
+      "show"
+    );
+
+  },
+  300
+  );
+
+}
+
+
+/* =====================
+   仲間にする
+===================== */
+
+joinButton.addEventListener(
+"click",
+function(){
+
+  eventScreen.classList.remove(
+    "show"
+  );
+
+
+  sharkEventDone =
+  true;
+
+
+  eventActive =
+  false;
+
+
+  itemCount +=
+  1;
+
+
+  itemCountDisplay.textContent =
+  itemCount;
+
+
+  sharkFriend.classList.add(
+    "show"
+  );
+
+
+  showMessage(
+    "🎉 シャーキュンが仲間になった！"
+  );
+
+
+  const shark =
+  document.querySelector(
+    '[data-event="shark"]'
+  );
+
+
+  if(shark){
+
+    shark.remove();
+
+  }
+
+
+  setTimeout(
+  function(){
+
+    checkStageClear();
+
+  },
+  700
+  );
+
+}
+);
 
 
 /* =====================
@@ -1497,150 +1849,112 @@ function catchItem(
 
 function checkItemCollisions(){
 
-  if(stageFinished){
+  if(
+    stageFinished ||
+    eventActive
+  ){
     return;
   }
 
 
   const items =
-    document.querySelectorAll(
-      ".item"
-    );
+  document.querySelectorAll(
+    ".item"
+  );
 
 
   const playerRect =
-    playerFace
-    .getBoundingClientRect();
+  playerFace
+  .getBoundingClientRect();
 
 
   const playerCenterX =
-    playerRect.left +
-    playerRect.width / 2;
+  playerRect.left +
+  playerRect.width / 2;
 
 
   const playerCenterY =
-    playerRect.top +
-    playerRect.height / 2;
+  playerRect.top +
+  playerRect.height / 2;
 
 
   items.forEach(
-    function(item){
+  function(item){
 
-      if(
-        item.dataset.caught ===
-        "true"
-      ){
-
-        return;
-
-      }
+    if(
+      item.dataset.caught ===
+      "true"
+    ){
+      return;
+    }
 
 
-      const itemRect =
-        item.getBoundingClientRect();
+    const itemRect =
+    item.getBoundingClientRect();
 
 
-      const itemCenterX =
-        itemRect.left +
-        itemRect.width / 2;
+    const itemCenterX =
+    itemRect.left +
+    itemRect.width / 2;
 
 
-      const itemCenterY =
-        itemRect.top +
-        itemRect.height / 2;
+    const itemCenterY =
+    itemRect.top +
+    itemRect.height / 2;
 
 
-      const distanceX =
-        Math.abs(
-          playerCenterX -
-          itemCenterX
-        );
+    const distanceX =
+    Math.abs(
+      playerCenterX -
+      itemCenterX
+    );
 
 
-      const distanceY =
-        Math.abs(
-          playerCenterY -
-          itemCenterY
-        );
+    const distanceY =
+    Math.abs(
+      playerCenterY -
+      itemCenterY
+    );
 
 
-      /* 広めの当たり判定 */
+    if(
+      distanceX < 65 &&
+      distanceY < 65
+    ){
 
-      if(
-        distanceX < 65 &&
-        distanceY < 65
-      ){
-
-        catchItem(
-          item
-        );
-
-      }
+      catchItem(
+        item
+      );
 
     }
+
+  }
   );
 
 }
 
 
 /* =====================
-   操作ボタン
+   ステージクリア確認
 ===================== */
 
-document
-.getElementById("upButton")
-.addEventListener(
-  "click",
-  function(){
+function checkStageClear(){
 
-    movePlayer(
-      "up"
-    );
-
-  }
-);
+  const total =
+  stages[currentStage]
+  .items
+  .length;
 
 
-document
-.getElementById("downButton")
-.addEventListener(
-  "click",
-  function(){
+  if(
+    itemCount >= total
+  ){
 
-    movePlayer(
-      "down"
-    );
+    stageClear();
 
   }
-);
 
-
-document
-.getElementById("leftButton")
-.addEventListener(
-  "click",
-  function(){
-
-    movePlayer(
-      "left"
-    );
-
-  }
-);
-
-
-document
-.getElementById("rightButton")
-.addEventListener(
-  "click",
-  function(){
-
-    movePlayer(
-      "right"
-    );
-
-  }
-);
+}
 
 
 /* =====================
@@ -1655,83 +1969,132 @@ function stageClear(){
 
 
   stageFinished =
-    true;
+  true;
 
 
   setTimeout(
-    function(){
+  function(){
 
-      points +=
-        100;
-
-
-      pointsDisplay.textContent =
-        points;
+    points +=
+    100;
 
 
-      const stage =
-        stages[currentStage];
+    pointsDisplay.textContent =
+    points;
 
 
-      stageTitle.innerHTML =
-        "🎉 ステージ" +
-        currentStage +
-        "クリア！ 🎉";
+    stageTitle.innerHTML =
+    "🎉 ステージ" +
+    currentStage +
+    "クリア！ 🎉";
 
 
-      stageText.innerHTML =
-        stage.clearText;
+    stageText.innerHTML =
+    stages[currentStage]
+    .clearText;
 
 
-      stageBonus.innerHTML =
-        "⭐ クリアボーナス +100！";
+    stageBonus.innerHTML =
+    "⭐ クリアボーナス +100！";
 
 
-      /* ステージ1 */
+    if(currentStage === 1){
 
-      if(
-        currentStage === 1
-      ){
-
-        nextStageButton.style.display =
-          "block";
+      nextStageButton.style.display =
+      "block";
 
 
-        restartButton.style.display =
-          "none";
+      restartButton.style.display =
+      "none";
 
 
-        nextStageButton.textContent =
-          "🌊 海の世界へ！";
+      nextStageButton.textContent =
+      "🌊 海の世界へ！";
 
-      }
-
-
-      /* ステージ2 */
-
-      if(
-        currentStage === 2
-      ){
-
-        nextStageButton.style.display =
-          "none";
+    }
 
 
-        restartButton.style.display =
-          "block";
+    if(currentStage === 2){
 
-      }
+      nextStageButton.style.display =
+      "none";
 
 
-      stageScreen.classList.add(
-        "show"
-      );
+      restartButton.style.display =
+      "block";
 
-    },
-    500
+    }
+
+
+    stageScreen.classList.add(
+      "show"
+    );
+
+  },
+  500
   );
 
 }
+
+
+/* =====================
+   操作ボタン
+===================== */
+
+document
+.getElementById("upButton")
+.addEventListener(
+"click",
+function(){
+
+  movePlayer(
+    "up"
+  );
+
+}
+);
+
+
+document
+.getElementById("downButton")
+.addEventListener(
+"click",
+function(){
+
+  movePlayer(
+    "down"
+  );
+
+}
+);
+
+
+document
+.getElementById("leftButton")
+.addEventListener(
+"click",
+function(){
+
+  movePlayer(
+    "left"
+  );
+
+}
+);
+
+
+document
+.getElementById("rightButton")
+.addEventListener(
+"click",
+function(){
+
+  movePlayer(
+    "right"
+  );
+
+}
+);
 
 
 /* =====================
@@ -1739,32 +2102,30 @@ function stageClear(){
 ===================== */
 
 nextStageButton.addEventListener(
-  "click",
-  function(){
+"click",
+function(){
 
-    stageScreen.classList.remove(
-      "show"
-    );
-
-
-    /* プレイヤー位置リセット */
-
-    playerX =
-      50;
+  stageScreen.classList.remove(
+    "show"
+  );
 
 
-    playerY =
-      200;
+  playerX =
+  50;
 
 
-    updatePlayer();
+  playerY =
+  200;
 
 
-    loadStage(
-      2
-    );
+  updatePlayer();
 
-  }
+
+  loadStage(
+    2
+  );
+
+}
 );
 
 
@@ -1773,12 +2134,12 @@ nextStageButton.addEventListener(
 ===================== */
 
 restartButton.addEventListener(
-  "click",
-  function(){
+"click",
+function(){
 
-    location.reload();
+  location.reload();
 
-  }
+}
 );
 
 
@@ -1790,7 +2151,7 @@ let messageTimer;
 
 
 function showMessage(
-  text
+text
 ){
 
   clearTimeout(
@@ -1799,7 +2160,7 @@ function showMessage(
 
 
   message.textContent =
-    text;
+  text;
 
 
   message.classList.add(
@@ -1808,76 +2169,69 @@ function showMessage(
 
 
   messageTimer =
-    setTimeout(
-      function(){
+  setTimeout(
+  function(){
 
-        message.classList.remove(
-          "show"
-        );
-
-      },
-      1400
+    message.classList.remove(
+      "show"
     );
+
+  },
+  1500
+  );
 
 }
 
 
 /* =====================
-   キーボード
+   キーボード操作
 ===================== */
 
 document.addEventListener(
-  "keydown",
-  function(event){
+"keydown",
+function(event){
 
-    if(
-      event.key ===
-      "ArrowUp"
-    ){
+  if(
+    event.key === "ArrowUp"
+  ){
 
-      movePlayer(
-        "up"
-      );
-
-    }
-
-
-    if(
-      event.key ===
-      "ArrowDown"
-    ){
-
-      movePlayer(
-        "down"
-      );
-
-    }
-
-
-    if(
-      event.key ===
-      "ArrowLeft"
-    ){
-
-      movePlayer(
-        "left"
-      );
-
-    }
-
-
-    if(
-      event.key ===
-      "ArrowRight"
-    ){
-
-      movePlayer(
-        "right"
-      );
-
-    }
+    movePlayer(
+      "up"
+    );
 
   }
+
+  if(
+    event.key === "ArrowDown"
+  ){
+
+    movePlayer(
+      "down"
+    );
+
+  }
+
+  if(
+    event.key === "ArrowLeft"
+  ){
+
+    movePlayer(
+      "left"
+    );
+
+  }
+
+  if(
+    event.key === "ArrowRight"
+  ){
+
+    movePlayer(
+      "right"
+    );
+
+  }
+
+}
 );
 
 

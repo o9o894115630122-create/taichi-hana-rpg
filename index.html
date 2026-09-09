@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>タイチとハナの大冒険</title>
 
@@ -17,801 +15,446 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
   margin:0;
   width:100%;
   height:100%;
   overflow:hidden;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans",
-    sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
 }
 
 body{
-  background:#222;
+  background:#111;
 }
-
-
-/* =====================
-   ゲーム画面
-===================== */
 
 #game{
   position:relative;
   width:100vw;
   height:100vh;
   overflow:hidden;
-
-  background:
-    linear-gradient(
-      to bottom,
-      #62b7e8 0%,
-      #8ed2ef 43%,
-      #69a941 44%,
-      #3f7f2d 100%
-    );
-
-  transition:background .7s;
+  transition:.5s;
 }
 
-
-/* 海 */
-
-#game.seaStage{
-  background:
-    linear-gradient(
-      to bottom,
-      #46b9e8 0%,
-      #67d5f4 32%,
-      #1887c9 33%,
-      #064f89 100%
-    );
+#game.forest{
+  background:linear-gradient(to bottom,#63bce9 0%,#9ce0f2 40%,#6eb34b 41%,#397c2d 100%);
 }
 
+#game.sea{
+  background:linear-gradient(to bottom,#55c8ef 0%,#83e2f4 30%,#168cc9 31%,#07518d 100%);
+}
 
-/* =====================
-   タイトル
-===================== */
+#game.volcano{
+  background:linear-gradient(to bottom,#48365b 0%,#8b4a3c 40%,#5c251d 41%,#29100d 100%);
+}
+
+#game.space{
+  background:linear-gradient(to bottom,#08153d 0%,#101d5c 55%,#17114b 100%);
+}
+
+#game.castle{
+  background:linear-gradient(to bottom,#261333 0%,#4d2455 45%,#1d1028 100%);
+}
+
+/* タイトル */
 
 #title{
   position:absolute;
-  top:12px;
+  top:10px;
   left:50%;
-
   transform:translateX(-50%);
-
   width:100%;
-
   text-align:center;
-
-  font-size:24px;
-  font-weight:900;
-
   color:white;
-
-  text-shadow:
-    0 3px 5px rgba(0,0,0,.45);
-
-  z-index:20;
+  font-size:23px;
+  font-weight:900;
+  text-shadow:0 3px 6px rgba(0,0,0,.5);
+  z-index:30;
 }
 
-
-/* =====================
-   ステージ表示
-===================== */
+/* ステージ */
 
 #stageLabel{
   position:absolute;
-
-  top:48px;
+  top:46px;
   left:50%;
-
   transform:translateX(-50%);
-
-  background:
-    rgba(33,100,35,.85);
-
-  color:white;
-
-  padding:6px 18px;
-
+  padding:6px 16px;
   border-radius:20px;
-
-  font-size:15px;
+  background:rgba(0,0,0,.55);
+  color:white;
   font-weight:900;
-
-  z-index:20;
+  z-index:30;
 }
 
-.seaStage #stageLabel{
-  background:
-    rgba(0,73,140,.9);
-}
-
-
-/* =====================
-   ステータス
-===================== */
+/* ステータス */
 
 #status{
   position:absolute;
-
   top:82px;
   left:50%;
-
   transform:translateX(-50%);
-
   display:flex;
-
-  gap:8px;
-
-  z-index:20;
+  gap:7px;
+  z-index:30;
 }
 
 .statusBox{
-  background:
-    rgba(255,255,255,.92);
-
-  padding:10px 14px;
-
-  border-radius:20px;
-
-  font-size:17px;
+  background:rgba(255,255,255,.93);
+  padding:8px 12px;
+  border-radius:18px;
+  font-size:16px;
   font-weight:900;
-
-  box-shadow:
-    0 5px 14px rgba(0,0,0,.2);
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 
-
-/* =====================
-   キャラクター選択
-===================== */
+/* キャラ */
 
 #characterSelect{
   position:absolute;
-
-  top:137px;
+  top:125px;
   left:50%;
-
   transform:translateX(-50%);
-
   display:flex;
-  gap:10px;
-
-  z-index:20;
+  gap:8px;
+  z-index:30;
 }
 
 .characterButton{
   border:none;
-
-  border-radius:20px;
-
-  padding:10px 16px;
-
-  font-size:18px;
+  padding:9px 13px;
+  border-radius:18px;
+  font-size:16px;
   font-weight:900;
-
   background:white;
-
-  color:#2870bb;
-
-  box-shadow:
-    0 5px 14px rgba(0,0,0,.2);
+  color:#2469ad;
 }
 
 .characterButton.active{
-  background:
-    linear-gradient(
-      135deg,
-      #ffd94c,
-      #ffb82e
-    );
-
+  background:#ffc928;
   color:white;
 }
 
-
-/* =====================
-   仲間表示
-===================== */
+/* 仲間 */
 
 #friends{
   position:absolute;
-
-  top:190px;
+  top:175px;
   left:50%;
-
   transform:translateX(-50%);
-
-  display:flex;
-
-  gap:8px;
-
-  z-index:20;
+  z-index:30;
 }
 
 .friend{
   display:none;
-
-  background:
-    rgba(255,255,255,.9);
-
-  padding:6px 12px;
-
-  border-radius:20px;
-
-  font-size:17px;
-
+  background:white;
+  padding:5px 12px;
+  border-radius:18px;
   font-weight:900;
-
-  box-shadow:
-    0 4px 10px rgba(0,0,0,.2);
+  box-shadow:0 3px 10px rgba(0,0,0,.2);
 }
 
 .friend.show{
   display:block;
 }
 
+/* 背景 */
 
-/* =====================
-   背景
-===================== */
-
-.backgroundItem{
+.decor{
   position:absolute;
-
   pointer-events:none;
-
   user-select:none;
-  -webkit-user-select:none;
+  z-index:1;
 }
 
-.cloud{
+#decor1{
+  top:240px;
+  left:25px;
+  font-size:65px;
+}
+
+#decor2{
+  top:300px;
+  right:20px;
   font-size:60px;
 }
 
-#cloud1{
-  top:240px;
-  left:20px;
+#decor3{
+  bottom:270px;
+  left:15px;
+  font-size:100px;
 }
 
-#cloud2{
-  top:320px;
-  right:20px;
+#decor4{
+  bottom:260px;
+  right:15px;
+  font-size:100px;
 }
 
-.tree{
-  font-size:95px;
-  bottom:290px;
-}
-
-#tree1{
-  left:20px;
-}
-
-#tree2{
-  right:20px;
-}
-
-
-/* 海背景 */
-
-.wave,
-.fishBackground{
-  display:none;
-}
-
-.wave{
-  font-size:70px;
-}
-
-.fishBackground{
-  font-size:52px;
-}
-
-#seaWave1{
-  top:270px;
-  left:5px;
-}
-
-#seaWave2{
-  top:410px;
-  right:5px;
-}
-
-#seaFish1{
-  top:250px;
-  left:20px;
-}
-
-#seaFish2{
-  top:350px;
-  right:20px;
-}
-
-.seaStage .wave,
-.seaStage .fishBackground{
-  display:block;
-}
-
-.seaStage .tree{
-  display:none;
-}
-
-.seaStage .cloud{
-  opacity:.45;
-}
-
-
-/* =====================
-   アイテム
-===================== */
+/* アイテム */
 
 .item{
   position:absolute;
-
-  width:70px;
-  height:70px;
-
+  width:72px;
+  height:72px;
   display:flex;
-
-  justify-content:center;
   align-items:center;
-
-  font-size:56px;
-
+  justify-content:center;
+  font-size:55px;
   z-index:10;
-
   cursor:pointer;
-
   user-select:none;
-  -webkit-user-select:none;
-
-  transition:
-    transform .2s,
-    opacity .25s;
+  transition:.2s;
 }
 
 .item:active{
-  transform:
-    scale(1.25);
+  transform:scale(1.25);
 }
 
-
-/* シャーキュン */
-
-.bossItem{
-  font-size:70px;
-
-  filter:
-    drop-shadow(
-      0 5px 6px rgba(0,0,0,.35)
-    );
-
-  animation:
-    sharkMove 1.2s infinite alternate;
+.special{
+  animation:float 1s infinite alternate;
 }
 
-@keyframes sharkMove{
-
-  from{
-    transform:
-      translateX(-8px);
-  }
-
-  to{
-    transform:
-      translateX(8px);
-  }
-
+@keyframes float{
+  from{transform:translateY(-7px);}
+  to{transform:translateY(7px);}
 }
 
-
-/* =====================
-   プレイヤー
-===================== */
+/* プレイヤー */
 
 #player{
   position:absolute;
-
   width:100px;
-
   left:50%;
-
-  bottom:200px;
-
-  transform:
-    translateX(-50%);
-
-  z-index:15;
-
+  bottom:180px;
+  transform:translateX(-50%);
+  z-index:20;
   text-align:center;
-
-  transition:
-    left .1s linear,
-    bottom .1s linear;
+  transition:left .1s,bottom .1s;
 }
 
 #playerFace{
-  width:82px;
-  height:82px;
-
+  width:78px;
+  height:78px;
   margin:auto;
-
   display:flex;
-
-  justify-content:center;
   align-items:center;
-
-  font-size:52px;
-
-  background:white;
-
+  justify-content:center;
   border-radius:50%;
-
-  box-shadow:
-    0 6px 15px rgba(0,0,0,.3);
+  background:white;
+  font-size:50px;
+  box-shadow:0 5px 15px rgba(0,0,0,.35);
 }
 
 #playerName{
   display:inline-block;
-
   margin-top:5px;
-
+  padding:5px 12px;
+  border-radius:16px;
   background:white;
-
-  padding:5px 14px;
-
-  border-radius:20px;
-
-  font-size:17px;
   font-weight:900;
 }
 
+/* シャーキュン */
 
-/* =====================
-   メッセージ
-===================== */
+#follower{
+  position:absolute;
+  font-size:50px;
+  z-index:18;
+  display:none;
+  transition:left .25s,bottom .25s;
+}
+
+#follower.show{
+  display:block;
+}
+
+/* ボス */
+
+#boss{
+  position:absolute;
+  display:none;
+  z-index:15;
+  text-align:center;
+  animation:bossFloat 1s infinite alternate;
+}
+
+@keyframes bossFloat{
+  from{transform:translateY(-5px);}
+  to{transform:translateY(5px);}
+}
+
+#bossFace{
+  font-size:90px;
+}
+
+#bossName{
+  background:white;
+  border-radius:18px;
+  padding:5px 12px;
+  font-weight:900;
+}
+
+#bossHPBox{
+  width:150px;
+  height:18px;
+  background:#333;
+  border-radius:20px;
+  overflow:hidden;
+  margin:5px auto;
+}
+
+#bossHP{
+  width:100%;
+  height:100%;
+  background:#ef3d3d;
+  transition:.3s;
+}
+
+/* メッセージ */
 
 #message{
   position:absolute;
-
-  top:225px;
+  top:220px;
   left:50%;
-
-  transform:
-    translateX(-50%)
-    translateY(-15px);
-
-  padding:12px 20px;
-
-  border-radius:25px;
-
-  background:
-    rgba(0,0,0,.78);
-
+  transform:translateX(-50%) translateY(-10px);
+  padding:11px 18px;
+  border-radius:22px;
+  background:rgba(0,0,0,.78);
   color:white;
-
-  font-size:19px;
+  font-size:18px;
   font-weight:900;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:
-    opacity .2s,
-    transform .2s;
-
-  z-index:50;
-
   white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:100;
 }
 
 #message.show{
   opacity:1;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
+  transform:translateX(-50%) translateY(0);
 }
 
-
-/* =====================
-   操作ボタン
-===================== */
+/* 操作 */
 
 #controls{
   position:absolute;
-
-  bottom:20px;
+  bottom:15px;
   left:50%;
-
   transform:translateX(-50%);
-
   width:100%;
-
-  z-index:30;
+  z-index:50;
 }
 
 #upRow{
   display:flex;
-
   justify-content:center;
-
-  margin-bottom:8px;
+  margin-bottom:7px;
 }
 
 #downRow{
   display:flex;
-
   justify-content:center;
-
-  gap:12px;
+  gap:10px;
 }
 
 .controlButton{
-  width:90px;
-  height:75px;
-
+  width:82px;
+  height:64px;
   border:none;
-
   border-radius:20px;
-
-  background:
-    rgba(255,255,255,.92);
-
-  font-size:42px;
-
+  background:rgba(255,255,255,.93);
+  font-size:37px;
   color:#2477bd;
-
-  box-shadow:
-    0 6px 16px rgba(0,0,0,.25);
+  box-shadow:0 5px 13px rgba(0,0,0,.25);
 }
 
 .controlButton:active{
   transform:scale(.94);
 }
 
+/* 攻撃 */
 
-/* =====================
-   ステージクリア画面
-===================== */
-
-#stageScreen{
-  position:absolute;
-
-  inset:0;
-
+#attackButton{
   display:none;
-
-  justify-content:center;
-  align-items:center;
-
-  background:
-    rgba(0,0,0,.58);
-
-  z-index:100;
-
-  padding:20px;
+  position:absolute;
+  right:18px;
+  bottom:180px;
+  width:85px;
+  height:85px;
+  border:none;
+  border-radius:50%;
+  background:#e94a35;
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 5px 15px rgba(0,0,0,.35);
+  z-index:60;
 }
 
-#stageScreen.show{
+#attackButton.show{
+  display:block;
+}
+
+/* 画面イベント */
+
+.overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.65);
+  z-index:200;
+}
+
+.overlay.show{
   display:flex;
 }
 
-#stageBox{
-  width:min(370px,100%);
-
-  padding:32px 24px;
-
+.eventBox{
+  width:min(380px,100%);
+  padding:28px 22px;
   text-align:center;
-
   border-radius:30px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fff6a5,
-      #ffffff
-    );
-
-  box-shadow:
-    0 12px 35px rgba(0,0,0,.35);
+  background:white;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
 }
 
-#stageTitle{
-  font-size:29px;
+.eventEmoji{
+  font-size:80px;
+}
 
+.eventTitle{
+  font-size:28px;
   font-weight:900;
-
-  color:#d88900;
+  margin-top:8px;
 }
 
-#stageText{
+.eventText{
   margin-top:15px;
-
-  font-size:19px;
+  font-size:18px;
   font-weight:800;
-
   line-height:1.6;
 }
 
-#stageBonus{
-  margin-top:15px;
-
-  font-size:22px;
-  font-weight:900;
-
-  color:#e05d00;
-}
-
-#nextStageButton,
-#restartButton{
-  margin-top:25px;
-
+.eventButton{
   width:100%;
-
-  padding:16px;
-
+  margin-top:22px;
+  padding:15px;
   border:none;
-
-  border-radius:22px;
-
+  border-radius:20px;
+  background:#237fd0;
   color:white;
-
-  font-size:20px;
-  font-weight:900;
-}
-
-#nextStageButton{
-  background:
-    linear-gradient(
-      135deg,
-      #258ad6,
-      #075ca5
-    );
-}
-
-#restartButton{
-  display:none;
-
-  background:
-    linear-gradient(
-      135deg,
-      #4caf50,
-      #218838
-    );
-}
-
-
-/* =====================
-   シャーキュンイベント
-===================== */
-
-#eventScreen{
-  position:absolute;
-
-  inset:0;
-
-  display:none;
-
-  justify-content:center;
-  align-items:center;
-
-  background:
-    rgba(0,30,60,.65);
-
-  z-index:200;
-
-  padding:20px;
-}
-
-#eventScreen.show{
-  display:flex;
-}
-
-#eventBox{
-  width:min(380px,100%);
-
-  text-align:center;
-
-  padding:30px 22px;
-
-  border-radius:30px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #b8f0ff,
-      #ffffff
-    );
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,.4);
-}
-
-#eventCharacter{
-  font-size:90px;
-
-  animation:
-    eventShark 1s infinite alternate;
-}
-
-@keyframes eventShark{
-
-  from{
-    transform:
-      translateY(-5px);
-  }
-
-  to{
-    transform:
-      translateY(5px);
-  }
-
-}
-
-#eventTitle{
-  margin-top:8px;
-
-  font-size:28px;
-
-  font-weight:900;
-
-  color:#075ca5;
-}
-
-#eventText{
-  margin-top:15px;
-
   font-size:19px;
-
-  font-weight:800;
-
-  line-height:1.7;
-}
-
-#joinButton{
-  margin-top:24px;
-
-  width:100%;
-
-  padding:16px;
-
-  border:none;
-
-  border-radius:22px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff8c3a,
-      #e65100
-    );
-
-  color:white;
-
-  font-size:20px;
   font-weight:900;
 }
-
-
-/* =====================
-   小さい画面
-===================== */
 
 @media(max-height:700px){
 
   #title{
-    top:7px;
-    font-size:20px;
+    font-size:19px;
   }
 
   #stageLabel{
@@ -819,22 +462,20 @@ body{
   }
 
   #status{
-    top:68px;
+    top:70px;
   }
 
   #characterSelect{
-    top:120px;
+    top:110px;
   }
 
   #friends{
-    top:175px;
+    top:160px;
   }
 
   .controlButton{
-    width:78px;
-    height:65px;
-
-    font-size:36px;
+    width:72px;
+    height:58px;
   }
 
 }
@@ -842,796 +483,362 @@ body{
 </style>
 </head>
 
-
 <body>
 
-<div id="game">
+<div id="game" class="forest">
 
+<div id="title">🌍 タイチとハナの大冒険 🌍</div>
 
-  <!-- タイトル -->
+<div id="stageLabel"></div>
 
-  <div id="title">
-    🌍 タイチとハナの大冒険 🌍
-  </div>
+<div id="status">
+  <div class="statusBox">⭐ <span id="points">0</span></div>
+  <div class="statusBox">🗺️ <span id="count">0</span>/<span id="total">0</span></div>
+</div>
 
+<div id="characterSelect">
 
-  <!-- ステージ -->
+<button id="taichiButton" class="characterButton active">
+🧒 タイチ
+</button>
 
-  <div id="stageLabel">
-    🌲 ステージ1：虫の森
-  </div>
-
-
-  <!-- ステータス -->
-
-  <div id="status">
-
-    <div class="statusBox">
-      ⭐ <span id="points">0</span>
-    </div>
-
-    <div class="statusBox">
-      🗺️ <span id="itemCount">0</span> / <span id="totalCount">5</span>
-    </div>
-
-  </div>
-
-
-  <!-- キャラクター -->
-
-  <div id="characterSelect">
-
-    <button
-      id="taichiButton"
-      class="characterButton active"
-    >
-      🧒 タイチ
-    </button>
-
-    <button
-      id="hanaButton"
-      class="characterButton"
-    >
-      👧 ハナ
-    </button>
-
-  </div>
-
-
-  <!-- 仲間 -->
-
-  <div id="friends">
-
-    <div
-      id="sharkFriend"
-      class="friend"
-    >
-      🦈 シャーキュン
-    </div>
-
-  </div>
-
-
-  <!-- 背景 -->
-
-  <div
-    id="cloud1"
-    class="backgroundItem cloud"
-  >
-    ☁️
-  </div>
-
-  <div
-    id="cloud2"
-    class="backgroundItem cloud"
-  >
-    ☁️
-  </div>
-
-  <div
-    id="tree1"
-    class="backgroundItem tree"
-  >
-    🌳
-  </div>
-
-  <div
-    id="tree2"
-    class="backgroundItem tree"
-  >
-    🌲
-  </div>
-
-
-  <!-- 海背景 -->
-
-  <div
-    id="seaWave1"
-    class="backgroundItem wave"
-  >
-    🌊
-  </div>
-
-  <div
-    id="seaWave2"
-    class="backgroundItem wave"
-  >
-    🌊
-  </div>
-
-  <div
-    id="seaFish1"
-    class="backgroundItem fishBackground"
-  >
-    🐠
-  </div>
-
-  <div
-    id="seaFish2"
-    class="backgroundItem fishBackground"
-  >
-    🐟
-  </div>
-
-
-  <!-- アイテム -->
-
-  <div id="items"></div>
-
-
-  <!-- プレイヤー -->
-
-  <div id="player">
-
-    <div id="playerFace">
-      🧒
-    </div>
-
-    <div id="playerName">
-      タイチ
-    </div>
-
-  </div>
-
-
-  <!-- メッセージ -->
-
-  <div id="message"></div>
-
-
-  <!-- 操作 -->
-
-  <div id="controls">
-
-    <div id="upRow">
-
-      <button
-        id="upButton"
-        class="controlButton"
-      >
-        ↑
-      </button>
-
-    </div>
-
-
-    <div id="downRow">
-
-      <button
-        id="leftButton"
-        class="controlButton"
-      >
-        ←
-      </button>
-
-      <button
-        id="downButton"
-        class="controlButton"
-      >
-        ↓
-      </button>
-
-      <button
-        id="rightButton"
-        class="controlButton"
-      >
-        →
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ステージクリア -->
-
-  <div id="stageScreen">
-
-    <div id="stageBox">
-
-      <div id="stageTitle"></div>
-
-      <div id="stageText"></div>
-
-      <div id="stageBonus"></div>
-
-      <button id="nextStageButton">
-        🌊 海の世界へ！
-      </button>
-
-      <button id="restartButton">
-        🔄 最初から遊ぶ
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- シャーキュンイベント -->
-
-  <div id="eventScreen">
-
-    <div id="eventBox">
-
-      <div id="eventCharacter">
-        🦈
-      </div>
-
-      <div id="eventTitle">
-        シャーキュン登場！
-      </div>
-
-      <div id="eventText">
-        「ぼくも一緒に<br>
-        冒険していい？」
-      </div>
-
-      <button id="joinButton">
-        🤝 仲間にする！
-      </button>
-
-    </div>
-
-  </div>
-
+<button id="hanaButton" class="characterButton">
+👧 ハナ
+</button>
 
 </div>
 
+<div id="friends">
+  <div id="sharkFriend" class="friend">
+    🦈 シャーキュン
+  </div>
+</div>
+
+<div id="decor1" class="decor">☁️</div>
+<div id="decor2" class="decor">☁️</div>
+<div id="decor3" class="decor">🌳</div>
+<div id="decor4" class="decor">🌲</div>
+
+<div id="items"></div>
+
+<div id="follower">🦈</div>
+
+<div id="boss">
+
+  <div id="bossFace">😈</div>
+
+  <div id="bossName">ますみん</div>
+
+  <div id="bossHPBox">
+    <div id="bossHP"></div>
+  </div>
+
+</div>
+
+<div id="player">
+
+  <div id="playerFace">🧒</div>
+
+  <div id="playerName">タイチ</div>
+
+</div>
+
+<div id="message"></div>
+
+<button id="attackButton">
+⚔️<BR>攻撃！
+</button>
+
+<div id="controls">
+
+  <div id="upRow">
+    <button id="upButton" class="controlButton">↑</button>
+  </div>
+
+  <div id="downRow">
+    <button id="leftButton" class="controlButton">←</button>
+    <button id="downButton" class="controlButton">↓</button>
+    <button id="rightButton" class="controlButton">→</button>
+  </div>
+
+</div>
+
+<div id="eventOverlay" class="overlay">
+
+  <div class="eventBox">
+
+    <div id="eventEmoji" class="eventEmoji"></div>
+
+    <div id="eventTitle" class="eventTitle"></div>
+
+    <div id="eventText" class="eventText"></div>
+
+    <button id="eventButton" class="eventButton">
+      OK！
+    </button>
+
+  </div>
+
+</div>
+
+</div>
 
 <script>
-
 
 /* =====================
    要素
 ===================== */
 
-const game =
-document.getElementById("game");
+const game=document.getElementById("game");
 
-const itemsContainer =
-document.getElementById("items");
+const stageLabel=document.getElementById("stageLabel");
 
-const player =
-document.getElementById("player");
+const pointsDisplay=document.getElementById("points");
 
-const playerFace =
-document.getElementById("playerFace");
+const countDisplay=document.getElementById("count");
 
-const playerName =
-document.getElementById("playerName");
+const totalDisplay=document.getElementById("total");
 
-const pointsDisplay =
-document.getElementById("points");
+const itemsContainer=document.getElementById("items");
 
-const itemCountDisplay =
-document.getElementById("itemCount");
+const player=document.getElementById("player");
 
-const totalCountDisplay =
-document.getElementById("totalCount");
+const playerFace=document.getElementById("playerFace");
 
-const stageLabel =
-document.getElementById("stageLabel");
+const playerName=document.getElementById("playerName");
 
-const message =
-document.getElementById("message");
+const follower=document.getElementById("follower");
 
-const stageScreen =
-document.getElementById("stageScreen");
+const message=document.getElementById("message");
 
-const stageTitle =
-document.getElementById("stageTitle");
+const sharkFriend=document.getElementById("sharkFriend");
 
-const stageText =
-document.getElementById("stageText");
+const boss=document.getElementById("boss");
 
-const stageBonus =
-document.getElementById("stageBonus");
+const bossHP=document.getElementById("bossHP");
 
-const nextStageButton =
-document.getElementById("nextStageButton");
+const attackButton=document.getElementById("attackButton");
 
-const restartButton =
-document.getElementById("restartButton");
+const eventOverlay=document.getElementById("eventOverlay");
 
-const eventScreen =
-document.getElementById("eventScreen");
+const eventEmoji=document.getElementById("eventEmoji");
 
-const joinButton =
-document.getElementById("joinButton");
+const eventTitle=document.getElementById("eventTitle");
 
-const sharkFriend =
-document.getElementById("sharkFriend");
+const eventText=document.getElementById("eventText");
 
-const taichiButton =
-document.getElementById("taichiButton");
-
-const hanaButton =
-document.getElementById("hanaButton");
+const eventButton=document.getElementById("eventButton");
 
 
 /* =====================
-   ゲームデータ
+   データ
 ===================== */
 
-let points = 0;
+let points=0;
 
-let itemCount = 0;
+let currentStage=1;
 
-let currentStage = 1;
+let itemCount=0;
 
-let stageFinished = false;
+let playerX=50;
 
-let eventActive = false;
+let playerBottom=180;
 
-let sharkEventDone = false;
+let hasShark=false;
 
+let gameLocked=false;
 
-/* プレイヤー位置 */
+let bossHPValue=100;
 
-let playerX = 50;
-
-let playerY = 200;
+let bossDefeated=false;
 
 
 /* =====================
-   ステージデータ
+   ステージ
 ===================== */
 
-const stages = {
+const stages={
 
-  1:{
+1:{
+name:"🌲 ステージ1：虫の森",
+theme:"forest",
+items:[
 
-    name:
-    "🌲 ステージ1：虫の森",
+["🪲","カブトムシ",10,"260px","100px"],
+["🦋","ちょうちょ",5,"240px","calc(100% - 150px)"],
+["🦗","バッタ",8,"410px","130px"],
+["🐞","てんとう虫",6,"390px","calc(100% - 110px)"],
+["🐛","いもむし",7,"500px","50%"]
 
-    clearText:
-    "虫の森の生き物を<br>全部見つけた！",
+]
+},
 
-    items:[
+2:{
+name:"🌊 ステージ2：海の世界",
+theme:"sea",
+items:[
 
-      {
-        emoji:"🪲",
-        name:"カブトムシ",
-        points:10,
-        top:"260px",
-        left:"100px"
-      },
+["🐟","おさかな",10,"250px","100px"],
+["🐙","たこたこ",15,"310px","calc(100% - 120px)"],
+["🦀","カニ",8,"430px","120px"],
+["🐢","カメ",12,"400px","calc(100% - 100px)"],
+["🦈","シャーキュン",0,"510px","50%","shark"]
 
-      {
-        emoji:"🦋",
-        name:"ちょうちょ",
-        points:5,
-        top:"250px",
-        right:"90px"
-      },
+]
+},
 
-      {
-        emoji:"🦗",
-        name:"バッタ",
-        points:8,
-        top:"410px",
-        left:"130px"
-      },
+3:{
+name:"🌋 ステージ3：火山の世界",
+theme:"volcano",
+items:[
 
-      {
-        emoji:"🐞",
-        name:"てんとう虫",
-        points:6,
-        top:"390px",
-        right:"65px"
-      },
+["🔥","炎の石",15,"260px","100px"],
+["🌋","火山のカケラ",20,"320px","calc(100% - 140px)"],
+["🪨","マグマ岩",12,"430px","120px"],
+["💎","炎のクリスタル",30,"470px","calc(100% - 120px)"]
 
-      {
-        emoji:"🐛",
-        name:"いもむし",
-        points:7,
-        top:"500px",
-        left:"50%"
-      }
+]
+},
 
-    ]
+4:{
+name:"🌌 ステージ4：星空の世界",
+theme:"space",
+items:[
 
-  },
+["⭐","星",10,"250px","100px"],
+["🌟","きらめく星",15,"310px","calc(100% - 120px)"],
+["✨","星のかけら",20,"420px","130px"],
+["🌠","流れ星",30,"470px","calc(100% - 130px)"]
 
+]
+},
 
-  2:{
+5:{
+name:"🏰 最終ステージ：ますみん城",
+theme:"castle",
+items:[]
 
-    name:
-    "🌊 ステージ2：海の世界",
-
-    clearText:
-    "海の仲間たちと<br>すてきな出会いがあった！",
-
-    items:[
-
-      {
-        emoji:"🐟",
-        name:"おさかな",
-        points:10,
-        top:"250px",
-        left:"100px"
-      },
-
-      {
-        emoji:"🐙",
-        name:"たこたこ",
-        points:15,
-        top:"300px",
-        right:"80px"
-      },
-
-      {
-        emoji:"🦀",
-        name:"カニ",
-        points:8,
-        top:"420px",
-        left:"120px"
-      },
-
-      {
-        emoji:"🐢",
-        name:"カメ",
-        points:12,
-        top:"400px",
-        right:"55px"
-      },
-
-      {
-        emoji:"🦈",
-        name:"シャーキュン",
-        points:0,
-        top:"500px",
-        left:"50%",
-        event:true
-      }
-
-    ]
-
-  }
+}
 
 };
+
+
+/* =====================
+   セーブ
+===================== */
+
+function saveGame(){
+
+  localStorage.setItem(
+    "taichiHanaAdventure",
+    JSON.stringify({
+
+      points:points,
+      currentStage:currentStage,
+      hasShark:hasShark
+
+    })
+
+  );
+
+}
+
+
+function clearSave(){
+
+  localStorage.removeItem(
+    "taichiHanaAdventure"
+  );
+
+}
 
 
 /* =====================
    ステージ読み込み
 ===================== */
 
-function loadStage(
-  stageNumber
-){
+function loadStage(number){
 
-  currentStage =
-  stageNumber;
+  currentStage=number;
 
-  itemCount =
-  0;
+  gameLocked=false;
 
-  stageFinished =
-  false;
+  itemCount=0;
 
-  eventActive =
-  false;
+  itemsContainer.innerHTML="";
 
+  boss.style.display="none";
 
-  const stage =
-  stages[stageNumber];
+  attackButton.classList.remove("show");
 
+  game.className=stages[number].theme;
 
-  stageLabel.innerHTML =
-  stage.name;
+  stageLabel.textContent=stages[number].name;
 
+  totalDisplay.textContent=stages[number].items.length;
 
-  itemCountDisplay.textContent =
-  itemCount;
+  countDisplay.textContent=0;
 
+  playerX=50;
 
-  totalCountDisplay.textContent =
-  stage.items.length;
-
-
-  /* 海 */
-
-  if(stageNumber === 2){
-
-    game.classList.add(
-      "seaStage"
-    );
-
-  }
-  else{
-
-    game.classList.remove(
-      "seaStage"
-    );
-
-  }
-
-
-  /* アイテム削除 */
-
-  itemsContainer.innerHTML =
-  "";
-
-
-  /* 作成 */
-
-  stage.items.forEach(
-  function(itemData){
-
-    const item =
-    document.createElement(
-      "div"
-    );
-
-
-    item.className =
-    "item";
-
-
-    if(itemData.event){
-
-      item.classList.add(
-        "bossItem"
-      );
-
-      item.dataset.event =
-      "shark";
-
-    }
-
-
-    item.textContent =
-    itemData.emoji;
-
-
-    item.dataset.name =
-    itemData.name;
-
-
-    item.dataset.points =
-    itemData.points;
-
-
-    if(itemData.top){
-
-      item.style.top =
-      itemData.top;
-
-    }
-
-
-    if(itemData.left){
-
-      item.style.left =
-      itemData.left;
-
-    }
-
-
-    if(itemData.right){
-
-      item.style.right =
-      itemData.right;
-
-    }
-
-
-    item.addEventListener(
-    "click",
-    function(event){
-
-      event.stopPropagation();
-
-      catchItem(
-        item
-      );
-
-    }
-    );
-
-
-    itemsContainer.appendChild(
-      item
-    );
-
-  }
-  );
-
-
-  showMessage(
-    stage.name +
-    " スタート！"
-  );
-
-}
-
-
-/* =====================
-   キャラクター変更
-===================== */
-
-taichiButton.addEventListener(
-"click",
-function(){
-
-  if(stageFinished ||
-     eventActive){
-    return;
-  }
-
-  playerFace.textContent =
-  "🧒";
-
-  playerName.textContent =
-  "タイチ";
-
-  taichiButton.classList.add(
-    "active"
-  );
-
-  hanaButton.classList.remove(
-    "active"
-  );
-
-  showMessage(
-    "🧒 タイチに交代！"
-  );
-
-}
-);
-
-
-hanaButton.addEventListener(
-"click",
-function(){
-
-  if(stageFinished ||
-     eventActive){
-    return;
-  }
-
-  playerFace.textContent =
-  "👧";
-
-  playerName.textContent =
-  "ハナ";
-
-  hanaButton.classList.add(
-    "active"
-  );
-
-  taichiButton.classList.remove(
-    "active"
-  );
-
-  showMessage(
-    "👧 ハナに交代！"
-  );
-
-}
-);
-
-
-/* =====================
-   プレイヤー更新
-===================== */
-
-function updatePlayer(){
-
-  player.style.left =
-  playerX + "%";
-
-  player.style.bottom =
-  playerY + "px";
-
-}
-
-
-/* =====================
-   移動
-===================== */
-
-function movePlayer(
-direction
-){
-
-  if(stageFinished ||
-     eventActive){
-    return;
-  }
-
-
-  const horizontalStep =
-  7;
-
-  const verticalStep =
-  45;
-
-
-  if(direction === "left"){
-
-    playerX -=
-    horizontalStep;
-
-  }
-
-  if(direction === "right"){
-
-    playerX +=
-    horizontalStep;
-
-  }
-
-  if(direction === "up"){
-
-    playerY +=
-    verticalStep;
-
-  }
-
-  if(direction === "down"){
-
-    playerY -=
-    verticalStep;
-
-  }
-
-
-  if(playerX < 8){
-
-    playerX = 8;
-
-  }
-
-  if(playerX > 92){
-
-    playerX = 92;
-
-  }
-
-  if(playerY < 150){
-
-    playerY = 150;
-
-  }
-
-  if(playerY > 520){
-
-    playerY = 520;
-
-  }
-
+  playerBottom=180;
 
   updatePlayer();
 
 
-  requestAnimationFrame(
-  function(){
+  if(number===5){
 
-    checkItemCollisions();
+    startBossStage();
+
+    return;
 
   }
+
+
+  stages[number].items.forEach(function(data){
+
+    const item=document.createElement("div");
+
+    item.className="item";
+
+    if(data[5]){
+
+      item.classList.add("special");
+
+      item.dataset.special=data[5];
+
+    }
+
+    item.textContent=data[0];
+
+    item.dataset.name=data[1];
+
+    item.dataset.points=data[2];
+
+    item.style.top=data[3];
+
+    item.style.left=data[4];
+
+
+    item.addEventListener(
+      "click",
+      function(e){
+
+        e.stopPropagation();
+
+        catchItem(item);
+
+      }
+    );
+
+
+    itemsContainer.appendChild(item);
+
+  });
+
+
+  showMessage(
+    stages[number].name+" スタート！"
   );
 
 }
@@ -1641,404 +848,587 @@ direction
    アイテム取得
 ===================== */
 
-function catchItem(
-item
-){
+function catchItem(item){
 
   if(
     !item ||
-    item.dataset.caught === "true" ||
-    stageFinished ||
-    eventActive
+    item.dataset.caught==="true" ||
+    gameLocked
   ){
     return;
   }
 
-
-  /* シャーキュン */
 
   if(
-    item.dataset.event ===
-    "shark"
+    item.dataset.special==="shark"
   ){
 
-    startSharkEvent(
-      item
-    );
+    startSharkEvent(item);
 
     return;
 
   }
 
 
-  item.dataset.caught =
-  "true";
+  item.dataset.caught="true";
 
+  const name=item.dataset.name;
 
-  const itemName =
-  item.dataset.name;
-
-
-  const itemPoints =
-  Number(
+  const value=Number(
     item.dataset.points
   );
 
 
-  points +=
-  itemPoints;
+  points+=value;
+
+  itemCount++;
 
 
-  itemCount +=
-  1;
+  pointsDisplay.textContent=points;
+
+  countDisplay.textContent=itemCount;
 
 
-  pointsDisplay.textContent =
-  points;
+  item.style.opacity="0";
 
-
-  itemCountDisplay.textContent =
-  itemCount;
-
-
-  item.style.pointerEvents =
-  "none";
-
-
-  item.style.transform =
-  "scale(1.6) rotate(20deg)";
-
-
-  item.style.opacity =
-  "0";
+  item.style.pointerEvents="none";
 
 
   showMessage(
-    "🎉 " +
-    itemName +
-    "をゲット！ +" +
-    itemPoints
+    "🎉 "+name+"をゲット！ +"+value
   );
 
 
-  setTimeout(
-  function(){
+  setTimeout(function(){
 
-    if(item.parentNode){
+    item.remove();
+
+    checkClear();
+
+  },250);
+
+}
+
+
+/* =====================
+   シャーキュン
+===================== */
+
+function startSharkEvent(item){
+
+  gameLocked=true;
+
+  item.style.opacity="0";
+
+
+  showEvent(
+
+    "🦈",
+
+    "シャーキュン登場！",
+
+    "「ぼくも一緒に<br>冒険していい？」",
+
+    "🤝 仲間にする！",
+
+    function(){
+
+      hasShark=true;
+
+      sharkFriend.classList.add("show");
+
+      follower.classList.add("show");
+
+      itemCount++;
+
+      countDisplay.textContent=itemCount;
 
       item.remove();
 
+      gameLocked=false;
+
+      showMessage(
+        "🎉 シャーキュンが仲間になった！"
+      );
+
+      saveGame();
+
+      setTimeout(checkClear,700);
+
     }
 
-
-    checkStageClear();
-
-  },
-  250
   );
 
 }
 
 
 /* =====================
-   シャーキュンイベント
+   クリア判定
 ===================== */
 
-function startSharkEvent(
-item
-){
+function checkClear(){
 
   if(
-    sharkEventDone ||
-    eventActive
+    itemCount>=
+    stages[currentStage].items.length
   ){
+
+    gameLocked=true;
+
+    points+=100;
+
+    pointsDisplay.textContent=points;
+
+    saveGame();
+
+
+    setTimeout(function(){
+
+      if(currentStage===4){
+
+        showEvent(
+
+          "🏰",
+
+          "最終決戦！",
+
+          "集めた仲間たちと一緒に<br>ますみん城へ向かおう！",
+
+          "⚔️ 最終決戦へ！",
+
+          function(){
+
+            loadStage(5);
+
+          }
+
+        );
+
+      }
+      else{
+
+        showEvent(
+
+          "🎉",
+
+          "ステージクリア！",
+
+          "クリアボーナス<br>⭐ +100！",
+
+          "次の世界へ！",
+
+          function(){
+
+            loadStage(
+              currentStage+1
+            );
+
+          }
+
+        );
+
+      }
+
+    },500);
+
+  }
+
+}
+
+
+/* =====================
+   プレイヤー移動
+===================== */
+
+function movePlayer(direction){
+
+  if(gameLocked){
     return;
   }
 
 
-  eventActive =
-  true;
+  const xStep=7;
+
+  const yStep=45;
 
 
-  item.style.opacity =
-  "0";
+  if(direction==="left"){
 
+    playerX-=xStep;
 
-  setTimeout(
-  function(){
+  }
 
-    eventScreen.classList.add(
-      "show"
-    );
+  if(direction==="right"){
 
-  },
-  300
-  );
+    playerX+=xStep;
 
-}
+  }
 
+  if(direction==="up"){
 
-/* =====================
-   仲間にする
-===================== */
+    playerBottom+=yStep;
 
-joinButton.addEventListener(
-"click",
-function(){
+  }
 
-  eventScreen.classList.remove(
-    "show"
-  );
+  if(direction==="down"){
 
-
-  sharkEventDone =
-  true;
-
-
-  eventActive =
-  false;
-
-
-  itemCount +=
-  1;
-
-
-  itemCountDisplay.textContent =
-  itemCount;
-
-
-  sharkFriend.classList.add(
-    "show"
-  );
-
-
-  showMessage(
-    "🎉 シャーキュンが仲間になった！"
-  );
-
-
-  const shark =
-  document.querySelector(
-    '[data-event="shark"]'
-  );
-
-
-  if(shark){
-
-    shark.remove();
+    playerBottom-=yStep;
 
   }
 
 
+  playerX=Math.max(
+    8,
+    Math.min(92,playerX)
+  );
+
+  playerBottom=Math.max(
+    140,
+    Math.min(520,playerBottom)
+  );
+
+
+  updatePlayer();
+
+
   setTimeout(
-  function(){
-
-    checkStageClear();
-
-  },
-  700
+    checkCollisions,
+    60
   );
 
 }
-);
+
+
+function updatePlayer(){
+
+  player.style.left=
+    playerX+"%";
+
+  player.style.bottom=
+    playerBottom+"px";
+
+
+  if(hasShark){
+
+    follower.style.left=
+      (playerX-10)+"%";
+
+    follower.style.bottom=
+      (playerBottom-15)+"px";
+
+  }
+
+}
 
 
 /* =====================
    当たり判定
 ===================== */
 
-function checkItemCollisions(){
+function checkCollisions(){
 
-  if(
-    stageFinished ||
-    eventActive
-  ){
+  if(gameLocked){
     return;
   }
 
 
-  const items =
-  document.querySelectorAll(
-    ".item"
-  );
+  const playerRect=
+    playerFace.getBoundingClientRect();
 
 
-  const playerRect =
-  playerFace
-  .getBoundingClientRect();
+  const px=
+    playerRect.left+
+    playerRect.width/2;
 
 
-  const playerCenterX =
-  playerRect.left +
-  playerRect.width / 2;
+  const py=
+    playerRect.top+
+    playerRect.height/2;
 
 
-  const playerCenterY =
-  playerRect.top +
-  playerRect.height / 2;
-
-
-  items.forEach(
-  function(item){
+  document
+  .querySelectorAll(".item")
+  .forEach(function(item){
 
     if(
-      item.dataset.caught ===
-      "true"
+      item.dataset.caught==="true"
     ){
       return;
     }
 
 
-    const itemRect =
-    item.getBoundingClientRect();
+    const rect=
+      item.getBoundingClientRect();
 
 
-    const itemCenterX =
-    itemRect.left +
-    itemRect.width / 2;
+    const ix=
+      rect.left+
+      rect.width/2;
 
 
-    const itemCenterY =
-    itemRect.top +
-    itemRect.height / 2;
-
-
-    const distanceX =
-    Math.abs(
-      playerCenterX -
-      itemCenterX
-    );
-
-
-    const distanceY =
-    Math.abs(
-      playerCenterY -
-      itemCenterY
-    );
+    const iy=
+      rect.top+
+      rect.height/2;
 
 
     if(
-      distanceX < 65 &&
-      distanceY < 65
+
+      Math.abs(px-ix)<65 &&
+
+      Math.abs(py-iy)<65
+
     ){
 
-      catchItem(
-        item
-      );
+      catchItem(item);
 
     }
 
-  }
+  });
+
+}
+
+
+/* =====================
+   最終ボス
+===================== */
+
+function startBossStage(){
+
+  gameLocked=false;
+
+  bossDefeated=false;
+
+  bossHPValue=100;
+
+  boss.style.display="block";
+
+  boss.style.left="50%";
+
+  boss.style.top="280px";
+
+  boss.style.transform="translateX(-50%)";
+
+  bossHP.style.width="100%";
+
+  attackButton.classList.add("show");
+
+  totalDisplay.textContent="BOSS";
+
+  countDisplay.textContent="⚔️";
+
+
+  showMessage(
+    "😈 ますみんが現れた！"
   );
 
 }
 
 
-/* =====================
-   ステージクリア確認
-===================== */
-
-function checkStageClear(){
-
-  const total =
-  stages[currentStage]
-  .items
-  .length;
-
+attackButton.addEventListener(
+"click",
+function(){
 
   if(
-    itemCount >= total
+    currentStage!==5 ||
+    bossDefeated
   ){
-
-    stageClear();
-
-  }
-
-}
-
-
-/* =====================
-   ステージクリア
-===================== */
-
-function stageClear(){
-
-  if(stageFinished){
     return;
   }
 
 
-  stageFinished =
-  true;
+  bossHPValue-=20;
 
 
-  setTimeout(
-  function(){
+  if(bossHPValue<0){
 
-    points +=
-    100;
+    bossHPValue=0;
 
-
-    pointsDisplay.textContent =
-    points;
+  }
 
 
-    stageTitle.innerHTML =
-    "🎉 ステージ" +
-    currentStage +
-    "クリア！ 🎉";
+  bossHP.style.width=
+    bossHPValue+"%";
 
 
-    stageText.innerHTML =
-    stages[currentStage]
-    .clearText;
+  showMessage(
+    "⚔️ タイチとハナの攻撃！"
+  );
 
 
-    stageBonus.innerHTML =
-    "⭐ クリアボーナス +100！";
+  if(
+    bossHPValue<=0
+  ){
+
+    bossDefeated=true;
+
+    attackButton.classList.remove("show");
+
+    boss.style.display="none";
+
+    points+=500;
+
+    pointsDisplay.textContent=points;
+
+    clearSave();
 
 
-    if(currentStage === 1){
+    setTimeout(function(){
 
-      nextStageButton.style.display =
-      "block";
+      showEnding();
+
+    },700);
+
+  }
+
+}
+);
 
 
-      restartButton.style.display =
-      "none";
+/* =====================
+   エンディング
+===================== */
 
+function showEnding(){
 
-      nextStageButton.textContent =
-      "🌊 海の世界へ！";
+  showEvent(
+
+    "🎉",
+
+    "大冒険クリア！！",
+
+    "タイチ、ハナ、シャーキュンは<br><br>たくさんの世界を冒険して<br>最後のますみんを倒した！<br><br>🌍 また新しい冒険が始まる…",
+
+    "🏠 最初から遊ぶ",
+
+    function(){
+
+      points=0;
+
+      currentStage=1;
+
+      hasShark=false;
+
+      follower.classList.remove("show");
+
+      sharkFriend.classList.remove("show");
+
+      pointsDisplay.textContent=0;
+
+      loadStage(1);
 
     }
 
-
-    if(currentStage === 2){
-
-      nextStageButton.style.display =
-      "none";
-
-
-      restartButton.style.display =
-      "block";
-
-    }
-
-
-    stageScreen.classList.add(
-      "show"
-    );
-
-  },
-  500
   );
 
 }
 
 
 /* =====================
-   操作ボタン
+   イベント
+===================== */
+
+function showEvent(
+
+emoji,
+title,
+text,
+buttonText,
+callback
+
+){
+
+  eventEmoji.textContent=emoji;
+
+  eventTitle.textContent=title;
+
+  eventText.innerHTML=text;
+
+  eventButton.textContent=buttonText;
+
+  eventOverlay.classList.add("show");
+
+
+  eventButton.onclick=function(){
+
+    eventOverlay.classList.remove("show");
+
+    callback();
+
+  };
+
+}
+
+
+/* =====================
+   メッセージ
+===================== */
+
+let messageTimer;
+
+
+function showMessage(text){
+
+  clearTimeout(messageTimer);
+
+  message.textContent=text;
+
+  message.classList.add("show");
+
+  messageTimer=setTimeout(function(){
+
+    message.classList.remove("show");
+
+  },1500);
+
+}
+
+
+/* =====================
+   キャラ変更
+===================== */
+
+document
+.getElementById("taichiButton")
+.addEventListener(
+"click",
+function(){
+
+  playerFace.textContent="🧒";
+
+  playerName.textContent="タイチ";
+
+  this.classList.add("active");
+
+  document
+  .getElementById("hanaButton")
+  .classList.remove("active");
+
+}
+);
+
+
+document
+.getElementById("hanaButton")
+.addEventListener(
+"click",
+function(){
+
+  playerFace.textContent="👧";
+
+  playerName.textContent="ハナ";
+
+  this.classList.add("active");
+
+  document
+  .getElementById("taichiButton")
+  .classList.remove("active");
+
+}
+);
+
+
+/* =====================
+   操作
 ===================== */
 
 document
@@ -2047,9 +1437,7 @@ document
 "click",
 function(){
 
-  movePlayer(
-    "up"
-  );
+  movePlayer("up");
 
 }
 );
@@ -2061,9 +1449,7 @@ document
 "click",
 function(){
 
-  movePlayer(
-    "down"
-  );
+  movePlayer("down");
 
 }
 );
@@ -2075,9 +1461,7 @@ document
 "click",
 function(){
 
-  movePlayer(
-    "left"
-  );
+  movePlayer("left");
 
 }
 );
@@ -2089,150 +1473,92 @@ document
 "click",
 function(){
 
-  movePlayer(
-    "right"
-  );
+  movePlayer("right");
 
 }
 );
 
 
-/* =====================
-   次のステージ
-===================== */
-
-nextStageButton.addEventListener(
-"click",
-function(){
-
-  stageScreen.classList.remove(
-    "show"
-  );
-
-
-  playerX =
-  50;
-
-
-  playerY =
-  200;
-
-
-  updatePlayer();
-
-
-  loadStage(
-    2
-  );
-
-}
-);
-
-
-/* =====================
-   最初から
-===================== */
-
-restartButton.addEventListener(
-"click",
-function(){
-
-  location.reload();
-
-}
-);
-
-
-/* =====================
-   メッセージ
-===================== */
-
-let messageTimer;
-
-
-function showMessage(
-text
-){
-
-  clearTimeout(
-    messageTimer
-  );
-
-
-  message.textContent =
-  text;
-
-
-  message.classList.add(
-    "show"
-  );
-
-
-  messageTimer =
-  setTimeout(
-  function(){
-
-    message.classList.remove(
-      "show"
-    );
-
-  },
-  1500
-  );
-
-}
-
-
-/* =====================
-   キーボード操作
-===================== */
+/* PC */
 
 document.addEventListener(
 "keydown",
-function(event){
+function(e){
 
-  if(
-    event.key === "ArrowUp"
-  ){
-
-    movePlayer(
-      "up"
-    );
-
+  if(e.key==="ArrowUp"){
+    movePlayer("up");
   }
 
-  if(
-    event.key === "ArrowDown"
-  ){
-
-    movePlayer(
-      "down"
-    );
-
+  if(e.key==="ArrowDown"){
+    movePlayer("down");
   }
 
-  if(
-    event.key === "ArrowLeft"
-  ){
-
-    movePlayer(
-      "left"
-    );
-
+  if(e.key==="ArrowLeft"){
+    movePlayer("left");
   }
 
-  if(
-    event.key === "ArrowRight"
-  ){
-
-    movePlayer(
-      "right"
-    );
-
+  if(e.key==="ArrowRight"){
+    movePlayer("right");
   }
 
 }
 );
+
+
+/* =====================
+   セーブデータ読み込み
+===================== */
+
+const save=
+localStorage.getItem(
+  "taichiHanaAdventure"
+);
+
+
+if(save){
+
+  try{
+
+    const data=
+    JSON.parse(save);
+
+
+    points=
+    data.points||0;
+
+
+    currentStage=
+    data.currentStage||1;
+
+
+    hasShark=
+    data.hasShark||false;
+
+
+    pointsDisplay.textContent=
+    points;
+
+
+    if(hasShark){
+
+      sharkFriend.classList.add(
+        "show"
+      );
+
+      follower.classList.add(
+        "show"
+      );
+
+    }
+
+  }
+  catch(e){
+
+    clearSave();
+
+  }
+
+}
 
 
 /* =====================
@@ -2240,7 +1566,7 @@ function(event){
 ===================== */
 
 loadStage(
-  1
+  currentStage
 );
 
 updatePlayer();

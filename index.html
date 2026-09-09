@@ -2,743 +2,460 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>タイチとハナの大冒険</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Yu Gothic", sans-serif;
+  background: linear-gradient(180deg, #79cfff, #dff6ff);
+  color: #222;
+  overflow: hidden;
 }
 
-body{
-  background:#111;
-}
-
-button{
-  font-family:inherit;
-}
-
-#game{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-  background:linear-gradient(
-    to bottom,
-    #63bce9 0%,
-    #9ce0f2 40%,
-    #6eb34b 41%,
-    #397c2d 100%
-  );
+#game {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 /* =========================
-   ワールドマップ
+   タイトル画面
 ========================= */
 
-#worldMap{
-  position:absolute;
-  inset:0;
-  z-index:500;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  overflow:auto;
-  padding:20px 15px 40px;
+#titleScreen {
+  position: absolute;
+  inset: 0;
   background:
-    linear-gradient(
-      to bottom,
-      #58bce9,
-      #8cdef0 38%,
-      #72b94c 39%,
-      #3e8a3d 100%
-    );
+    linear-gradient(180deg, rgba(70,180,255,0.8), rgba(255,255,255,0.9)),
+    radial-gradient(circle at center, #fff, #8fdcff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  text-align: center;
+  padding: 20px;
 }
 
-#mapTitle{
-  margin-top:5px;
-  color:white;
-  font-size:28px;
-  font-weight:900;
-  text-align:center;
-  text-shadow:0 3px 6px rgba(0,0,0,.4);
+.title-logo {
+  font-size: 42px;
+  font-weight: 900;
+  color: #ff4f91;
+  text-shadow:
+    3px 3px 0 white,
+    5px 5px 0 #7b4bff;
+  line-height: 1.25;
 }
 
-#mapSubtitle{
-  margin:8px 0 18px;
-  padding:7px 15px;
-  background:rgba(255,255,255,.9);
-  border-radius:20px;
-  font-weight:900;
+.subtitle {
+  font-size: 18px;
+  margin-top: 15px;
+  font-weight: bold;
 }
 
-#mapPath{
-  position:relative;
-  width:min(390px,100%);
-  min-height:610px;
+#startButton {
+  margin-top: 40px;
+  padding: 18px 45px;
+  border: none;
+  border-radius: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff4f91, #ff8a4f);
+  color: white;
+  box-shadow: 0 7px 0 #b93367;
 }
 
-.pathLine{
-  position:absolute;
-  width:10px;
-  background:rgba(255,255,255,.65);
-  border-radius:20px;
-  z-index:1;
-}
-
-#path1{
-  height:105px;
-  left:50%;
-  top:100px;
-  transform:translateX(-50%) rotate(-10deg);
-}
-
-#path2{
-  height:110px;
-  left:50%;
-  top:255px;
-  transform:translateX(-50%) rotate(12deg);
-}
-
-#path3{
-  height:105px;
-  left:50%;
-  top:410px;
-  transform:translateX(-50%) rotate(-8deg);
-}
-
-.mapStage{
-  position:absolute;
-  z-index:5;
-  width:145px;
-  min-height:100px;
-  padding:10px;
-  border:none;
-  border-radius:28px;
-  background:rgba(255,255,255,.94);
-  box-shadow:0 7px 18px rgba(0,0,0,.25);
-  font-weight:900;
-  text-align:center;
-}
-
-.mapStage:active{
-  transform:scale(.96);
-}
-
-.mapEmoji{
-  display:block;
-  font-size:44px;
-}
-
-.mapName{
-  display:block;
-  margin-top:3px;
-  font-size:16px;
-}
-
-.mapStatus{
-  display:block;
-  margin-top:3px;
-  font-size:12px;
-}
-
-.mapStage.locked{
-  filter:grayscale(1);
-  opacity:.65;
-}
-
-.mapStage.locked .mapStatus{
-  color:#c40000;
-}
-
-.mapStage.unlocked .mapStatus{
-  color:#168331;
-}
-
-#mapStage1{
-  top:15px;
-  left:15px;
-}
-
-#mapStage2{
-  top:155px;
-  right:15px;
-}
-
-#mapStage3{
-  top:305px;
-  left:15px;
-}
-
-#mapStage4{
-  top:450px;
-  right:15px;
-}
-
-#mapStage5{
-  top:530px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-#mapPoints{
-  margin-top:8px;
-  padding:9px 18px;
-  border-radius:20px;
-  background:#fff7c7;
-  font-weight:900;
-  box-shadow:0 4px 12px rgba(0,0,0,.2);
-}
-
-#resetButton{
-  margin-top:12px;
-  padding:9px 16px;
-  border:none;
-  border-radius:18px;
-  background:rgba(0,0,0,.55);
-  color:white;
-  font-weight:800;
+#startButton:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 #b93367;
 }
 
 /* =========================
-   ゲームUI
+   ゲーム画面
 ========================= */
 
-#gameUI{
-  display:none;
+#gameScreen {
+  display: none;
+  width: 100%;
+  height: 100%;
 }
 
-#gameUI.show{
-  display:block;
+#topBar {
+  height: 90px;
+  background: rgba(255,255,255,0.88);
+  border-bottom: 3px solid #ffffff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+  z-index: 20;
 }
 
-#title{
-  position:absolute;
-  top:9px;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  text-align:center;
-  color:white;
-  font-size:22px;
-  font-weight:900;
-  text-shadow:0 3px 6px rgba(0,0,0,.5);
-  z-index:30;
+#worldName {
+  font-size: 19px;
+  font-weight: 900;
+  text-align: center;
 }
 
-#stageLabel{
-  position:absolute;
-  top:43px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:6px 16px;
-  border-radius:20px;
-  background:rgba(0,0,0,.55);
-  color:white;
-  font-weight:900;
-  z-index:30;
-}
-
-#status{
-  position:absolute;
-  top:80px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:7px;
-  z-index:30;
-}
-
-.statusBox{
-  background:rgba(255,255,255,.93);
-  padding:8px 12px;
-  border-radius:18px;
-  font-size:16px;
-  font-weight:900;
-  box-shadow:0 4px 12px rgba(0,0,0,.2);
-}
-
-#mapButton{
-  position:absolute;
-  top:125px;
-  right:10px;
-  z-index:40;
-  border:none;
-  border-radius:18px;
-  padding:8px 10px;
-  background:white;
-  font-size:15px;
-  font-weight:900;
-  box-shadow:0 3px 10px rgba(0,0,0,.2);
-}
-
-#characterSelect{
-  position:absolute;
-  top:125px;
-  left:10px;
-  display:flex;
-  gap:7px;
-  z-index:30;
-}
-
-.characterButton{
-  border:none;
-  padding:8px 10px;
-  border-radius:17px;
-  font-size:14px;
-  font-weight:900;
-  background:white;
-  color:#2469ad;
-}
-
-.characterButton.active{
-  background:#ffc928;
-  color:white;
-}
-
-#friends{
-  position:absolute;
-  top:172px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:30;
-}
-
-.friend{
-  display:none;
-  background:white;
-  padding:5px 12px;
-  border-radius:18px;
-  font-weight:900;
-}
-
-.friend.show{
-  display:block;
+#message {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  min-height: 20px;
 }
 
 /* =========================
-   背景テーマ
+   マップ
 ========================= */
 
-#game.forest{
-  background:linear-gradient(
-    to bottom,
-    #63bce9 0%,
-    #9ce0f2 40%,
-    #6eb34b 41%,
-    #397c2d 100%
-  );
+#map {
+  position: absolute;
+  top: 90px;
+  bottom: 170px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  transition: background 0.5s;
 }
 
-#game.sea{
-  background:linear-gradient(
-    to bottom,
-    #54c6ec 0%,
-    #82dff3 30%,
-    #168cc9 31%,
-    #07518d 100%
-  );
+.world-forest {
+  background:
+    radial-gradient(circle at 20% 20%, #c5ff9e 0 8%, transparent 9%),
+    radial-gradient(circle at 70% 30%, #8ee67b 0 10%, transparent 11%),
+    linear-gradient(#8ce8ff 0 45%, #75c85b 45% 100%);
 }
 
-#game.volcano{
-  background:linear-gradient(
-    to bottom,
-    #47365b 0%,
-    #934a3d 40%,
-    #5b251d 41%,
-    #28100d 100%
-  );
+.world-sea {
+  background:
+    radial-gradient(circle at 30% 20%, #ffffff99 0 4%, transparent 5%),
+    linear-gradient(#72d8ff 0%, #178bd8 100%);
 }
 
-#game.space{
-  background:linear-gradient(
-    to bottom,
-    #07133b,
-    #111d5c 55%,
-    #17114b
-  );
+.world-castle {
+  background:
+    radial-gradient(circle at 50% 20%, #fff 0 5%, transparent 6%),
+    linear-gradient(#55466f, #201a35);
 }
 
-#game.castle{
-  background:linear-gradient(
-    to bottom,
-    #261333,
-    #4d2455 45%,
-    #1d1028
-  );
+.world-fire {
+  background:
+    radial-gradient(circle at 50% 30%, #ffcf4f 0 10%, transparent 11%),
+    linear-gradient(#ff754f, #a91f24);
+}
+
+.world-final {
+  background:
+    radial-gradient(circle at 50% 25%, #ffb5d4 0 10%, transparent 11%),
+    linear-gradient(#6b3c78, #1e1530);
 }
 
 /* =========================
-   飾り
+   キャラクター
 ========================= */
 
-.decor{
-  position:absolute;
-  pointer-events:none;
-  user-select:none;
-  z-index:1;
+.character {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 37px;
+  border: 4px solid white;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+  transition: left 0.12s linear, top 0.12s linear;
+  z-index: 10;
 }
 
-#decor1{
-  top:235px;
-  left:20px;
-  font-size:65px;
+#player {
+  background: linear-gradient(135deg, #ffcb52, #ff774f);
 }
 
-#decor2{
-  top:285px;
-  right:15px;
-  font-size:62px;
+#partner {
+  background: linear-gradient(135deg, #ff8ac2, #c466ff);
 }
 
-#decor3{
-  bottom:260px;
-  left:10px;
-  font-size:100px;
+.enemy {
+  background: linear-gradient(135deg, #4b4b4b, #1e1e1e);
 }
 
-#decor4{
-  bottom:250px;
-  right:10px;
-  font-size:100px;
+.friend {
+  background: linear-gradient(135deg, #7cffb3, #28a55e);
 }
 
 /* =========================
-   アイテム
+   HP
 ========================= */
 
-.item{
-  position:absolute;
-  width:72px;
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:55px;
-  z-index:10;
-  cursor:pointer;
-  user-select:none;
-  transition:.2s;
+#status {
+  position: absolute;
+  top: 95px;
+  left: 10px;
+  right: 10px;
+  z-index: 30;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
-.item:active{
-  transform:scale(1.25);
+.statusCard {
+  background: rgba(255,255,255,0.9);
+  border-radius: 14px;
+  padding: 7px 12px;
+  min-width: 130px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
 
-.special{
-  animation:float 1s infinite alternate;
+.hpbar {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 4px;
 }
 
-@keyframes float{
-  from{
-    transform:translateY(-7px);
-  }
-  to{
-    transform:translateY(7px);
-  }
+.hp {
+  height: 100%;
+  width: 100%;
+  background: #49c768;
+  transition: width 0.3s;
 }
 
 /* =========================
-   プレイヤー
+   操作ボタン
 ========================= */
 
-#player{
-  position:absolute;
-  width:100px;
-  left:50%;
-  bottom:180px;
-  transform:translateX(-50%);
-  z-index:20;
-  text-align:center;
-  transition:left .1s,bottom .1s;
+#controls {
+  position: absolute;
+  bottom: 0;
+  height: 170px;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.92);
+  border-top: 3px solid white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
 }
 
-#playerFace{
-  width:78px;
-  height:78px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:white;
-  font-size:50px;
-  box-shadow:0 5px 15px rgba(0,0,0,.35);
+#dpad {
+  width: 180px;
+  position: relative;
 }
 
-#playerName{
-  display:inline-block;
-  margin-top:5px;
-  padding:5px 12px;
-  border-radius:16px;
-  background:white;
-  font-weight:900;
+.controlButton {
+  width: 55px;
+  height: 55px;
+  border-radius: 18px;
+  border: none;
+  background: linear-gradient(#ffffff, #dfeaff);
+  box-shadow: 0 4px 0 #9eb1c8;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-/* 仲間 */
-
-#follower{
-  position:absolute;
-  font-size:50px;
-  z-index:18;
-  display:none;
-  transition:left .25s,bottom .25s;
+.controlButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #9eb1c8;
 }
 
-#follower.show{
-  display:block;
+#up {
+  position: absolute;
+  left: 62px;
+  top: 0;
+}
+
+#left {
+  position: absolute;
+  left: 0;
+  top: 58px;
+}
+
+#down {
+  position: absolute;
+  left: 62px;
+  top: 58px;
+}
+
+#right {
+  position: absolute;
+  left: 124px;
+  top: 58px;
+}
+
+#actionArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.actionButton {
+  min-width: 150px;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #ff4f91, #9a55ff);
+  box-shadow: 0 4px 0 #6930b2;
+}
+
+.actionButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #6930b2;
 }
 
 /* =========================
-   ボス
+   バトル画面
 ========================= */
 
-#boss{
-  position:absolute;
-  display:none;
-  z-index:15;
-  text-align:center;
-  animation:bossFloat 1s infinite alternate;
+#battleScreen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 200;
+  background:
+    radial-gradient(circle at center, #ffffff, #b4ddff);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-@keyframes bossFloat{
-  from{
-    margin-top:-5px;
-  }
-  to{
-    margin-top:5px;
-  }
+#enemyName {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 15px;
 }
 
-#bossFace{
-  font-size:90px;
+#enemySprite {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  background: #333;
+  border: 6px solid white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-#bossName{
-  background:white;
-  border-radius:18px;
-  padding:5px 12px;
-  font-weight:900;
+#battleMessage {
+  margin: 25px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  min-height: 50px;
 }
 
-#bossHPBox{
-  width:150px;
-  height:18px;
-  background:#333;
-  border-radius:20px;
-  overflow:hidden;
-  margin:5px auto;
+#battleButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 380px;
 }
 
-#bossHP{
-  width:100%;
-  height:100%;
-  background:#ef3d3d;
-  transition:.3s;
+.battleButton {
+  padding: 18px 8px;
+  border: none;
+  border-radius: 18px;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff5b5b, #ff9f4f);
+  box-shadow: 0 5px 0 #bd4c35;
 }
 
-/* =========================
-   メッセージ
-========================= */
-
-#message{
-  position:absolute;
-  top:220px;
-  left:50%;
-  transform:translateX(-50%) translateY(-10px);
-  padding:11px 18px;
-  border-radius:22px;
-  background:rgba(0,0,0,.78);
-  color:white;
-  font-size:18px;
-  font-weight:900;
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s;
-  z-index:100;
+.battleButton:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #bd4c35;
 }
 
-#message.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+#enemyHPWrap {
+  width: 100%;
+  max-width: 350px;
+  margin-top: 15px;
 }
 
-/* =========================
-   操作
-========================= */
-
-#controls{
-  position:absolute;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  z-index:50;
+#enemyHPBar {
+  width: 100%;
+  height: 20px;
+  border-radius: 20px;
+  background: #ddd;
+  overflow: hidden;
 }
 
-#upRow{
-  display:flex;
-  justify-content:center;
-  margin-bottom:7px;
-}
-
-#downRow{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-
-.controlButton{
-  width:82px;
-  height:64px;
-  border:none;
-  border-radius:20px;
-  background:rgba(255,255,255,.93);
-  font-size:37px;
-  color:#2477bd;
-  box-shadow:0 5px 13px rgba(0,0,0,.25);
-}
-
-.controlButton:active{
-  transform:scale(.94);
-}
-
-/* =========================
-   攻撃
-========================= */
-
-#attackButton{
-  display:none;
-  position:absolute;
-  right:18px;
-  bottom:175px;
-  width:85px;
-  height:85px;
-  border:none;
-  border-radius:50%;
-  background:#e94a35;
-  color:white;
-  font-size:17px;
-  font-weight:900;
-  box-shadow:0 5px 15px rgba(0,0,0,.35);
-  z-index:60;
-}
-
-#attackButton.show{
-  display:block;
+#enemyHP {
+  height: 100%;
+  width: 100%;
+  background: #ff4b4b;
+  transition: width 0.4s;
 }
 
 /* =========================
    イベント
 ========================= */
 
-.overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:rgba(0,0,0,.65);
-  z-index:300;
+#eventPopup {
+  position: absolute;
+  z-index: 300;
+  left: 20px;
+  right: 20px;
+  top: 25%;
+  background: white;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  display: none;
+  text-align: center;
 }
 
-.overlay.show{
-  display:flex;
+#eventText {
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: bold;
 }
 
-.eventBox{
-  width:min(380px,100%);
-  padding:28px 22px;
-  text-align:center;
-  border-radius:30px;
-  background:white;
-  box-shadow:0 12px 40px rgba(0,0,0,.4);
+#eventButton {
+  margin-top: 20px;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  background: #6b63ff;
 }
 
-.eventEmoji{
-  font-size:80px;
-}
-
-.eventTitle{
-  font-size:27px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.eventText{
-  margin-top:15px;
-  font-size:18px;
-  font-weight:800;
-  line-height:1.6;
-}
-
-.eventButton{
-  width:100%;
-  margin-top:22px;
-  padding:15px;
-  border:none;
-  border-radius:20px;
-  background:#237fd0;
-  color:white;
-  font-size:19px;
-  font-weight:900;
-}
-
-@media(max-height:700px){
-
-  #mapPath{
-    min-height:580px;
-  }
-
-  #mapTitle{
-    font-size:23px;
-  }
-
-  #title{
-    font-size:18px;
-  }
-
-  #stageLabel{
-    top:37px;
-  }
-
-  #status{
-    top:70px;
-  }
-
-  #characterSelect{
-    top:110px;
-  }
-
-  #mapButton{
-    top:110px;
-  }
-
-  #friends{
-    top:155px;
-  }
-
-  .controlButton{
-    width:72px;
-    height:58px;
-  }
-
+#worldProgress {
+  position: absolute;
+  top: 145px;
+  right: 10px;
+  z-index: 40;
+  background: rgba(255,255,255,0.85);
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 </style>
@@ -746,325 +463,99 @@ button{
 
 <body>
 
-<div id="game" class="forest">
+<div id="game">
 
-  <!-- =====================
-       ワールドマップ
-  ====================== -->
+<!-- タイトル -->
 
-  <div id="worldMap">
+<div id="titleScreen">
 
-    <div id="mapTitle">
-      🌍 タイチとハナの大冒険 🌍
-    </div>
-
-    <div id="mapSubtitle">
-      🗺️ 冒険する世界を選ぼう！
-    </div>
-
-    <div id="mapPath">
-
-      <div id="path1" class="pathLine"></div>
-      <div id="path2" class="pathLine"></div>
-      <div id="path3" class="pathLine"></div>
-
-      <button
-      id="mapStage1"
-      class="mapStage">
-
-        <span class="mapEmoji">🌲</span>
-
-        <span class="mapName">
-          虫の森
-        </span>
-
-        <span class="mapStatus">
-        </span>
-
-      </button>
-
-
-      <button
-      id="mapStage2"
-      class="mapStage">
-
-        <span class="mapEmoji">🌊</span>
-
-        <span class="mapName">
-          海の世界
-        </span>
-
-        <span class="mapStatus">
-        </span>
-
-      </button>
-
-
-      <button
-      id="mapStage3"
-      class="mapStage">
-
-        <span class="mapEmoji">🌋</span>
-
-        <span class="mapName">
-          火山の世界
-        </span>
-
-        <span class="mapStatus">
-        </span>
-
-      </button>
-
-
-      <button
-      id="mapStage4"
-      class="mapStage">
-
-        <span class="mapEmoji">🌌</span>
-
-        <span class="mapName">
-          星空の世界
-        </span>
-
-        <span class="mapStatus">
-        </span>
-
-      </button>
-
-
-      <button
-      id="mapStage5"
-      class="mapStage">
-
-        <span class="mapEmoji">🏰</span>
-
-        <span class="mapName">
-          ますみん城
-        </span>
-
-        <span class="mapStatus">
-        </span>
-
-      </button>
-
-    </div>
-
-    <div id="mapPoints">
-      ⭐ ポイント：<span id="mapPointsValue">0</span>
-    </div>
-
-    <button id="resetButton">
-      🔄 セーブデータを最初から
-    </button>
-
+  <div class="title-logo">
+    タイチとハナの<br>
+    大冒険！
   </div>
 
+  <div class="subtitle">
+    🌍 ふしぎな世界を旅して<br>
+    仲間を集め、ますみんを救え！
+  </div>
 
-  <!-- =====================
-       ゲーム
-  ====================== -->
+  <button id="startButton" onclick="startGame()">
+    ▶ ぼうけんをはじめる！
+  </button>
 
-  <div id="gameUI">
+</div>
 
-    <div id="title">
-      🌍 タイチとハナの大冒険 🌍
+
+<!-- ゲーム -->
+
+<div id="gameScreen">
+
+  <div id="topBar">
+    <div id="worldName">🌳 はじまりの森</div>
+    <div id="message">
+      タイチとハナの冒険が始まる！
     </div>
+  </div>
 
-    <div id="stageLabel"></div>
-
+  <div id="map" class="world-forest">
 
     <div id="status">
 
-      <div class="statusBox">
-        ⭐ <span id="points">0</span>
-      </div>
-
-      <div class="statusBox">
-        🗺️
-        <span id="count">0</span>
-        /
-        <span id="total">0</span>
-      </div>
-
-    </div>
-
-
-    <button id="mapButton">
-      🗺️ マップ
-    </button>
-
-
-    <div id="characterSelect">
-
-      <button
-      id="taichiButton"
-      class="characterButton active">
-
+      <div class="statusCard">
         🧒 タイチ
+        <div class="hpbar">
+          <div id="taichiHP" class="hp"></div>
+        </div>
+      </div>
 
-      </button>
-
-
-      <button
-      id="hanaButton"
-      class="characterButton">
-
+      <div class="statusCard">
         👧 ハナ
-
-      </button>
-
-    </div>
-
-
-    <div id="friends">
-
-      <div
-      id="sharkFriend"
-      class="friend">
-
-        🦈 シャーキュン
-
+        <div class="hpbar">
+          <div id="hanaHP" class="hp"></div>
+        </div>
       </div>
 
     </div>
 
-
-    <div id="decor1" class="decor">☁️</div>
-    <div id="decor2" class="decor">☁️</div>
-    <div id="decor3" class="decor">🌳</div>
-    <div id="decor4" class="decor">🌲</div>
-
-
-    <div id="items"></div>
-
-
-    <div id="follower">
-      🦈
+    <div id="worldProgress">
+      ワールド 1 / 5
     </div>
 
-
-    <div id="boss">
-
-      <div id="bossFace">
-        😈
-      </div>
-
-      <div id="bossName">
-        ますみん
-      </div>
-
-      <div id="bossHPBox">
-
-        <div id="bossHP"></div>
-
-      </div>
-
+    <div id="player" class="character">
+      🧒
     </div>
 
-
-    <div id="player">
-
-      <div id="playerFace">
-        🧒
-      </div>
-
-      <div id="playerName">
-        タイチ
-      </div>
-
-    </div>
-
-
-    <div id="message"></div>
-
-
-    <button id="attackButton">
-      ⚔️<br>
-      攻撃！
-    </button>
-
-
-    <div id="controls">
-
-      <div id="upRow">
-
-        <button
-        id="upButton"
-        class="controlButton">
-
-          ↑
-
-        </button>
-
-      </div>
-
-
-      <div id="downRow">
-
-        <button
-        id="leftButton"
-        class="controlButton">
-
-          ←
-
-        </button>
-
-
-        <button
-        id="downButton"
-        class="controlButton">
-
-          ↓
-
-        </button>
-
-
-        <button
-        id="rightButton"
-        class="controlButton">
-
-          →
-
-        </button>
-
-      </div>
-
+    <div id="partner" class="character">
+      👧
     </div>
 
   </div>
 
 
-  <!-- =====================
-       イベント画面
-  ====================== -->
+  <!-- 操作 -->
 
-  <div
-  id="eventOverlay"
-  class="overlay">
+  <div id="controls">
 
-    <div class="eventBox">
+    <div id="dpad">
 
-      <div
-      id="eventEmoji"
-      class="eventEmoji"></div>
+      <button id="up" class="controlButton" onclick="movePlayer(0,-1)">▲</button>
 
+      <button id="left" class="controlButton" onclick="movePlayer(-1,0)">◀</button>
 
-      <div
-      id="eventTitle"
-      class="eventTitle"></div>
+      <button id="down" class="controlButton" onclick="movePlayer(0,1)">▼</button>
 
+      <button id="right" class="controlButton" onclick="movePlayer(1,0)">▶</button>
 
-      <div
-      id="eventText"
-      class="eventText"></div>
+    </div>
 
+    <div id="actionArea">
 
-      <button
-      id="eventButton"
-      class="eventButton">
+      <button class="actionButton" onclick="searchArea()">
+        🔍 しらべる
+      </button>
 
-        OK！
-
+      <button class="actionButton" onclick="showStatus()">
+        ⭐ なかま
       </button>
 
     </div>
@@ -1074,1715 +565,580 @@ button{
 </div>
 
 
+<!-- バトル -->
+
+<div id="battleScreen">
+
+  <div id="enemyName">
+    敵
+  </div>
+
+  <div id="enemySprite">
+    👾
+  </div>
+
+  <div id="enemyHPWrap">
+    <div id="enemyHPBar">
+      <div id="enemyHP"></div>
+    </div>
+  </div>
+
+  <div id="battleMessage">
+    バトル開始！
+  </div>
+
+  <div id="battleButtons">
+
+    <button class="battleButton" onclick="attack('taichi')">
+      🧒 タイチ<br>むしアタック
+    </button>
+
+    <button class="battleButton" onclick="attack('hana')">
+      👧 ハナ<br>キラキラ魔法
+    </button>
+
+    <button class="battleButton" onclick="attack('rainbow')">
+      🪲 レインボー<br>クワガタ斬り
+    </button>
+
+    <button class="battleButton" onclick="attack('tockun')">
+      🦎 とっくん<br>しっぽアタック
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- イベント -->
+
+<div id="eventPopup">
+
+  <div id="eventText"></div>
+
+  <button id="eventButton" onclick="closeEvent()">
+    OK！
+  </button>
+
+</div>
+
+</div>
+
+
 <script>
 
-/* =====================
-   要素
-===================== */
+/* =========================
+   基本データ
+========================= */
 
-const game =
-document.getElementById("game");
+let playerX = 45;
+let playerY = 55;
 
-const worldMap =
-document.getElementById("worldMap");
+let currentWorld = 0;
 
-const gameUI =
-document.getElementById("gameUI");
+let taichiHealth = 100;
+let hanaHealth = 100;
 
-const stageLabel =
-document.getElementById("stageLabel");
+let enemyHealth = 100;
+let currentEnemy = null;
 
-const pointsDisplay =
-document.getElementById("points");
+let defeatedEnemies = 0;
 
-const mapPointsValue =
-document.getElementById("mapPointsValue");
 
-const countDisplay =
-document.getElementById("count");
+/* =========================
+   ワールド
+========================= */
 
-const totalDisplay =
-document.getElementById("total");
+const worlds = [
 
-const itemsContainer =
-document.getElementById("items");
-
-const player =
-document.getElementById("player");
-
-const playerFace =
-document.getElementById("playerFace");
-
-const playerName =
-document.getElementById("playerName");
-
-const follower =
-document.getElementById("follower");
-
-const message =
-document.getElementById("message");
-
-const sharkFriend =
-document.getElementById("sharkFriend");
-
-const boss =
-document.getElementById("boss");
-
-const bossHP =
-document.getElementById("bossHP");
-
-const attackButton =
-document.getElementById("attackButton");
-
-const eventOverlay =
-document.getElementById("eventOverlay");
-
-const eventEmoji =
-document.getElementById("eventEmoji");
-
-const eventTitle =
-document.getElementById("eventTitle");
-
-const eventText =
-document.getElementById("eventText");
-
-const eventButton =
-document.getElementById("eventButton");
-
-
-/* =====================
-   ゲームデータ
-===================== */
-
-let points = 0;
-
-let currentStage = 1;
-
-let itemCount = 0;
-
-let playerX = 50;
-
-let playerBottom = 180;
-
-let hasShark = false;
-
-let gameLocked = false;
-
-let bossHPValue = 100;
-
-let bossDefeated = false;
-
-
-/* =====================
-   解放ステージ
-===================== */
-
-let unlockedStages =
-[1];
-
-
-/* =====================
-   ステージデータ
-===================== */
-
-const stages = {
-
-1:{
-  name:"🌲 虫の森",
-  theme:"forest",
-  items:[
-
-    ["🪲","カブトムシ",10,"250px","90px"],
-
-    ["🦋","ちょうちょ",5,"300px","calc(100% - 130px)"],
-
-    ["🦗","バッタ",8,"410px","120px"],
-
-    ["🐞","てんとう虫",6,"390px","calc(100% - 100px)"],
-
-    ["🐛","いもむし",7,"500px","50%"]
-
-  ]
-},
-
-2:{
-  name:"🌊 海の世界",
-  theme:"sea",
-  items:[
-
-    ["🐟","おさかな",10,"250px","90px"],
-
-    ["🐙","たこたこ",15,"310px","calc(100% - 120px)"],
-
-    ["🦀","カニ",8,"420px","120px"],
-
-    ["🐢","カメ",12,"400px","calc(100% - 100px)"],
-
-    ["🦈","シャーキュン",0,"500px","50%","shark"]
-
-  ]
-},
-
-3:{
-  name:"🌋 火山の世界",
-  theme:"volcano",
-  items:[
-
-    ["🔥","炎の石",15,"260px","90px"],
-
-    ["🌋","火山のカケラ",20,"320px","calc(100% - 120px)"],
-
-    ["🪨","マグマ岩",12,"430px","120px"],
-
-    ["💎","炎のクリスタル",30,"480px","calc(100% - 110px)"]
-
-  ]
-},
-
-4:{
-  name:"🌌 星空の世界",
-  theme:"space",
-  items:[
-
-    ["⭐","星",10,"250px","90px"],
-
-    ["🌟","きらめく星",15,"320px","calc(100% - 120px)"],
-
-    ["✨","星のかけら",20,"430px","120px"],
-
-    ["🌠","流れ星",30,"480px","calc(100% - 110px)"]
-
-  ]
-},
-
-5:{
-  name:"🏰 ますみん城",
-  theme:"castle",
-  items:[]
-}
-
-};
-
-
-/* =====================
-   セーブ
-===================== */
-
-function saveGame(){
-
-  const saveData = {
-
-    points:points,
-
-    currentStage:currentStage,
-
-    hasShark:hasShark,
-
-    unlockedStages:unlockedStages
-
-  };
-
-
-  localStorage.setItem(
-
-    "taichiHanaWorldMap",
-
-    JSON.stringify(saveData)
-
-  );
-
-}
-
-
-/* =====================
-   セーブ削除
-===================== */
-
-function resetGame(){
-
-  localStorage.removeItem(
-    "taichiHanaWorldMap"
-  );
-
-
-  points = 0;
-
-  currentStage = 1;
-
-  hasShark = false;
-
-  unlockedStages = [1];
-
-
-  pointsDisplay.textContent = 0;
-
-  mapPointsValue.textContent = 0;
-
-
-  follower.classList.remove(
-    "show"
-  );
-
-  sharkFriend.classList.remove(
-    "show"
-  );
-
-
-  updateWorldMap();
-
-}
-
-
-/* =====================
-   ワールドマップ
-===================== */
-
-function updateWorldMap(){
-
-  mapPointsValue.textContent =
-    points;
-
-
-  for(
-
-    let i = 1;
-
-    i <= 5;
-
-    i++
-
-  ){
-
-    const button =
-    document.getElementById(
-      "mapStage"+i
-    );
-
-
-    const status =
-    button.querySelector(
-      ".mapStatus"
-    );
-
-
-    if(
-      unlockedStages.includes(i)
-    ){
-
-      button.classList.remove(
-        "locked"
-      );
-
-      button.classList.add(
-        "unlocked"
-      );
-
-      status.textContent =
-        "▶️ 冒険する";
-
-    }
-
-    else{
-
-      button.classList.add(
-        "locked"
-      );
-
-      button.classList.remove(
-        "unlocked"
-      );
-
-      status.textContent =
-        "🔒 ロック中";
-
-    }
-
-  }
-
-}
-
-
-/* =====================
-   マップを開く
-===================== */
-
-function openWorldMap(){
-
-  gameUI.classList.remove(
-    "show"
-  );
-
-
-  worldMap.style.display =
-    "flex";
-
-
-  updateWorldMap();
-
-
-  saveGame();
-
-}
-
-
-/* =====================
-   マップから冒険
-===================== */
-
-function startFromMap(stageNumber){
-
-  if(
-    !unlockedStages.includes(
-      stageNumber
-    )
-  ){
-
-    showMessage(
-      "🔒 まだこの世界には行けないよ！"
-    );
-
-    return;
-
-  }
-
-
-  currentStage =
-    stageNumber;
-
-
-  worldMap.style.display =
-    "none";
-
-
-  gameUI.classList.add(
-    "show"
-  );
-
-
-  loadStage(
-    stageNumber
-  );
-
-}
-
-
-/* =====================
-   ステージ読み込み
-===================== */
-
-function loadStage(number){
-
-  currentStage =
-    number;
-
-
-  gameLocked =
-    false;
-
-
-  itemCount =
-    0;
-
-
-  itemsContainer.innerHTML =
-    "";
-
-
-  boss.style.display =
-    "none";
-
-
-  attackButton.classList.remove(
-    "show"
-  );
-
-
-  game.className =
-    stages[number].theme;
-
-
-  stageLabel.textContent =
-    stages[number].name;
-
-
-  countDisplay.textContent =
-    0;
-
-
-  totalDisplay.textContent =
-    stages[number].items.length;
-
-
-  playerX =
-    50;
-
-
-  playerBottom =
-    180;
-
-
-  updatePlayer();
-
-
-  if(
-    number === 5
-  ){
-
-    startBossStage();
-
-    return;
-
-  }
-
-
-  stages[number].items.forEach(
-
-    function(data){
-
-      const item =
-      document.createElement(
-        "div"
-      );
-
-
-      item.className =
-        "item";
-
-
-      if(
-        data[5]
-      ){
-
-        item.classList.add(
-          "special"
-        );
-
-
-        item.dataset.special =
-          data[5];
-
-      }
-
-
-      item.textContent =
-        data[0];
-
-
-      item.dataset.name =
-        data[1];
-
-
-      item.dataset.points =
-        data[2];
-
-
-      item.style.top =
-        data[3];
-
-
-      item.style.left =
-        data[4];
-
-
-      item.addEventListener(
-
-        "click",
-
-        function(event){
-
-          event.stopPropagation();
-
-          catchItem(item);
-
-        }
-
-      );
-
-
-      itemsContainer.appendChild(
-        item
-      );
-
-    }
-
-  );
-
-
-  showMessage(
-    stages[number].name+
-    " スタート！"
-  );
-
-}
-
-
-/* =====================
-   アイテム取得
-===================== */
-
-function catchItem(item){
-
-  if(
-    !item ||
-    item.dataset.caught === "true" ||
-    gameLocked
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    item.dataset.special ===
-    "shark"
-  ){
-
-    startSharkEvent(
-      item
-    );
-
-    return;
-
-  }
-
-
-  item.dataset.caught =
-    "true";
-
-
-  const name =
-    item.dataset.name;
-
-
-  const value =
-    Number(
-      item.dataset.points
-    );
-
-
-  points +=
-    value;
-
-
-  itemCount +=
-    1;
-
-
-  pointsDisplay.textContent =
-    points;
-
-
-  countDisplay.textContent =
-    itemCount;
-
-
-  item.style.opacity =
-    "0";
-
-
-  item.style.pointerEvents =
-    "none";
-
-
-  showMessage(
-
-    "🎉 "+name+
-    "をゲット！ +"+
-    value
-
-  );
-
-
-  setTimeout(
-
-    function(){
-
-      item.remove();
-
-      checkClear();
-
+  {
+    name: "🌳 はじまりの森",
+    className: "world-forest",
+    enemy: {
+      name: "🦗 カマキチ",
+      icon: "🦗",
+      hp: 80
     },
+    story:
+      "森の奥から不思議な声が聞こえる！<br><br>『タイチ！ハナ！大変だ！』<br><br>カマキチが待っている！"
+  },
 
-    250
+  {
+    name: "🌊 シャーキュンの海",
+    className: "world-sea",
+    enemy: {
+      name: "🦈 シャーキュン",
+      icon: "🦈",
+      hp: 100
+    },
+    story:
+      "海の世界に到着！<br><br>そこには巨大な波と、<br>シャーキュンが待っていた！"
+  },
 
-  );
+  {
+    name: "🏰 ちび怪盗くんの城",
+    className: "world-castle",
+    enemy: {
+      name: "🦹 ちび怪盗くん",
+      icon: "🦹",
+      hp: 120
+    },
+    story:
+      "謎の城に潜入！<br><br>お宝を盗んだちび怪盗くんを<br>追いかけよう！"
+  },
+
+  {
+    name: "🔥 パリピタイタイ火山",
+    className: "world-fire",
+    enemy: {
+      name: "😎 パリピタイタイ",
+      icon: "😎",
+      hp: 150
+    },
+    story:
+      "ド派手な音楽が鳴り響く火山！<br><br>パリピタイタイとの<br>熱いバトルが始まる！"
+  },
+
+  {
+    name: "🌸 ますみん城",
+    className: "world-final",
+    enemy: {
+      name: "👑 ラスボス・ますみん",
+      icon: "👑",
+      hp: 220
+    },
+    story:
+      "ついに最後の世界！<br><br>すべての冒険の先にいるのは…<br><br>ラスボス・ますみん！！"
+  }
+
+];
+
+
+/* =========================
+   ゲーム開始
+========================= */
+
+function startGame() {
+
+  document.getElementById("titleScreen").style.display = "none";
+
+  document.getElementById("gameScreen").style.display = "block";
+
+  updatePlayerPosition();
+
+  showWorldIntro();
 
 }
 
 
-/* =====================
-   シャーキュン
-===================== */
+/* =========================
+   プレイヤー移動
+========================= */
 
-function startSharkEvent(item){
+function movePlayer(dx, dy) {
 
-  gameLocked =
-    true;
+  playerX += dx * 7;
+  playerY += dy * 7;
+
+  playerX = Math.max(5, Math.min(85, playerX));
+  playerY = Math.max(25, Math.min(80, playerY));
+
+  updatePlayerPosition();
+
+  randomEncounter();
+
+}
 
 
-  item.style.opacity =
-    "0";
+function updatePlayerPosition() {
 
+  const player = document.getElementById("player");
+  const partner = document.getElementById("partner");
+
+  player.style.left = playerX + "%";
+  player.style.top = playerY + "%";
+
+  partner.style.left = (playerX - 8) + "%";
+  partner.style.top = (playerY + 8) + "%";
+
+}
+
+
+/* =========================
+   エリア探索
+========================= */
+
+function searchArea() {
+
+  const messages = [
+
+    "🌱 草むらを調べた！<br>何かが動いた気がする…",
+
+    "🪲 タイチは虫の気配を感じた！",
+
+    "🎀 ハナがキラキラしたものを見つけた！",
+
+    "🌟 不思議な力を感じる！",
+
+    "🦎 とっくんが近くにいる気がする…",
+
+    "🪲 レインボーが仲間になりたそうにしている！"
+
+  ];
+
+  const text =
+    messages[Math.floor(Math.random() * messages.length)];
+
+  showEvent(text);
+
+}
+
+
+function showStatus() {
 
   showEvent(
-
-    "🦈",
-
-    "シャーキュン登場！",
-
-    "「ぼくも一緒に<br>冒険していい？」",
-
-    "🤝 仲間にする！",
-
-    function(){
-
-      hasShark =
-        true;
-
-
-      sharkFriend.classList.add(
-        "show"
-      );
-
-
-      follower.classList.add(
-        "show"
-      );
-
-
-      itemCount +=
-        1;
-
-
-      countDisplay.textContent =
-        itemCount;
-
-
-      item.remove();
-
-
-      gameLocked =
-        false;
-
-
-      showMessage(
-        "🎉 シャーキュンが仲間になった！"
-      );
-
-
-      saveGame();
-
-
-      setTimeout(
-        checkClear,
-        700
-      );
-
-    }
-
+    "⭐ 現在の仲間 ⭐<br><br>" +
+    "🧒 タイチ<br>" +
+    "👧 ハナ<br>" +
+    "🪲 レインボー<br>" +
+    "🦎 とっくん<br><br>" +
+    "これからさらに仲間が増えるかも！？"
   );
 
 }
 
 
-/* =====================
-   クリア判定
-===================== */
+/* =========================
+   ランダムエンカウント
+========================= */
 
-function checkClear(){
+function randomEncounter() {
 
-  if(
-    itemCount >=
-    stages[currentStage].items.length
-  ){
+  const chance = Math.random();
 
-    gameLocked =
-      true;
+  if (chance < 0.18) {
 
-
-    points +=
-      100;
-
-
-    pointsDisplay.textContent =
-      points;
-
-
-    /* 次の世界解放 */
-
-    const nextStage =
-      currentStage + 1;
-
-
-    if(
-
-      nextStage <= 5 &&
-
-      !unlockedStages.includes(
-        nextStage
-      )
-
-    ){
-
-      unlockedStages.push(
-        nextStage
-      );
-
-    }
-
-
-    saveGame();
-
-
-    setTimeout(
-
-      function(){
-
-        if(
-          currentStage === 4
-        ){
-
-          showEvent(
-
-            "🏰",
-
-            "ますみん城が解放された！",
-
-            "いよいよ最後の戦い！<br><br>🗺️ ワールドマップから<br>ますみん城へ向かおう！",
-
-            "🗺️ マップへ！",
-
-            function(){
-
-              openWorldMap();
-
-            }
-
-          );
-
-        }
-
-        else{
-
-          showEvent(
-
-            "🎉",
-
-            "ステージクリア！",
-
-            "クリアボーナス<br>⭐ +100！<br><br>次の世界が解放されたよ！",
-
-            "🗺️ マップへ！",
-
-            function(){
-
-              openWorldMap();
-
-            }
-
-          );
-
-        }
-
-      },
-
-      500
-
-    );
+    startBattle();
 
   }
 
 }
 
 
-/* =====================
-   プレイヤー移動
-===================== */
+/* =========================
+   ワールド開始
+========================= */
 
-function movePlayer(direction){
+function showWorldIntro() {
 
-  if(
-    gameLocked
-  ){
+  const world = worlds[currentWorld];
 
-    return;
+  document.getElementById("worldName").innerText =
+    world.name;
 
-  }
+  document.getElementById("worldProgress").innerText =
+    "ワールド " + (currentWorld + 1) +
+    " / " + worlds.length;
 
+  const map = document.getElementById("map");
 
-  const xStep =
-    7;
+  map.className = "";
 
+  map.classList.add(world.className);
 
-  const yStep =
-    45;
+  document.getElementById("message").innerText =
+    "冒険を進めよう！";
 
-
-  if(
-    direction === "left"
-  ){
-
-    playerX -=
-      xStep;
-
-  }
-
-
-  if(
-    direction === "right"
-  ){
-
-    playerX +=
-      xStep;
-
-  }
-
-
-  if(
-    direction === "up"
-  ){
-
-    playerBottom +=
-      yStep;
-
-  }
-
-
-  if(
-    direction === "down"
-  ){
-
-    playerBottom -=
-      yStep;
-
-  }
-
-
-  playerX =
-  Math.max(
-
-    8,
-
-    Math.min(
-      92,
-      playerX
-    )
-
-  );
-
-
-  playerBottom =
-  Math.max(
-
-    140,
-
-    Math.min(
-      520,
-      playerBottom
-    )
-
-  );
-
-
-  updatePlayer();
-
-
-  setTimeout(
-    checkCollisions,
-    60
-  );
+  showEvent(world.story);
 
 }
 
 
-function updatePlayer(){
+/* =========================
+   バトル開始
+========================= */
 
-  player.style.left =
-    playerX+"%";
+function startBattle() {
 
+  const world = worlds[currentWorld];
 
-  player.style.bottom =
-    playerBottom+"px";
+  currentEnemy = world.enemy;
 
+  enemyHealth = currentEnemy.hp;
 
-  if(
-    hasShark
-  ){
+  document.getElementById("enemyName").innerText =
+    currentEnemy.name;
 
-    follower.style.left =
-      (playerX-10)+"%";
+  document.getElementById("enemySprite").innerText =
+    currentEnemy.icon;
 
-
-    follower.style.bottom =
-      (playerBottom-15)+"px";
-
-  }
-
-}
-
-
-/* =====================
-   当たり判定
-===================== */
-
-function checkCollisions(){
-
-  if(
-    gameLocked
-  ){
-
-    return;
-
-  }
-
-
-  const playerRect =
-  playerFace.getBoundingClientRect();
-
-
-  const px =
-    playerRect.left+
-    playerRect.width/2;
-
-
-  const py =
-    playerRect.top+
-    playerRect.height/2;
-
-
-  document
-  .querySelectorAll(
-    ".item"
-  )
-  .forEach(
-
-    function(item){
-
-      if(
-        item.dataset.caught ===
-        "true"
-      ){
-
-        return;
-
-      }
-
-
-      const rect =
-      item.getBoundingClientRect();
-
-
-      const ix =
-        rect.left+
-        rect.width/2;
-
-
-      const iy =
-        rect.top+
-        rect.height/2;
-
-
-      if(
-
-        Math.abs(px-ix) < 65 &&
-
-        Math.abs(py-iy) < 65
-
-      ){
-
-        catchItem(
-          item
-        );
-
-      }
-
-    }
-
-  );
-
-}
-
-
-/* =====================
-   最終ボス
-===================== */
-
-function startBossStage(){
-
-  gameLocked =
-    false;
-
-
-  bossDefeated =
-    false;
-
-
-  bossHPValue =
-    100;
-
-
-  boss.style.display =
-    "block";
-
-
-  boss.style.left =
-    "50%";
-
-
-  boss.style.top =
-    "270px";
-
-
-  boss.style.transform =
-    "translateX(-50%)";
-
-
-  bossHP.style.width =
+  document.getElementById("enemyHP").style.width =
     "100%";
 
+  document.getElementById("battleMessage").innerText =
+    currentEnemy.name + " が現れた！";
 
-  attackButton.classList.add(
-    "show"
-  );
-
-
-  totalDisplay.textContent =
-    "BOSS";
-
-
-  countDisplay.textContent =
-    "⚔️";
-
-
-  showMessage(
-    "😈 ますみんが現れた！"
-  );
+  document.getElementById("battleScreen").style.display =
+    "flex";
 
 }
 
 
-/* =====================
+/* =========================
    攻撃
-===================== */
+========================= */
 
-attackButton.addEventListener(
+function attack(type) {
 
-  "click",
+  let damage = 0;
+  let attackName = "";
 
-  function(){
+  if (type === "taichi") {
 
-    if(
+    damage =
+      Math.floor(Math.random() * 20) + 15;
 
-      currentStage !== 5 ||
-
-      bossDefeated
-
-    ){
-
-      return;
-
-    }
-
-
-    bossHPValue -=
-      20;
-
-
-    if(
-      bossHPValue < 0
-    ){
-
-      bossHPValue =
-        0;
-
-    }
-
-
-    bossHP.style.width =
-      bossHPValue+"%";
-
-
-    showMessage(
-      "⚔️ タイチとハナの攻撃！"
-    );
-
-
-    if(
-      bossHPValue <= 0
-    ){
-
-      bossDefeated =
-        true;
-
-
-      attackButton.classList.remove(
-        "show"
-      );
-
-
-      boss.style.display =
-        "none";
-
-
-      points +=
-        500;
-
-
-      pointsDisplay.textContent =
-        points;
-
-
-      unlockedStages =
-      [1,2,3,4,5];
-
-
-      saveGame();
-
-
-      setTimeout(
-
-        function(){
-
-          showEnding();
-
-        },
-
-        700
-
-      );
-
-    }
+    attackName =
+      "🧒 タイチの むしアタック！";
 
   }
 
-);
+  if (type === "hana") {
+
+    damage =
+      Math.floor(Math.random() * 20) + 18;
+
+    attackName =
+      "👧 ハナの キラキラ魔法！";
+
+  }
+
+  if (type === "rainbow") {
+
+    damage =
+      Math.floor(Math.random() * 25) + 20;
+
+    attackName =
+      "🪲 レインボーの クワガタ斬り！";
+
+  }
+
+  if (type === "tockun") {
+
+    damage =
+      Math.floor(Math.random() * 25) + 18;
+
+    attackName =
+      "🦎 とっくんの しっぽアタック！";
+
+  }
 
 
-/* =====================
-   エンディング
-===================== */
+  enemyHealth -= damage;
 
-function showEnding(){
+  if (enemyHealth < 0) {
+    enemyHealth = 0;
+  }
+
+
+  const maxHP = currentEnemy.hp;
+
+  const percent =
+    (enemyHealth / maxHP) * 100;
+
+  document.getElementById("enemyHP").style.width =
+    percent + "%";
+
+  document.getElementById("battleMessage").innerHTML =
+    attackName +
+    "<br>" +
+    damage +
+    " ダメージ！";
+
+
+  if (enemyHealth <= 0) {
+
+    setTimeout(victory, 700);
+
+    return;
+
+  }
+
+
+  setTimeout(enemyAttack, 600);
+
+}
+
+
+/* =========================
+   敵の攻撃
+========================= */
+
+function enemyAttack() {
+
+  const damage =
+    Math.floor(Math.random() * 12) + 5;
+
+  if (Math.random() < 0.5) {
+
+    taichiHealth -= damage;
+
+  } else {
+
+    hanaHealth -= damage;
+
+  }
+
+  taichiHealth =
+    Math.max(0, taichiHealth);
+
+  hanaHealth =
+    Math.max(0, hanaHealth);
+
+
+  document.getElementById("taichiHP").style.width =
+    taichiHealth + "%";
+
+  document.getElementById("hanaHP").style.width =
+    hanaHealth + "%";
+
+
+  document.getElementById("battleMessage").innerHTML =
+    currentEnemy.name +
+    " の攻撃！<br>" +
+    damage +
+    " ダメージ！";
+
+
+  if (
+    taichiHealth <= 0 &&
+    hanaHealth <= 0
+  ) {
+
+    setTimeout(gameOver, 700);
+
+  }
+
+}
+
+
+/* =========================
+   勝利
+========================= */
+
+function victory() {
+
+  document.getElementById("battleScreen").style.display =
+    "none";
+
+  defeatedEnemies++;
+
+  if (currentWorld < worlds.length - 1) {
+
+    showEvent(
+      "🎉 勝利！！<br><br>" +
+      currentEnemy.name +
+      " を倒した！<br><br>" +
+      "次の世界への道が開いた！"
+    );
+
+    currentWorld++;
+
+    setTimeout(() => {
+
+      showWorldIntro();
+
+    }, 1000);
+
+  } else {
+
+    showEvent(
+      "🎉🎉🎉 クリア！！！ 🎉🎉🎉<br><br>" +
+      "ラスボス・ますみんを倒した！<br><br>" +
+      "タイチとハナの大冒険は<br>大成功！！<br><br>" +
+      "🌈 これからも冒険は続く… 🌈"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ゲームオーバー
+========================= */
+
+function gameOver() {
+
+  document.getElementById("battleScreen").style.display =
+    "none";
 
   showEvent(
-
-    "🎉",
-
-    "大冒険クリア！！",
-
-    "タイチとハナは<br>虫の森、海、火山、星空を冒険し<br><br>シャーキュンと一緒に<br>ますみんを倒した！<br><br>🌍 冒険はまだまだ続く…",
-
-    "🗺️ ワールドマップへ！",
-
-    function(){
-
-      openWorldMap();
-
-    }
-
+    "💦 タイチとハナは<br>少し疲れてしまった…<br><br>" +
+    "でも大丈夫！<br>また挑戦しよう！"
   );
+
+  taichiHealth = 100;
+  hanaHealth = 100;
+
+  document.getElementById("taichiHP").style.width =
+    "100%";
+
+  document.getElementById("hanaHP").style.width =
+    "100%";
 
 }
 
 
-/* =====================
-   イベント
-===================== */
+/* =========================
+   ポップアップ
+========================= */
 
-function showEvent(
+function showEvent(text) {
 
-  emoji,
-
-  title,
-
-  text,
-
-  buttonText,
-
-  callback
-
-){
-
-  eventEmoji.textContent =
-    emoji;
-
-
-  eventTitle.textContent =
-    title;
-
-
-  eventText.innerHTML =
+  document.getElementById("eventText").innerHTML =
     text;
 
-
-  eventButton.textContent =
-    buttonText;
-
-
-  eventOverlay.classList.add(
-    "show"
-  );
-
-
-  eventButton.onclick =
-  function(){
-
-    eventOverlay.classList.remove(
-      "show"
-    );
-
-
-    callback();
-
-  };
+  document.getElementById("eventPopup").style.display =
+    "block";
 
 }
 
 
-/* =====================
-   メッセージ
-===================== */
+function closeEvent() {
 
-let messageTimer;
-
-
-function showMessage(text){
-
-  clearTimeout(
-    messageTimer
-  );
-
-
-  message.textContent =
-    text;
-
-
-  message.classList.add(
-    "show"
-  );
-
-
-  messageTimer =
-  setTimeout(
-
-    function(){
-
-      message.classList.remove(
-        "show"
-      );
-
-    },
-
-    1500
-
-  );
+  document.getElementById("eventPopup").style.display =
+    "none";
 
 }
 
 
-/* =====================
-   キャラクター変更
-===================== */
-
-document
-.getElementById(
-  "taichiButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    playerFace.textContent =
-      "🧒";
-
-
-    playerName.textContent =
-      "タイチ";
-
-
-    this.classList.add(
-      "active"
-    );
-
-
-    document
-    .getElementById(
-      "hanaButton"
-    )
-    .classList.remove(
-      "active"
-    );
-
-  }
-
-);
-
-
-document
-.getElementById(
-  "hanaButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    playerFace.textContent =
-      "👧";
-
-
-    playerName.textContent =
-      "ハナ";
-
-
-    this.classList.add(
-      "active"
-    );
-
-
-    document
-    .getElementById(
-      "taichiButton"
-    )
-    .classList.remove(
-      "active"
-    );
-
-  }
-
-);
-
-
-/* =====================
-   操作ボタン
-===================== */
-
-document
-.getElementById(
-  "upButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    movePlayer(
-      "up"
-    );
-
-  }
-
-);
-
-
-document
-.getElementById(
-  "downButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    movePlayer(
-      "down"
-    );
-
-  }
-
-);
-
-
-document
-.getElementById(
-  "leftButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    movePlayer(
-      "left"
-    );
-
-  }
-
-);
-
-
-document
-.getElementById(
-  "rightButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    movePlayer(
-      "right"
-    );
-
-  }
-
-);
-
-
-/* =====================
-   マップボタン
-===================== */
-
-document
-.getElementById(
-  "mapButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    openWorldMap();
-
-  }
-
-);
-
-
-/* =====================
-   マップステージ
-===================== */
-
-for(
-
-  let i = 1;
-
-  i <= 5;
-
-  i++
-
-){
-
-  document
-  .getElementById(
-    "mapStage"+i
-  )
-  .addEventListener(
-
-    "click",
-
-    function(){
-
-      startFromMap(
-        i
-      );
-
-    }
-
-  );
-
-}
-
-
-/* =====================
-   リセット
-===================== */
-
-document
-.getElementById(
-  "resetButton"
-)
-.addEventListener(
-
-  "click",
-
-  function(){
-
-    const ok =
-    confirm(
-      "本当に最初からやり直す？"
-    );
-
-
-    if(
-      ok
-    ){
-
-      resetGame();
-
-    }
-
-  }
-
-);
-
-
-/* =====================
-   PCキーボード
-===================== */
+/* =========================
+   キーボード操作
+========================= */
 
 document.addEventListener(
-
   "keydown",
+  function(e) {
 
-  function(event){
-
-    if(
-      event.key ===
-      "ArrowUp"
-    ){
-
-      movePlayer(
-        "up"
-      );
-
+    if (e.key === "ArrowUp") {
+      movePlayer(0,-1);
     }
 
-
-    if(
-      event.key ===
-      "ArrowDown"
-    ){
-
-      movePlayer(
-        "down"
-      );
-
+    if (e.key === "ArrowDown") {
+      movePlayer(0,1);
     }
 
-
-    if(
-      event.key ===
-      "ArrowLeft"
-    ){
-
-      movePlayer(
-        "left"
-      );
-
+    if (e.key === "ArrowLeft") {
+      movePlayer(-1,0);
     }
 
-
-    if(
-      event.key ===
-      "ArrowRight"
-    ){
-
-      movePlayer(
-        "right"
-      );
-
+    if (e.key === "ArrowRight") {
+      movePlayer(1,0);
     }
 
   }
-
 );
-
-
-/* =====================
-   セーブデータ読み込み
-===================== */
-
-const save =
-localStorage.getItem(
-  "taichiHanaWorldMap"
-);
-
-
-if(
-  save
-){
-
-  try{
-
-    const data =
-    JSON.parse(
-      save
-    );
-
-
-    points =
-      data.points || 0;
-
-
-    currentStage =
-      data.currentStage || 1;
-
-
-    hasShark =
-      data.hasShark || false;
-
-
-    if(
-      Array.isArray(
-        data.unlockedStages
-      )
-    ){
-
-      unlockedStages =
-        data.unlockedStages;
-
-    }
-
-
-    pointsDisplay.textContent =
-      points;
-
-
-    mapPointsValue.textContent =
-      points;
-
-
-    if(
-      hasShark
-    ){
-
-      sharkFriend.classList.add(
-        "show"
-      );
-
-
-      follower.classList.add(
-        "show"
-      );
-
-    }
-
-  }
-
-  catch(error){
-
-    resetGame();
-
-  }
-
-}
-
-
-/* =====================
-   初期表示
-===================== */
-
-updateWorldMap();
-
-
-gameUI.classList.remove(
-  "show"
-);
-
-
-worldMap.style.display =
-  "flex";
-
 
 </script>
 

@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
 
 <title>タイチとハナの大冒険</title>
 
@@ -21,6 +23,7 @@ body{
   width:100%;
   height:100%;
   overflow:hidden;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -39,8 +42,10 @@ body{
 
 #game{
   position:relative;
+
   width:100vw;
   height:100vh;
+
   overflow:hidden;
 
   background:
@@ -51,6 +56,22 @@ body{
       #69a941 44%,
       #3f7f2d 100%
     );
+
+  transition:
+    background .7s;
+}
+
+/* 海ステージ */
+
+#game.seaStage{
+  background:
+    linear-gradient(
+      to bottom,
+      #49bce8 0%,
+      #63d0f2 35%,
+      #167bc0 36%,
+      #07528f 100%
+    );
 }
 
 /* =====================
@@ -59,6 +80,7 @@ body{
 
 #title{
   position:absolute;
+
   top:15px;
   left:50%;
 
@@ -107,6 +129,14 @@ body{
   font-weight:900;
 
   z-index:20;
+
+  transition:
+    background .5s;
+}
+
+.seaStage #stageLabel{
+  background:
+    rgba(0,73,140,.85);
 }
 
 /* =====================
@@ -203,12 +233,18 @@ body{
    背景
 ===================== */
 
-.cloud{
+.backgroundItem{
   position:absolute;
 
-  font-size:60px;
-
   pointer-events:none;
+
+  user-select:none;
+
+  -webkit-user-select:none;
+}
+
+.cloud{
+  font-size:60px;
 }
 
 #cloud1{
@@ -222,13 +258,9 @@ body{
 }
 
 .tree{
-  position:absolute;
-
   font-size:95px;
 
   bottom:300px;
-
-  pointer-events:none;
 }
 
 #tree1{
@@ -239,11 +271,58 @@ body{
   right:20px;
 }
 
+/* 海の背景 */
+
+.wave{
+  display:none;
+
+  font-size:70px;
+}
+
+.fishBackground{
+  display:none;
+
+  font-size:55px;
+}
+
+#seaWave1{
+  top:270px;
+  left:10px;
+}
+
+#seaWave2{
+  top:390px;
+  right:10px;
+}
+
+#seaFish1{
+  top:240px;
+  left:30px;
+}
+
+#seaFish2{
+  top:330px;
+  right:30px;
+}
+
+.seaStage .wave,
+.seaStage .fishBackground{
+  display:block;
+}
+
+.seaStage .tree{
+  display:none;
+}
+
+.seaStage .cloud{
+  opacity:.5;
+}
+
 /* =====================
-   虫
+   アイテム
 ===================== */
 
-.bug{
+.item{
   position:absolute;
 
   width:70px;
@@ -269,34 +348,9 @@ body{
     opacity .25s;
 }
 
-.bug:active{
+.item:active{
   transform:
     scale(1.25);
-}
-
-#bug1{
-  top:250px;
-  left:105px;
-}
-
-#bug2{
-  top:270px;
-  right:95px;
-}
-
-#bug3{
-  top:410px;
-  left:130px;
-}
-
-#bug4{
-  top:390px;
-  right:65px;
-}
-
-#bug5{
-  top:500px;
-  left:50%;
 }
 
 /* =====================
@@ -420,7 +474,6 @@ body{
   position:absolute;
 
   bottom:20px;
-
   left:50%;
 
   transform:
@@ -472,10 +525,10 @@ body{
 }
 
 /* =====================
-   クリア画面
+   ステージ画面
 ===================== */
 
-#clearScreen{
+#stageScreen{
   position:absolute;
 
   inset:0;
@@ -493,12 +546,12 @@ body{
   padding:20px;
 }
 
-#clearScreen.show{
+#stageScreen.show{
   display:flex;
 }
 
-#clearBox{
-  width:min(360px,100%);
+#stageBox{
+  width:min(370px,100%);
 
   padding:
     32px 24px;
@@ -519,7 +572,7 @@ body{
     rgba(0,0,0,.35);
 }
 
-#clearTitle{
+#stageTitle{
   font-size:30px;
 
   font-weight:900;
@@ -527,7 +580,7 @@ body{
   color:#d88900;
 }
 
-#clearText{
+#stageText{
   margin-top:15px;
 
   font-size:19px;
@@ -537,7 +590,7 @@ body{
   line-height:1.6;
 }
 
-#clearPoints{
+#stageBonus{
   margin-top:15px;
 
   font-size:22px;
@@ -547,6 +600,7 @@ body{
   color:#e05d00;
 }
 
+#nextStageButton,
 #restartButton{
   margin-top:25px;
 
@@ -558,18 +612,31 @@ body{
 
   border-radius:22px;
 
+  color:white;
+
+  font-size:20px;
+
+  font-weight:900;
+}
+
+#nextStageButton{
+  background:
+    linear-gradient(
+      135deg,
+      #258ad6,
+      #075ca5
+    );
+}
+
+#restartButton{
+  display:none;
+
   background:
     linear-gradient(
       135deg,
       #4caf50,
       #218838
     );
-
-  color:white;
-
-  font-size:20px;
-
-  font-weight:900;
 }
 
 /* =====================
@@ -618,6 +685,9 @@ body{
     🌲 ステージ1：虫の森
   </div>
 
+
+  <!-- ステータス -->
+
   <div id="status">
 
     <div class="statusBox">
@@ -625,11 +695,13 @@ body{
     </div>
 
     <div class="statusBox">
-      🐞 <span id="bugCount">0</span> / 5
+      🐞 <span id="itemCount">0</span> / <span id="totalCount">5</span>
     </div>
 
   </div>
 
+
+  <!-- キャラクター -->
 
   <div id="characterSelect">
 
@@ -650,82 +722,71 @@ body{
   </div>
 
 
+  <!-- 森背景 -->
+
   <div
     id="cloud1"
-    class="cloud"
+    class="backgroundItem cloud"
   >
     ☁️
   </div>
 
   <div
     id="cloud2"
-    class="cloud"
+    class="backgroundItem cloud"
   >
     ☁️
   </div>
 
-
   <div
     id="tree1"
-    class="tree"
+    class="backgroundItem tree"
   >
     🌳
   </div>
 
   <div
     id="tree2"
-    class="tree"
+    class="backgroundItem tree"
   >
     🌲
   </div>
 
 
-  <!-- 虫 -->
+  <!-- 海背景 -->
 
   <div
-    class="bug"
-    id="bug1"
-    data-name="カブトムシ"
-    data-points="10"
+    id="seaWave1"
+    class="backgroundItem wave"
   >
-    🪲
+    🌊
   </div>
 
   <div
-    class="bug"
-    id="bug2"
-    data-name="ちょうちょ"
-    data-points="5"
+    id="seaWave2"
+    class="backgroundItem wave"
   >
-    🦋
+    🌊
   </div>
 
   <div
-    class="bug"
-    id="bug3"
-    data-name="バッタ"
-    data-points="8"
+    id="seaFish1"
+    class="backgroundItem fishBackground"
   >
-    🦗
+    🐠
   </div>
 
   <div
-    class="bug"
-    id="bug4"
-    data-name="てんとう虫"
-    data-points="6"
+    id="seaFish2"
+    class="backgroundItem fishBackground"
   >
-    🐞
+    🐟
   </div>
 
-  <div
-    class="bug"
-    id="bug5"
-    data-name="いもむし"
-    data-points="7"
-  >
-    🐛
-  </div>
+
+  <!-- アイテム表示場所 -->
+
+  <div id="items"></div>
 
 
   <!-- プレイヤー -->
@@ -745,8 +806,7 @@ body{
 
   <!-- メッセージ -->
 
-  <div id="message">
-  </div>
+  <div id="message"></div>
 
 
   <!-- 操作ボタン -->
@@ -763,7 +823,6 @@ body{
       </button>
 
     </div>
-
 
     <div id="downRow">
 
@@ -793,27 +852,30 @@ body{
   </div>
 
 
-  <!-- クリア画面 -->
+  <!-- ステージ画面 -->
 
-  <div id="clearScreen">
+  <div id="stageScreen">
 
-    <div id="clearBox">
+    <div id="stageBox">
 
-      <div id="clearTitle">
-        🎉 ステージ1クリア！ 🎉
+      <div id="stageTitle">
+        🎉 ステージクリア！ 🎉
       </div>
 
-      <div id="clearText">
-        虫の森の虫を<br>
+      <div id="stageText">
         全部見つけた！
       </div>
 
-      <div id="clearPoints">
-        ⭐ クリアボーナス +100！
+      <div id="stageBonus">
+        ⭐ ボーナス +100！
       </div>
 
+      <button id="nextStageButton">
+        🌊 次のステージへ！
+      </button>
+
       <button id="restartButton">
-        🔄 もう一度遊ぶ
+        🔄 最初から遊ぶ
       </button>
 
     </div>
@@ -832,6 +894,9 @@ body{
 const game =
   document.getElementById("game");
 
+const itemsContainer =
+  document.getElementById("items");
+
 const player =
   document.getElementById("player");
 
@@ -844,23 +909,35 @@ const playerName =
 const pointsDisplay =
   document.getElementById("points");
 
-const bugCountDisplay =
-  document.getElementById("bugCount");
+const itemCountDisplay =
+  document.getElementById("itemCount");
+
+const totalCountDisplay =
+  document.getElementById("totalCount");
 
 const message =
   document.getElementById("message");
 
-const clearScreen =
-  document.getElementById("clearScreen");
+const stageScreen =
+  document.getElementById("stageScreen");
+
+const stageTitle =
+  document.getElementById("stageTitle");
+
+const stageText =
+  document.getElementById("stageText");
+
+const stageBonus =
+  document.getElementById("stageBonus");
+
+const nextStageButton =
+  document.getElementById("nextStageButton");
 
 const restartButton =
   document.getElementById("restartButton");
 
-const taichiButton =
-  document.getElementById("taichiButton");
-
-const hanaButton =
-  document.getElementById("hanaButton");
+const stageLabel =
+  document.getElementById("stageLabel");
 
 
 /* =====================
@@ -869,20 +946,285 @@ const hanaButton =
 
 let points = 0;
 
-let bugCount = 0;
+let itemCount = 0;
 
-const totalBugs = 5;
+let currentStage = 1;
 
-let gameCleared = false;
+let stageFinished = false;
 
 
-/* =====================
-   プレイヤー位置
-===================== */
+/* プレイヤー位置 */
 
 let playerX = 50;
 
 let playerY = 200;
+
+
+/* =====================
+   ステージデータ
+===================== */
+
+const stages = {
+
+  1:{
+
+    name:
+      "🌲 ステージ1：虫の森",
+
+    clearText:
+      "虫の森の生き物を<br>全部見つけた！",
+
+    items:[
+
+      {
+        emoji:"🪲",
+        name:"カブトムシ",
+        points:10,
+        top:"250px",
+        left:"105px"
+      },
+
+      {
+        emoji:"🦋",
+        name:"ちょうちょ",
+        points:5,
+        top:"270px",
+        right:"95px"
+      },
+
+      {
+        emoji:"🦗",
+        name:"バッタ",
+        points:8,
+        top:"410px",
+        left:"130px"
+      },
+
+      {
+        emoji:"🐞",
+        name:"てんとう虫",
+        points:6,
+        top:"390px",
+        right:"65px"
+      },
+
+      {
+        emoji:"🐛",
+        name:"いもむし",
+        points:7,
+        top:"500px",
+        left:"50%"
+      }
+
+    ]
+
+  },
+
+
+  2:{
+
+    name:
+      "🌊 ステージ2：海の世界",
+
+    clearText:
+      "海の仲間を<br>全部見つけた！",
+
+    items:[
+
+      {
+        emoji:"🐟",
+        name:"おさかな",
+        points:10,
+        top:"250px",
+        left:"100px"
+      },
+
+      {
+        emoji:"🐙",
+        name:"たこたこ",
+        points:15,
+        top:"300px",
+        right:"80px"
+      },
+
+      {
+        emoji:"🦀",
+        name:"カニ",
+        points:8,
+        top:"420px",
+        left:"120px"
+      },
+
+      {
+        emoji:"🐢",
+        name:"カメ",
+        points:12,
+        top:"390px",
+        right:"55px"
+      },
+
+      {
+        emoji:"🦈",
+        name:"シャーキュン",
+        points:20,
+        top:"500px",
+        left:"50%"
+      }
+
+    ]
+
+  }
+
+};
+
+
+/* =====================
+   ステージ開始
+===================== */
+
+function loadStage(
+  stageNumber
+){
+
+  const stage =
+    stages[stageNumber];
+
+
+  currentStage =
+    stageNumber;
+
+
+  itemCount = 0;
+
+  stageFinished = false;
+
+
+  /* 表示 */
+
+  stageLabel.innerHTML =
+    stage.name;
+
+
+  itemCountDisplay.textContent =
+    itemCount;
+
+
+  totalCountDisplay.textContent =
+    stage.items.length;
+
+
+  /* 背景変更 */
+
+  if(
+    stageNumber === 2
+  ){
+
+    game.classList.add(
+      "seaStage"
+    );
+
+  }
+  else{
+
+    game.classList.remove(
+      "seaStage"
+    );
+
+  }
+
+
+  /* 前のアイテム削除 */
+
+  itemsContainer.innerHTML =
+    "";
+
+
+  /* 新しいアイテム作成 */
+
+  stage.items.forEach(
+    function(itemData){
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "item";
+
+
+      item.textContent =
+        itemData.emoji;
+
+
+      item.dataset.name =
+        itemData.name;
+
+
+      item.dataset.points =
+        itemData.points;
+
+
+      if(
+        itemData.top
+      ){
+
+        item.style.top =
+          itemData.top;
+
+      }
+
+
+      if(
+        itemData.left
+      ){
+
+        item.style.left =
+          itemData.left;
+
+      }
+
+
+      if(
+        itemData.right
+      ){
+
+        item.style.right =
+          itemData.right;
+
+      }
+
+
+      item.addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          catchItem(
+            item
+          );
+
+        }
+      );
+
+
+      itemsContainer.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  showMessage(
+    "🎮 " +
+    stage.name +
+    " スタート！"
+  );
+
+}
 
 
 /* =====================
@@ -893,7 +1235,7 @@ taichiButton.addEventListener(
   "click",
   function(){
 
-    if(gameCleared){
+    if(stageFinished){
       return;
     }
 
@@ -923,7 +1265,7 @@ hanaButton.addEventListener(
   "click",
   function(){
 
-    if(gameCleared){
+    if(stageFinished){
       return;
     }
 
@@ -950,7 +1292,7 @@ hanaButton.addEventListener(
 
 
 /* =====================
-   プレイヤー表示更新
+   プレイヤー更新
 ===================== */
 
 function updatePlayer(){
@@ -972,7 +1314,7 @@ function movePlayer(
   direction
 ){
 
-  if(gameCleared){
+  if(stageFinished){
     return;
   }
 
@@ -982,47 +1324,32 @@ function movePlayer(
   const verticalStep = 45;
 
 
-  if(
-    direction === "left"
-  ){
+  if(direction === "left"){
 
-    playerX -=
-      horizontalStep;
+    playerX -= horizontalStep;
+
+  }
+
+  if(direction === "right"){
+
+    playerX += horizontalStep;
+
+  }
+
+  if(direction === "up"){
+
+    playerY += verticalStep;
+
+  }
+
+  if(direction === "down"){
+
+    playerY -= verticalStep;
 
   }
 
 
-  if(
-    direction === "right"
-  ){
-
-    playerX +=
-      horizontalStep;
-
-  }
-
-
-  if(
-    direction === "up"
-  ){
-
-    playerY +=
-      verticalStep;
-
-  }
-
-
-  if(
-    direction === "down"
-  ){
-
-    playerY -=
-      verticalStep;
-
-  }
-
-
-  /* 画面外に出ない */
+  /* 範囲 */
 
   if(playerX < 8){
 
@@ -1052,15 +1379,10 @@ function movePlayer(
   updatePlayer();
 
 
-  /*
-    表示位置更新後に
-    当たり判定を少し待つ
-  */
-
   requestAnimationFrame(
     function(){
 
-      checkBugCollisions();
+      checkItemCollisions();
 
     }
   );
@@ -1069,17 +1391,17 @@ function movePlayer(
 
 
 /* =====================
-   虫ゲット
+   アイテムゲット
 ===================== */
 
-function catchBug(
-  bug
+function catchItem(
+  item
 ){
 
   if(
-    !bug ||
-    bug.dataset.caught === "true" ||
-    gameCleared
+    !item ||
+    item.dataset.caught === "true" ||
+    stageFinished
   ){
 
     return;
@@ -1087,52 +1409,52 @@ function catchBug(
   }
 
 
-  bug.dataset.caught =
+  item.dataset.caught =
     "true";
 
 
-  const bugName =
-    bug.dataset.name;
+  const itemName =
+    item.dataset.name;
 
 
-  const bugPoints =
+  const itemPoints =
     Number(
-      bug.dataset.points
+      item.dataset.points
     );
 
 
   points +=
-    bugPoints;
+    itemPoints;
 
 
-  bugCount += 1;
+  itemCount += 1;
 
 
   pointsDisplay.textContent =
     points;
 
 
-  bugCountDisplay.textContent =
-    bugCount;
+  itemCountDisplay.textContent =
+    itemCount;
 
 
-  bug.style.pointerEvents =
+  item.style.pointerEvents =
     "none";
 
 
-  bug.style.transform =
+  item.style.transform =
     "scale(1.6) rotate(20deg)";
 
 
-  bug.style.opacity =
+  item.style.opacity =
     "0";
 
 
   showMessage(
     "🎉 " +
-    bugName +
+    itemName +
     "をゲット！ +" +
-    bugPoints
+    itemPoints
   );
 
 
@@ -1140,16 +1462,22 @@ function catchBug(
     function(){
 
       if(
-        bug.parentNode
+        item.parentNode
       ){
 
-        bug.remove();
+        item.remove();
 
       }
 
 
+      const total =
+        stages[currentStage]
+        .items
+        .length;
+
+
       if(
-        bugCount >= totalBugs
+        itemCount >= total
       ){
 
         stageClear();
@@ -1164,58 +1492,25 @@ function catchBug(
 
 
 /* =====================
-   虫タップ
-===================== */
-
-const bugs =
-  document.querySelectorAll(
-    ".bug"
-  );
-
-
-bugs.forEach(
-  function(bug){
-
-    bug.addEventListener(
-      "click",
-      function(event){
-
-        event.stopPropagation();
-
-        catchBug(
-          bug
-        );
-
-      }
-    );
-
-  }
-);
-
-
-/* =====================
    当たり判定
 ===================== */
 
-function checkBugCollisions(){
+function checkItemCollisions(){
 
-  if(gameCleared){
+  if(stageFinished){
     return;
   }
 
 
-  const currentBugs =
+  const items =
     document.querySelectorAll(
-      ".bug"
+      ".item"
     );
 
 
-  /*
-    プレイヤーの顔だけを使う
-  */
-
   const playerRect =
-    playerFace.getBoundingClientRect();
+    playerFace
+    .getBoundingClientRect();
 
 
   const playerCenterX =
@@ -1228,11 +1523,11 @@ function checkBugCollisions(){
     playerRect.height / 2;
 
 
-  currentBugs.forEach(
-    function(bug){
+  items.forEach(
+    function(item){
 
       if(
-        bug.dataset.caught ===
+        item.dataset.caught ===
         "true"
       ){
 
@@ -1241,57 +1536,43 @@ function checkBugCollisions(){
       }
 
 
-      const bugRect =
-        bug.getBoundingClientRect();
+      const itemRect =
+        item.getBoundingClientRect();
 
 
-      const bugCenterX =
-        bugRect.left +
-        bugRect.width / 2;
+      const itemCenterX =
+        itemRect.left +
+        itemRect.width / 2;
 
 
-      const bugCenterY =
-        bugRect.top +
-        bugRect.height / 2;
+      const itemCenterY =
+        itemRect.top +
+        itemRect.height / 2;
 
-
-      /*
-        X方向の距離
-      */
 
       const distanceX =
         Math.abs(
           playerCenterX -
-          bugCenterX
+          itemCenterX
         );
 
-
-      /*
-        Y方向の距離
-      */
 
       const distanceY =
         Math.abs(
           playerCenterY -
-          bugCenterY
+          itemCenterY
         );
 
 
-      /*
-        これが重要！
-
-        iPhoneでも確実に
-        「近づいたらゲット」
-        になる広めの判定
-      */
+      /* 広めの当たり判定 */
 
       if(
         distanceX < 65 &&
         distanceY < 65
       ){
 
-        catchBug(
-          bug
+        catchItem(
+          item
         );
 
       }
@@ -1368,12 +1649,12 @@ document
 
 function stageClear(){
 
-  if(gameCleared){
+  if(stageFinished){
     return;
   }
 
 
-  gameCleared =
+  stageFinished =
     true;
 
 
@@ -1388,7 +1669,61 @@ function stageClear(){
         points;
 
 
-      clearScreen.classList.add(
+      const stage =
+        stages[currentStage];
+
+
+      stageTitle.innerHTML =
+        "🎉 ステージ" +
+        currentStage +
+        "クリア！ 🎉";
+
+
+      stageText.innerHTML =
+        stage.clearText;
+
+
+      stageBonus.innerHTML =
+        "⭐ クリアボーナス +100！";
+
+
+      /* ステージ1 */
+
+      if(
+        currentStage === 1
+      ){
+
+        nextStageButton.style.display =
+          "block";
+
+
+        restartButton.style.display =
+          "none";
+
+
+        nextStageButton.textContent =
+          "🌊 海の世界へ！";
+
+      }
+
+
+      /* ステージ2 */
+
+      if(
+        currentStage === 2
+      ){
+
+        nextStageButton.style.display =
+          "none";
+
+
+        restartButton.style.display =
+          "block";
+
+      }
+
+
+      stageScreen.classList.add(
         "show"
       );
 
@@ -1400,7 +1735,41 @@ function stageClear(){
 
 
 /* =====================
-   リスタート
+   次のステージ
+===================== */
+
+nextStageButton.addEventListener(
+  "click",
+  function(){
+
+    stageScreen.classList.remove(
+      "show"
+    );
+
+
+    /* プレイヤー位置リセット */
+
+    playerX =
+      50;
+
+
+    playerY =
+      200;
+
+
+    updatePlayer();
+
+
+    loadStage(
+      2
+    );
+
+  }
+);
+
+
+/* =====================
+   最初から
 ===================== */
 
 restartButton.addEventListener(
@@ -1454,7 +1823,7 @@ function showMessage(
 
 
 /* =====================
-   PCキーボード
+   キーボード
 ===================== */
 
 document.addEventListener(
@@ -1511,6 +1880,16 @@ document.addEventListener(
   }
 );
 
+
+/* =====================
+   ゲーム開始
+===================== */
+
+loadStage(
+  1
+);
+
+updatePlayer();
 
 </script>
 

@@ -6,427 +6,1125 @@
 <title>タイチとハナの大冒険</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:#71cfff}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:#8edcff}
 button{font:inherit;cursor:pointer}
 button:active{transform:translateY(2px)}
-#game{position:relative;width:100vw;height:100vh;max-width:760px;margin:auto;overflow:hidden;background:#8edcff}
+#game{position:relative;width:100vw;height:100vh;max-width:760px;margin:auto;overflow:hidden}
 .screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;padding:16px;overflow:auto}
 .screen.active{display:flex}
-.hidden{display:none!important}
-.glass{background:rgba(255,255,255,.94);border-radius:24px;box-shadow:0 10px 28px rgba(0,0,0,.14)}
-.topBar{position:sticky;top:0;z-index:20;width:calc(100% + 32px);margin:-16px -16px 14px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.96);box-shadow:0 3px 14px rgba(0,0,0,.12)}
-.topTitle{font-size:18px;font-weight:900}
-.topStatus{display:flex;gap:6px;align-items:center}
+.glass{background:rgba(255,255,255,.95);border-radius:24px;box-shadow:0 10px 28px rgba(0,0,0,.14)}
+.top{width:calc(100% + 32px);margin:-16px -16px 14px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;background:#fff;position:sticky;top:0;z-index:10}
+.top b{font-size:18px}
 .pill{background:#edf7ff;border-radius:20px;padding:7px 10px;font-size:12px;font-weight:900}
-.smallButton,.backButton{border:0;border-radius:15px;padding:9px 12px;background:#fff;box-shadow:0 4px 0 rgba(0,0,0,.13);font-weight:900}
-.bigButton{width:min(92%,440px);border:0;border-radius:24px;padding:17px 20px;color:#fff;font-size:21px;font-weight:900;background:linear-gradient(#ff789f,#ed4f86);box-shadow:0 7px 0 #b83d69;margin-top:10px}
-.bigButton.blue{background:linear-gradient(#6d9eff,#4b75cf);box-shadow:0 7px 0 #31569b}
-.bigButton.green{background:linear-gradient(#5bd68a,#34ad65);box-shadow:0 7px 0 #27834d}
+.btn{border:0;border-radius:17px;padding:12px 15px;font-weight:900;box-shadow:0 5px 0 rgba(0,0,0,.13)}
+.big{width:min(92%,440px);margin:8px;padding:17px;color:#fff;font-size:21px;background:linear-gradient(#ff789f,#ed4f86);box-shadow:0 7px 0 #b83d69}
+.blue{background:linear-gradient(#709fff,#4c76d0);box-shadow:0 7px 0 #31569b}
+.next{width:100%;margin-top:12px;color:#fff;background:#4d8ff5;box-shadow:0 5px 0 #3266b7}
 
 /* title */
-#titleScreen{justify-content:center;background:radial-gradient(circle at 15% 20%,#fff 0 2%,transparent 3%),radial-gradient(circle at 80% 12%,#fff 0 3%,transparent 4%),linear-gradient(#70cdf8,#e8fbff)}
-.gameLogo{font-size:clamp(34px,8vw,58px);font-weight:1000;text-align:center;color:#f45d91;line-height:1.2;text-shadow:3px 3px 0 #fff,6px 6px 0 rgba(0,0,0,.1)}
-.logoSub{margin-top:10px;font-size:16px;font-weight:900;color:#26364b}
-.titleCharacters{display:flex;gap:14px;margin:26px 0}
-.titleChar{width:145px;height:175px;border:5px solid #fff;border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 10px 0 rgba(0,0,0,.12)}
-.taichiCard{background:linear-gradient(#75baff,#4389d8)}
-.hanaCard{background:linear-gradient(#ff9bc4,#e7649d)}
-.bigEmoji{font-size:65px}.charLabel{color:#fff;font-size:23px;font-weight:1000;text-shadow:2px 2px 0 rgba(0,0,0,.2)}
-.version{margin-top:13px;color:#54708c;font-size:11px;font-weight:800}
+.title{justify-content:center;background:linear-gradient(#70cdf8,#e8fbff)}
+.logo{font-size:clamp(34px,8vw,58px);font-weight:1000;text-align:center;color:#f45d91;text-shadow:3px 3px 0 #fff,6px 6px 0 rgba(0,0,0,.1)}
+.subtitle{font-size:16px;font-weight:900;color:#26364b;margin-top:8px}
+.chars{display:flex;gap:14px;margin:25px 0}
+.char{width:145px;height:170px;border-radius:30px;border:5px solid #fff;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-size:23px;font-weight:1000;box-shadow:0 9px 0 rgba(0,0,0,.12)}
+.taichi{background:linear-gradient(#75baff,#4389d8)}
+.hana{background:linear-gradient(#ff9bc4,#e7649d)}
 
 /* map */
-#mapScreen{background:linear-gradient(#83d8ff,#f0fcff)}
-.mapHeading{font-size:27px;font-weight:1000;margin:8px 0 14px}
-.worldList{width:100%;max-width:680px;display:flex;flex-direction:column;gap:11px;padding-bottom:25px}
-.worldButton{border:0;border-radius:22px;padding:12px;background:#fff;display:flex;align-items:center;gap:12px;text-align:left;box-shadow:0 5px 0 rgba(0,0,0,.12)}
-.worldButton.locked{opacity:.48;filter:grayscale(1)}
-.worldIcon{width:60px;height:60px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:33px;flex-shrink:0}
-.worldInfo{flex:1}.worldInfo h2{margin:0;font-size:17px}.worldInfo p{margin:4px 0 0;color:#666;font-size:12px;font-weight:800}
-.worldProgress{font-size:12px;font-weight:1000;color:#437ee3}
-.world1{background:#79d66d}.world2{background:#64c7ff}.world3{background:#ff9b5f}.world4{background:#a98cff}.world5{background:#ff94cb}.world6{background:#7774a8}.world7{background:#f0b15b}
+.map{background:linear-gradient(#83d8ff,#f0fcff)}
+.worldList{width:100%;max-width:680px}
+.world{display:flex;align-items:center;gap:12px;text-align:left;width:100%;margin:6px 0}
+.wi{font-size:35px;width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info{flex:1}
+.card{background:#fff;border:0;border-radius:19px;padding:12px;box-shadow:0 5px 0 rgba(0,0,0,.12);font-weight:900}
+.locked{opacity:.4;filter:grayscale(1)}
 
 /* stage */
-#stageScreen{background:linear-gradient(#a6e4ff,#f4fdff)}
-.stageHeader{width:100%;max-width:680px;text-align:center;margin:4px 0 12px}
-.stageTitle{font-size:25px;font-weight:1000}.stageSub{font-size:13px;color:#58708a;font-weight:800}
-.stageGrid{width:100%;max-width:680px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.stageButton{border:0;border-radius:18px;padding:11px 4px;background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.12);font-weight:1000}
-.stageButton.boss{background:#ffe0e9}.stageButton.locked{opacity:.45;filter:grayscale(1)}
-.stageNum{font-size:20px}.stageLabel{font-size:10px;margin-top:3px}
-.stageInfo{width:100%;max-width:680px;margin-top:15px;padding:18px}
-.stageInfo h3{margin:0 0 7px;font-size:20px}.stageInfo p{margin:0;line-height:1.6;font-weight:700;font-size:14px}
+.stage{background:linear-gradient(#a6e4ff,#f4fdff)}
+.grid{width:100%;max-width:680px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.stageInfo{width:100%;max-width:680px;margin-top:15px;padding:18px;line-height:1.7;font-weight:750}
 
 /* story */
-#storyScreen{background:linear-gradient(#9be2ff,#e9fbff)}
-.storyScene{width:100%;max-width:680px;margin:auto}
-.storyCharacters{min-height:185px;display:flex;justify-content:center;align-items:flex-end;gap:10px}
-.storyChar{width:118px;height:150px;border-radius:28px;border:4px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 9px 0 rgba(0,0,0,.1)}
-.storyCharEmoji{font-size:50px}.storyCharName{font-size:16px;font-weight:1000;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.2)}
-.storyTaichi{background:#5a9bea}.storyHana{background:#ef79aa}.storyRyo{background:#777}.storyFriend{background:#72c984}
-.storyBox{padding:20px}.worldName{font-size:22px;font-weight:1000;color:#437ee3;margin-bottom:9px}.storyText{white-space:pre-line;min-height:125px;font-size:18px;line-height:1.75;font-weight:750}
-.nextButton{width:100%;margin-top:12px;border:0;border-radius:17px;padding:15px;background:#4d8ff5;color:#fff;font-size:18px;font-weight:1000;box-shadow:0 5px 0 #3266b7}
+.story{background:linear-gradient(#9be2ff,#e9fbff)}
+.storychars{min-height:180px;display:flex;justify-content:center;align-items:flex-end;gap:8px}
+.storychar{width:112px;height:145px;border-radius:26px;border:4px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:1000;box-shadow:0 7px 0 rgba(0,0,0,.1)}
+.storyemoji{font-size:45px}
+.storybox{width:100%;max-width:680px;padding:20px}
+.worldName{font-size:21px;font-weight:1000;color:#437ee3;margin-bottom:8px}
+.storytext{font-size:18px;line-height:1.75;min-height:125px;white-space:pre-line;font-weight:750}
 
 /* friend */
-#friendScreen{justify-content:center;background:linear-gradient(#d9f8ff,#fff)}
-.friendEmoji{font-size:105px}.friendName{font-size:29px;font-weight:1000;text-align:center;margin:10px 0}.friendBox{width:100%;max-width:600px;padding:22px;font-size:18px;font-weight:750;line-height:1.7;white-space:pre-line}
+.friend{justify-content:center;background:linear-gradient(#d9f8ff,#fff)}
+.friendemoji{font-size:90px}
+.friendname{font-size:28px;font-weight:1000;margin:10px;text-align:center}
+.friendbox{width:100%;max-width:600px;padding:22px;font-size:18px;line-height:1.7;font-weight:750;white-space:pre-line}
 
 /* battle */
-#battleScreen{background:linear-gradient(#ffd69e,#fff0d7)}
-.battleWrap{width:100%;max-width:680px;display:flex;flex-direction:column;gap:10px}
-.enemyPanel{padding:15px;text-align:center}.enemyEmoji{font-size:68px}.enemyName{font-size:21px;font-weight:1000}.hpOuter{width:100%;height:17px;border-radius:20px;overflow:hidden;background:#ddd;margin-top:7px}.hpInner{height:100%;background:#50cf6f;transition:.3s}
-.partyRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.partyCard{padding:9px;text-align:center;font-weight:900;font-size:12px}.partyEmoji{font-size:30px}
-.battleLog{min-height:90px;padding:14px;font-size:16px;font-weight:800;line-height:1.55;white-space:pre-line}
-.commandGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.command{border:0;border-radius:17px;padding:15px 8px;color:#fff;font-size:16px;font-weight:1000;box-shadow:0 4px 0 rgba(0,0,0,.16)}.command:disabled{opacity:.45}
-.attackButton{background:#e85e5e}.skillButton{background:#7565e8}.healButton{background:#45c878}.supportButton{background:#ec78b0}.runButton{background:#777;grid-column:1/3}
-.battleStage{font-size:12px;color:#7b6653;font-weight:900;text-align:center}
+.battle{background:linear-gradient(#ffd69e,#fff0d7)}
+.battleName{font-size:13px;color:#7b6653;font-weight:900;margin-bottom:7px}
+.enemy{width:100%;max-width:680px;padding:17px;text-align:center}
+.enemyemoji{font-size:67px}
+.enemyName{font-size:21px;font-weight:1000}
+.hp{height:16px;background:#ddd;border-radius:20px;overflow:hidden;margin-top:7px}
+.hp i{display:block;height:100%;background:#50cf6f;transition:.3s}
+.party{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:680px;margin-top:9px}
+.party .card{text-align:center}
+.commands{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:680px;margin-top:9px}
+.cmd{color:#fff;border:0;border-radius:17px;padding:15px;font-weight:1000;box-shadow:0 4px 0 rgba(0,0,0,.16)}
+.cmd:disabled{opacity:.45}
+.attack{background:#e85e5e}
+.skill{background:#7565e8}
+.heal{background:#45c878}
+.run{background:#777;grid-column:1/3}
+.log{width:100%;max-width:680px;min-height:90px;padding:14px;font-weight:800;line-height:1.55;white-space:pre-line;margin-top:9px}
 
 /* result */
-#resultScreen{justify-content:center;background:linear-gradient(#91dcff,#eafaff)}.resultTitle{font-size:33px;font-weight:1000;margin-bottom:14px}.resultBox{width:100%;max-width:570px;padding:26px;text-align:center}.resultEmoji{font-size:85px}.resultText{margin-top:12px;white-space:pre-line;font-size:19px;font-weight:850;line-height:1.7}
+.result{justify-content:center;background:linear-gradient(#91dcff,#eafaff);text-align:center}
+.resultTitle{font-size:32px;font-weight:1000}
+.resultbox{width:100%;max-width:570px;padding:25px;margin-top:12px}
+.resultemoji{font-size:82px}
+.resulttext{font-size:18px;line-height:1.7;white-space:pre-line;font-weight:800}
 
 /* ending */
-#endingScreen{justify-content:center;background:radial-gradient(circle at 20% 20%,#fff 0 1%,transparent 2%),radial-gradient(circle at 80% 15%,#fff 0 1%,transparent 2%),linear-gradient(#17133e,#56328e,#ff8eb9);color:#fff}.endingTitle{font-size:34px;font-weight:1000;text-align:center}.endingCharacters{margin:20px 0;font-size:42px;text-align:center;line-height:1.6}.endingText{text-align:center;font-size:17px;font-weight:750;line-height:1.8;max-width:590px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:none;background:#222;color:#fff;padding:11px 18px;border-radius:30px;font-weight:900;z-index:100}
-@media(max-height:700px){.titleCharacters{margin:15px 0}.titleChar{height:145px;width:120px}.storyCharacters{min-height:145px}.storyChar{height:125px}.storyCharEmoji{font-size:42px}.storyText{min-height:105px;font-size:16px}}
+.ending{justify-content:center;background:linear-gradient(#17133e,#56328e,#ff8eb9);color:#fff;text-align:center}
+.endingTitle{font-size:32px;font-weight:1000}
+.endingCharacters{font-size:43px;line-height:1.6;margin:15px}
+.endingtext{max-width:600px;font-size:17px;line-height:1.8;font-weight:750}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:11px 18px;border-radius:25px;display:none;z-index:30;font-weight:900}
+
+@media(max-height:700px){
+.chars{margin:12px 0}
+.char{height:140px;width:120px}
+.storychars{min-height:145px}
+.storychar{height:120px}
+.storytext{font-size:16px;min-height:105px}
+}
 </style>
 </head>
+
 <body>
 <div id="game">
 
-<section id="titleScreen" class="screen active">
-  <div class="gameLogo">タイチとハナの大冒険</div>
-  <div class="logoSub">〜世界をめぐる友情の冒険〜</div>
-  <div class="titleCharacters">
-    <div class="titleChar taichiCard"><div class="bigEmoji">🧒🏻🪲</div><div class="charLabel">タイチ</div></div>
-    <div class="titleChar hanaCard"><div class="bigEmoji">👧🏻🌸</div><div class="charLabel">ハナ</div></div>
-  </div>
-  <button class="bigButton" onclick="newGame()">🌟 はじめから</button>
-  <button id="continueButton" class="bigButton blue" onclick="continueGame()" style="display:none">▶️ つづきから</button>
-  <div class="version">最新版・35ステージ版</div>
+<section id="title" class="screen title active">
+<div class="logo">タイチとハナの大冒険</div>
+<div class="subtitle">〜世界をめぐる友情の冒険〜</div>
+
+<div class="chars">
+<div class="char taichi">🧒🏻🪲<br>タイチ</div>
+<div class="char hana">👧🏻🌸<br>ハナ</div>
+</div>
+
+<button class="btn big" onclick="newGame()">🌟 はじめから</button>
+<button id="continue" class="btn big blue" onclick="loadGame()" style="display:none">▶️ つづきから</button>
+<small>最新版・35ステージ版</small>
 </section>
 
-<section id="mapScreen" class="screen">
-  <div class="topBar">
-    <div class="topTitle">🌍 世界マップ</div>
-    <div class="topStatus"><div class="pill">Lv <span id="levelText">1</span></div><div class="pill">EXP <span id="expText">0</span></div></div>
-  </div>
-  <div class="mapHeading">次はどこへ行く？</div>
-  <div id="worldList" class="worldList"></div>
+
+<section id="map" class="screen map">
+<div class="top">
+<b>🌍 世界マップ</b>
+<span class="pill">Lv <b id="lv">1</b> / EXP <b id="xp">0</b></span>
+</div>
+<h2>次はどこへ行く？</h2>
+<div id="worlds" class="worldList"></div>
 </section>
 
-<section id="stageScreen" class="screen">
-  <div class="topBar">
-    <button class="backButton" onclick="showMap()">← 戻る</button>
-    <div id="stageTopTitle" class="topTitle">ステージ</div>
-    <div class="pill">Lv <span id="stageLevel">1</span></div>
-  </div>
-  <div class="stageHeader">
-    <div id="stageTitle" class="stageTitle"></div>
-    <div id="stageSub" class="stageSub"></div>
-  </div>
-  <div id="stageGrid" class="stageGrid"></div>
-  <div id="stageInfo" class="stageInfo glass">
-    <h3>ステージを選ぼう！</h3><p>5つのステージを進んで、最後のボスを倒そう。</p>
-  </div>
+
+<section id="stage" class="screen stage">
+<div class="top">
+<button class="btn" onclick="showMap()">← 戻る</button>
+<b id="stageTop"></b>
+<span class="pill">Lv <b id="slv">1</b></span>
+</div>
+
+<h2 id="stageTitle"></h2>
+<p>5ステージをクリアして世界を救おう！</p>
+<div id="stages" class="grid"></div>
+<div id="stageInfo" class="stageInfo glass"></div>
 </section>
 
-<section id="storyScreen" class="screen">
-  <div class="topBar">
-    <div id="storyTopTitle" class="topTitle">冒険</div>
-    <button class="smallButton" onclick="showStageSelect()">ステージ</button>
-  </div>
-  <div class="storyScene">
-    <div id="storyCharacters" class="storyCharacters"></div>
-    <div class="storyBox glass">
-      <div id="worldName" class="worldName"></div>
-      <div id="storyText" class="storyText"></div>
-      <button class="nextButton" onclick="nextStory()">つぎへ ▶</button>
-    </div>
-  </div>
+
+<section id="story" class="screen story">
+<div class="top">
+<b id="storyTop"></b>
+<button class="btn" onclick="showStages()">ステージ</button>
+</div>
+
+<div id="storyChars" class="storychars"></div>
+
+<div class="storybox glass">
+<div id="worldName" class="worldName"></div>
+<div id="storyText" class="storytext"></div>
+<button class="btn next" onclick="nextStory()">つぎへ ▶</button>
+</div>
 </section>
 
-<section id="friendScreen" class="screen">
-  <div id="friendEmoji" class="friendEmoji"></div>
-  <div id="friendName" class="friendName"></div>
-  <div id="friendBox" class="friendBox glass"></div>
-  <button class="nextButton" onclick="startBattle()">このステージへ進む！ ⚔️</button>
+
+<section id="friend" class="screen friend">
+<div id="friendEmoji" class="friendemoji"></div>
+<div id="friendName" class="friendname"></div>
+
+<div id="friendBox" class="friendbox glass"></div>
+
+<button class="btn next" onclick="startBattle()">このステージへ進む！ ⚔️</button>
 </section>
 
-<section id="battleScreen" class="screen">
-  <div class="topBar">
-    <div class="topTitle">⚔️ バトル！</div>
-    <div class="topStatus"><div class="pill">W<span id="battleWorld">1</span>-<span id="battleStage">1</span></div><div class="pill">Lv <span id="battleLevel">1</span></div></div>
-  </div>
-  <div class="battleWrap">
-    <div class="battleStage" id="battleStageName"></div>
-    <div class="enemyPanel glass">
-      <div id="enemyEmoji" class="enemyEmoji"></div>
-      <div id="enemyName" class="enemyName"></div>
-      <div class="hpOuter"><div id="enemyHp" class="hpInner"></div></div>
-    </div>
-    <div class="partyRow">
-      <div class="partyCard glass"><div class="partyEmoji">🧒🏻🪲</div>タイチ<div class="hpOuter"><div id="taichiHp" class="hpInner"></div></div></div>
-      <div class="partyCard glass"><div class="partyEmoji">👧🏻🌸</div>ハナ<div class="hpOuter"><div id="hanaHp" class="hpInner"></div></div></div>
-    </div>
-    <div id="battleLog" class="battleLog glass">敵が現れた！</div>
-    <div class="commandGrid">
-      <button id="attackButton" class="command attackButton" onclick="attack()">⚔️ こうげき</button>
-      <button id="skillButton" class="command skillButton" onclick="skill()">✨ 友情パワー</button>
-      <button id="healButton" class="command healButton" onclick="heal()">💖 ハナの回復</button>
-      <button id="supportButton" class="command supportButton" onclick="ryoSupport()">😂 りょうちゃん</button>
-      <button id="runButton" class="command runButton" onclick="runAway()">💨 にげる</button>
-    </div>
-  </div>
+
+<section id="battle" class="screen battle">
+
+<div class="top">
+<b>⚔️ バトル！</b>
+<span class="pill">W<span id="bw"></span>-<span id="bs"></span>　Lv<span id="bl"></span></span>
+</div>
+
+<div id="battleName" class="battleName"></div>
+
+<div class="enemy glass">
+<div id="enemyEmoji" class="enemyemoji"></div>
+<div id="enemyName" class="enemyName"></div>
+<div class="hp"><i id="ehp"></i></div>
+</div>
+
+<!-- 味方はタイチとハナだけ -->
+<div class="party">
+<div class="card">
+🧒🏻🪲 タイチ
+<div class="hp"><i id="thp"></i></div>
+</div>
+
+<div class="card">
+👧🏻🌸 ハナ
+<div class="hp"><i id="hhp"></i></div>
+</div>
+</div>
+
+<div id="log" class="log glass">敵が現れた！</div>
+
+<div class="commands">
+<button class="cmd attack" onclick="attack()">⚔️ こうげき</button>
+<button class="cmd skill" onclick="skill()">✨ 友情パワー</button>
+<button class="cmd heal" onclick="heal()">💖 ハナの回復</button>
+<button class="cmd run" onclick="runAway()">💨 にげる</button>
+</div>
+
 </section>
 
-<section id="resultScreen" class="screen">
-  <div class="resultTitle" id="resultTitle">🎉 ステージクリア！</div>
-  <div class="resultBox glass">
-    <div id="resultEmoji" class="resultEmoji"></div>
-    <div id="resultText" class="resultText"></div>
-  </div>
-  <button class="nextButton" onclick="resultNext()">次のステージへ！ 🌍</button>
+
+<section id="result" class="screen result">
+<div id="resultTitle" class="resultTitle"></div>
+
+<div class="resultbox glass">
+<div id="resultEmoji" class="resultemoji"></div>
+<div id="resultText" class="resulttext"></div>
+</div>
+
+<button class="btn next" onclick="resultNext()">次へ 🌍</button>
 </section>
 
-<section id="endingScreen" class="screen">
-  <div class="endingTitle">🎉 大冒険クリア！ 🎉</div>
-  <div class="endingCharacters">🧒🏻🪲 👧🏻🌸 🤖<br>🪲 🦈 🔥 ☁️ 🌙<br>🦎 🦗 😎 😂 👑</div>
-  <div class="endingText">
-    タイチとハナは、たくさんの世界を旅して、たくさんの仲間と出会いました。<br><br>
-    ゼロとともに世界をつなぐ力を取り戻し、最後にはますみん城へ。<br><br>
-    そして二人は気づきます。<br>
-    本当の宝物は、みんなで冒険した時間だったのです。<br><br>
-    <b>「まだ見ぬ世界が、二人を待っているのでした……✨」</b>
-  </div>
-  <button class="bigButton" onclick="restartGame()">もう一度遊ぶ！</button>
+
+<section id="ending" class="screen ending">
+
+<div class="endingTitle">🎉 大冒険クリア！ 🎉</div>
+
+<div class="endingCharacters">
+🧒🏻 🪲　👧🏻 🌸　🤖<br>
+🪲 🦈 🔥 ☁️ 🌙<br>
+🦎 🦗　😂　👑
+</div>
+
+<div class="endingtext">
+
+タイチとハナは、ゼロとともに<br>
+7つの世界を旅しました。
+
+<br><br>
+
+そして、ますみんとの最後の戦いが終わったあと――
+
+<br><br>
+
+😂りょうちゃん「俺も一緒に帰る！」
+
+<br>
+
+🤖ゼロ「……なんでお前まで！？」
+
+<br>
+
+🧒🏻タイチ「まあ、いいじゃん！」
+
+<br>
+
+👧🏻ハナ「みんな一緒がいい！」
+
+<br><br>
+
+なぜか、ますみん・タイチ・ハナ・りょうちゃんは
+一緒に帰ることになりました。
+
+<br><br>
+
+🤖ゼロ「……まあ、これも冒険の結果か。」
+
+<br><br>
+
+<b>
+本当の宝物は、みんなで冒険した時間でした……✨
+</b>
+
+</div>
+
+<button class="btn big" onclick="restart()">もう一度遊ぶ！</button>
+
 </section>
 
 <div id="toast" class="toast"></div>
+
 </div>
 
+
 <script>
-const SAVE_KEY="taichiHanaSave_v2";
+
+const KEY="taichiHanaSave_v4";
 
 const worlds=[
- {name:"はじまりの世界",icon:"🤖",color:"world1",friend:"ゼロ",friendEmoji:"🤖",enemy:"時空のバグモンスター",enemyEmoji:"👾",
-  intro:["ある日、タイチとハナはいつものように外で虫を探していました。","タイチ「今日はどんなクワガタがいるかな？」","ハナ「タイチー！あっち、ピカピカしてるよ！」","草むらの奥から、壊れかけた小さなロボットが現れました。","🤖「ぼくの名前は……ゼロ。世界間ゲートの案内役……」","突然、空がゆがみ始めます。ゼロ「ゲートが暴走している！」"]},
- {name:"モリモリの森",icon:"🌲",color:"world1",friend:"レインボー",friendEmoji:"🪲",enemy:"森を荒らすバグビートル",enemyEmoji:"🐛",
-  intro:["巨大な木々が広がる不思議な森へ。","タイチ「すごい！見たことない虫がいっぱいだ！」","虹色に輝くニジイロクワガタ、レインボーが現れました。","🪲「ぼくはレインボー！この森を守っているんだ！」","森の奥ではバグビートルが大暴れ。","タイチとハナは森を守るため進みます。"]},
- {name:"シャーキュンの海",icon:"🌊",color:"world2",friend:"シャーキュン",friendEmoji:"🦈",enemy:"たこたこ",enemyEmoji:"🐙",
-  intro:["次のゲートの先には、青く広がる大きな海。","ハナ「わぁー！お魚さんがいっぱい！」","🦈「待ってたよ！ぼくはシャーキュン！」","海の奥では、たこたこがエネルギーを奪っています。","タイチ「みんなで助けに行こう！」","二人は海の奥へ向かいます。"]},
- {name:"灼熱ファイヤーランド",icon:"🔥",color:"world3",friend:"ファイヤー",friendEmoji:"🔥",enemy:"メラメラキング",enemyEmoji:"😈",
-  intro:["ゲートの先は地面まで熱い灼熱の世界。","ハナ「タイチ……あついよぉ〜！」","🔥「俺はファイヤー！炎が暴走してるんだ！」","ゼロ「またゲートのバグが世界のバランスを壊している……！」","巨大な炎の影が迫ります。","二人は炎の世界を進みます。"]},
- {name:"フワフワ天空島",icon:"☁️",color:"world4",friend:"くもくも",friendEmoji:"☁️",enemy:"ストームモンスター",enemyEmoji:"🌪️",
-  intro:["雲を抜けると、空に浮かぶ不思議な島。","タイチ「本当に空の上に島がある！」","ハナ「雲のベッドみたい！」","☁️「こんにちは〜！ぼく、くもくもだよ〜！」","巨大な嵐が島を飲み込もうとしています。","タイチとハナは天空島を守ります。"]},
- {name:"ユメユメの世界",icon:"🌙",color:"world5",friend:"ユメちゃん",friendEmoji:"🌙",enemy:"ナイトメア",enemyEmoji:"👻",
-  intro:["星と月がきらめく不思議な夜の世界。","ハナ「ここ、夢の中みたい！」","ゼロ「ここはユメユメの世界。楽しい夢を守る場所だ」","🌙「でも最近、怖い夢ばかり増えているの……」","暗闇からナイトメアが現れました。","タイチ「そんなことさせない！」"]},
- {name:"ゆがんだ時空",icon:"🌀",color:"world6",friend:"とっくん・カマキチ",friendEmoji:"🦎🦗",enemy:"パリピタイタイ",enemyEmoji:"😎",
-  intro:["すべてのゲートが集まる場所、ゆがんだ時空。","ゼロ「ここが……すべての異常の中心だ」","🦎「おれ、とっくん！」 🦗「オレがカマキチだ！」","そこへパリピタイタイが現れました。","😎「ウェーイ！！ここから先には行かせないぜ！」","ゼロ「時空のバグに取り込まれている……！」"]},
- {name:"ますみん城",icon:"🏰",color:"world7",friend:"全員",friendEmoji:"👑",enemy:"ますみん",enemyEmoji:"👑",
-  intro:["すべての世界を救ったタイチとハナ。","最後のゲートの先には、巨大な城がそびえ立っていました。","🏰 ますみん城。","ゼロ「すべてのバグの中心……ここにいる」","👑「よくここまで来たね……」","最後の戦いが始まります！"]}
+
+{
+name:"はじまりの世界",
+icon:"🤖",
+friend:"ゼロ",
+fe:"🤖",
+boss:"時空のバグモンスター",
+be:"👾",
+intro:[
+"ある日、タイチとハナはいつものように虫を探していました。",
+"タイチ「今日はどんなクワガタがいるかな？」",
+"ハナ「タイチー！あっち、ピカピカしてるよ！」",
+"草むらの奥から、壊れかけた小さなロボットが現れました。",
+"🤖「ぼくの名前はゼロ。世界間ゲートの案内役……」",
+"突然、空がゆがみ始めます。",
+"ゼロ「ゲートが暴走している！」",
+"タイチ「じゃあ、冒険に行こう！」",
+"ゼロ「話を聞けー！！」"
+]
+},
+
+{
+name:"モリモリの森",
+icon:"🌲",
+friend:"レインボー",
+fe:"🪲",
+boss:"森を荒らすバグビートル",
+be:"🐛",
+intro:[
+"巨大な木々が広がる不思議な森へ。",
+"タイチ「すごい！見たことない虫がいっぱいだ！」",
+"虹色に輝くニジイロクワガタ、レインボーが現れました。",
+"🪲「ぼくはレインボー！この森を守っているんだ！」",
+"森の奥ではバグビートルが大暴れ。",
+"タイチ「もっと虫を探そう！」",
+"🤖ゼロ「タイチ、今は虫探ししてる場合じゃない！！」"
+]
+},
+
+{
+name:"シャーキュンの海",
+icon:"🌊",
+friend:"シャーキュン",
+fe:"🦈",
+boss:"たこたこ",
+be:"🐙",
+intro:[
+"次のゲートの先には、青く広がる大きな海。",
+"ハナ「わぁー！お魚さんがいっぱい！」",
+"🦈「待ってたよ！ぼくはシャーキュン！」",
+"海の奥では、たこたこがエネルギーを奪っています。",
+"タイチ「海にも虫っているかな？」",
+"🤖ゼロ「海に来てまで虫を探すな！！」",
+"ハナ「タイチ、またゼロに怒られてるよ〜！」"
+]
+},
+
+{
+name:"灼熱ファイヤーランド",
+icon:"🔥",
+friend:"ファイヤー",
+fe:"🔥",
+boss:"メラメラキング",
+be:"😈",
+intro:[
+"ゲートの先は地面まで熱い灼熱の世界。",
+"ハナ「タイチ……あついよぉ〜！」",
+"🔥「俺はファイヤー！炎が暴走してるんだ！」",
+"ゼロ「またゲートのバグが世界を壊している……！」",
+"巨大な炎の影が迫ります。",
+"タイチ「俺、先に行く！」",
+"🤖ゼロ「待てー！毎回それやるな！！」"
+]
+},
+
+{
+name:"フワフワ天空島",
+icon:"☁️",
+friend:"くもくも",
+fe:"☁️",
+boss:"ストームモンスター",
+be:"🌪️",
+intro:[
+"雲を抜けると、空に浮かぶ不思議な島。",
+"タイチ「本当に空の上に島がある！」",
+"ハナ「雲のベッドみたい！」",
+"☁️「こんにちは〜！ぼく、くもくもだよ〜！」",
+"巨大な嵐が島を飲み込もうとしています。",
+"タイチ「雲って食べられるかな？」",
+"🤖ゼロ「食べ物じゃない！！」"
+]
+},
+
+{
+name:"ユメユメの世界",
+icon:"🌙",
+friend:"ユメちゃん",
+fe:"🌙",
+boss:"ナイトメア",
+be:"👻",
+intro:[
+"星と月がきらめく不思議な夜の世界。",
+"ハナ「ここ、夢の中みたい！」",
+"ゼロ「ここは楽しい夢を守る世界だ。」",
+"🌙「でも最近、怖い夢ばかり増えているの……」",
+"暗闇からナイトメアが現れました。",
+"タイチ「寝ながら戦えば勝てる？」",
+"🤖ゼロ「起きて戦え！！」"
+]
+},
+
+{
+name:"ゆがんだ時空",
+icon:"🌀",
+friend:"とっくん・カマキチ",
+fe:"🦎🦗",
+boss:"パリピタイタイ",
+be:"😎",
+intro:[
+"すべてのゲートが集まる場所、ゆがんだ時空。",
+"ゼロ「ここが……すべての異常の中心だ。」",
+"🦎「おれ、とっくん！」",
+"🦗「オレがカマキチだ！」",
+"そこへパリピタイタイが現れました。",
+"😎「ウェーイ！！ここから先には行かせないぜ！」",
+"🤖ゼロ「最後までツッコミどころしかないな……」"
+]
+},
+
+{
+name:"ますみん城",
+icon:"🏰",
+friend:"ますみん",
+fe:"👑",
+boss:"ますみん",
+be:"👑",
+intro:[
+"すべての世界を救ったタイチとハナ。",
+"最後のゲートの先には巨大な城がそびえ立っていました。",
+"🏰 ますみん城。",
+"ゼロ「すべてのバグの中心……ここにいる。」",
+"👑「よくここまで来たね……」",
+"タイチ「よーし！最後の戦いだ！」",
+"🤖ゼロ「最後くらい落ち着け！！」",
+"最後の戦いが始まります！"
+]
+}
+
 ];
 
-const stageNames=["旅立ち","なかまとの出会い","バグの気配","世界の危機","ボスバトル"];
-const stageDescriptions=["世界を探索して敵を倒そう！","新しい仲間の力を知ろう！","強くなった敵に注意！","ボス直前の大ピンチ！","この世界のボスに挑戦！"];
+const stageNames=[
+"旅立ち",
+"なかまとの出会い",
+"バグの気配",
+"世界の危機",
+"ボスバトル"
+];
 
-let currentWorld=0,currentStage=0,storyIndex=0;
-let level=1,exp=0,unlockedWorld=0;
-let unlockedStages=Array(7).fill(0);
-let enemyMaxHp=100,enemyHp=100,taichiMaxHp=100,taichiHp=100,hanaMaxHp=100,hanaHp=100;
-let battleBusy=false, ryoUsed=false;
+let w=0;
+let s=0;
+let story=0;
+let lv=1;
+let xp=0;
+let uw=0;
+let us=Array(7).fill(0);
 
-function $(id){return document.getElementById(id)}
-function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active")}
-function random(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+let enemy=100;
+let maxEnemy=100;
+let th=100;
+let hh=100;
+let maxHp=100;
+let busy=false;
 
-window.onload=()=>{
- try{
-  const s=JSON.parse(localStorage.getItem(SAVE_KEY));
-  if(s){$("continueButton").style.display="block"}
- }catch(e){}
-};
-
-function resetProgress(){
- currentWorld=0;currentStage=0;storyIndex=0;level=1;exp=0;unlockedWorld=0;unlockedStages=Array(7).fill(0);unlockedStages[0]=0;
+function $(id){
+return document.getElementById(id);
 }
-function newGame(){resetProgress();saveGame();enterWorld(0)}
-function continueGame(){
- try{
-  const s=JSON.parse(localStorage.getItem(SAVE_KEY));
-  if(!s)return newGame();
-  level=s.level??1;exp=s.exp??0;unlockedWorld=s.unlockedWorld??0;currentWorld=s.currentWorld??0;currentStage=s.currentStage??0;
-  unlockedStages=s.unlockedStages??Array(7).fill(0);
-  if(!Array.isArray(unlockedStages)||unlockedStages.length!==7)unlockedStages=Array(7).fill(0);
-  showMap();
- }catch(e){newGame()}
+
+function show(id){
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+$(id).classList.add("active");
 }
-function saveGame(){
- localStorage.setItem(SAVE_KEY,JSON.stringify({level,exp,unlockedWorld,currentWorld,currentStage,unlockedStages}));
- $("continueButton").style.display="block";
+
+function rnd(a,b){
+return Math.floor(Math.random()*(b-a+1))+a;
 }
-function updateStatus(){ $("levelText").textContent=level; $("expText").textContent=exp; }
+
+function save(){
+localStorage.setItem(KEY,JSON.stringify({
+w,s,lv,xp,uw,us
+}));
+}
+
+function newGame(){
+w=0;
+s=0;
+story=0;
+lv=1;
+xp=0;
+uw=0;
+us=Array(7).fill(0);
+save();
+showStages(0);
+}
+
+function loadGame(){
+
+let a=JSON.parse(localStorage.getItem(KEY)||"null");
+
+if(!a){
+newGame();
+return;
+}
+
+w=a.w||0;
+s=a.s||0;
+lv=a.lv||1;
+xp=a.xp||0;
+uw=a.uw||0;
+us=Array.isArray(a.us)?a.us:Array(7).fill(0);
+
+showMap();
+}
 
 function showMap(){
- updateStatus();
- const list=$("worldList");list.innerHTML="";
- worlds.forEach((w,i)=>{
-  const b=document.createElement("button");b.className="worldButton"+(i>unlockedWorld?" locked":"");
-  const cleared=Math.min(unlockedStages[i]+1,5);
-  b.innerHTML=`<div class="worldIcon ${w.color}">${w.icon}</div><div class="worldInfo"><h2>${i+1}. ${w.name}</h2><p>${i>unlockedWorld?"🔒 まだ行けません":"冒険に出発！"}</p></div><div class="worldProgress">${i<=unlockedWorld?cleared+"/5":"🔒"}</div>`;
-  b.onclick=()=>i<=unlockedWorld&&showStageSelect(i);
-  list.appendChild(b);
- });
- showScreen("mapScreen");
+
+$("lv").textContent=lv;
+$("xp").textContent=xp;
+
+$("worlds").innerHTML="";
+
+worlds.forEach((x,i)=>{
+
+let b=document.createElement("button");
+
+b.className="card world "+(i>uw?"locked":"");
+
+b.innerHTML=`
+<div class="wi">${x.icon}</div>
+<div class="info">
+<b>${i+1}. ${x.name}</b><br>
+<small>${i>uw?"🔒 未解放":"冒険に出発！"}</small>
+</div>
+<b>${i<=uw?Math.min(us[i]+1,5)+"/5":"🔒"}</b>
+`;
+
+if(i<=uw){
+b.onclick=()=>showStages(i);
 }
 
-function showStageSelect(worldIndex=currentWorld){
- if(worldIndex>unlockedWorld){showToast("まだこの世界には行けないよ！");return}
- currentWorld=worldIndex;
- $("stageTopTitle").textContent=worlds[currentWorld].name;
- $("stageTitle").textContent=`${currentWorld+1}. ${worlds[currentWorld].name}`;
- $("stageSub").textContent=`5ステージをクリアして世界を救おう！`;
- $("stageLevel").textContent=level;
- const grid=$("stageGrid");grid.innerHTML="";
- for(let i=0;i<5;i++){
-  const b=document.createElement("button");
-  const open=i<=unlockedStages[currentWorld];
-  b.className="stageButton"+(i===4?" boss":"")+(open?"":" locked");
-  b.innerHTML=`<div class="stageNum">${i===4?"👑":i+1}</div><div class="stageLabel">${stageNames[i]}</div>`;
-  if(open)b.onclick=()=>enterStage(i);else b.onclick=()=>showToast("このステージはまだだよ！");
-  grid.appendChild(b);
- }
- $("stageInfo").innerHTML=`<h3>🌟 ${worlds[currentWorld].name}</h3><p>「${stageDescriptions[unlockedStages[currentWorld]]}」<br>現在：${unlockedStages[currentWorld]+1}/5まで挑戦可能</p>`;
- showScreen("stageScreen");
+$("worlds").appendChild(b);
+
+});
+
+show("map");
 }
 
-function enterWorld(index){showStageSelect(index)}
-function enterStage(stage){
- if(stage>unlockedStages[currentWorld]){showToast("まだこのステージには行けないよ！");return}
- currentStage=stage;storyIndex=0;
- if(stage===0||currentWorld===6){showStory()}else{showFriend()}
+function showStages(i=w){
+
+if(i>uw){
+toast("まだこの世界には行けないよ！");
+return;
 }
+
+w=i;
+
+$("stageTop").textContent=worlds[w].name;
+$("stageTitle").textContent=`${w+1}. ${worlds[w].name}`;
+$("slv").textContent=lv;
+
+$("stages").innerHTML="";
+
+for(let j=0;j<5;j++){
+
+let b=document.createElement("button");
+
+b.className="card "+(j>us[w]?"locked":"");
+
+b.innerHTML=`
+${j===4?"👑":j+1}<br>
+<small>${stageNames[j]}</small>
+`;
+
+b.onclick=()=>j<=us[w]
+?enterStage(j)
+:toast("このステージはまだだよ！");
+
+$("stages").appendChild(b);
+
+}
+
+let progress=Math.min(us[w],4);
+
+$("stageInfo").innerHTML=`
+<b>🌟 ${worlds[w].name}</b><br><br>
+現在：${Math.min(us[w]+1,5)}/5まで挑戦可能<br>
+${progress>=4?"👑 ボスステージに挑戦できる！":"次のステージをクリアしよう！"}
+`;
+
+show("stage");
+}
+
+function enterStage(j){
+
+s=j;
+story=0;
+
+if(s===0||w===6){
+showStory();
+}else{
+showFriend();
+}
+
+}
+
 function showStory(){
- const w=worlds[currentWorld];
- $("storyTopTitle").textContent=`${currentWorld+1}-${currentStage+1} ${w.name}`;
- $("worldName").textContent=`${w.name}　/　${stageNames[currentStage]}`;
- const lines=currentStage===0?w.intro:[
-  `タイチ「この世界、まだ何かおかしいぞ！」`,
-  `ハナ「みんなで力を合わせれば大丈夫だよ！」`,
-  `ゼロ「ゲートの奥から、強いバグ反応が出ている……」`,
-  `りょうちゃん「俺も……たぶん役に立つ！」`,
-  currentStage===4?`仲間たち「ここが最後の防衛線だ！いこう！！」`:`二人は次の場所へ走り出しました！`
- ];
- $("storyText").textContent=lines[storyIndex];
- renderStoryCharacters();
- showScreen("storyScreen");
+
+let x=worlds[w];
+
+let lines=s===0
+?x.intro
+:[
+`タイチ「この世界、まだ何かおかしいぞ！」`,
+`ハナ「みんなで力を合わせれば大丈夫！」`,
+`ゼロ「ゲートの奥から強いバグ反応が出ている……」`,
+`タイチ「よし、行こう！」`,
+`ゼロ「その前に話を聞けー！！」`
+];
+
+$("storyTop").textContent=`${w+1}-${s+1} ${x.name}`;
+
+$("worldName").textContent=
+`${x.name} / ${stageNames[s]}`;
+
+$("storyText").textContent=lines[story];
+
+$("storyChars").innerHTML=`
+<div class="storychar taichi">
+<div class="storyemoji">🧒🏻🪲</div>
+タイチ
+</div>
+
+<div class="storychar hana">
+<div class="storyemoji">👧🏻🌸</div>
+ハナ
+</div>
+
+<div class="storychar" style="background:#72c984">
+<div class="storyemoji">🤖</div>
+ゼロ
+</div>
+`;
+
+show("story");
 }
-function renderStoryCharacters(){
- const area=$("storyCharacters");area.innerHTML="";
- const chars=[["🧒🏻🪲","タイチ","storyTaichi"],["👧🏻🌸","ハナ","storyHana"]];
- if(currentWorld===6)chars.push(["😂","りょうちゃん","storyRyo"]);
- chars.forEach(c=>{const d=document.createElement("div");d.className=`storyChar ${c[2]}`;d.innerHTML=`<div class="storyCharEmoji">${c[0]}</div><div class="storyCharName">${c[1]}</div>`;area.appendChild(d)});
-}
+
 function nextStory(){
- storyIndex++;
- const lines=currentStage===0?worlds[currentWorld].intro:[
-  `タイチ「この世界、まだ何かおかしいぞ！」`,
-  `ハナ「みんなで力を合わせれば大丈夫だよ！」`,
-  `ゼロ「ゲートの奥から、強いバグ反応が出ている……」`,
-  `りょうちゃん「俺も……たぶん役に立つ！」`,
-  currentStage===4?`仲間たち「ここが最後の防衛線だ！いこう！！」`:`二人は次の場所へ走り出しました！`
- ];
- if(storyIndex<lines.length){showStory()}else{showFriend()}
+
+let x=worlds[w];
+
+let lines=s===0
+?x.intro
+:[
+`タイチ「この世界、まだ何かおかしいぞ！」`,
+`ハナ「みんなで力を合わせれば大丈夫！」`,
+`ゼロ「ゲートの奥から強いバグ反応が出ている……」`,
+`タイチ「よし、行こう！」`,
+`ゼロ「その前に話を聞けー！！」`
+];
+
+story++;
+
+if(story<lines.length){
+showStory();
+}else{
+showFriend();
 }
+
+}
+
 function showFriend(){
- const w=worlds[currentWorld];
- $("friendEmoji").textContent=w.friendEmoji;
- $("friendName").textContent=`${w.friend} が力を貸してくれる！`;
- $("friendBox").textContent=`${w.friend} がタイチとハナの冒険を応援してくれる！\n\n「これからは一緒に冒険しよう！」\n\nステージ ${currentStage+1} の敵を倒そう！`;
- showScreen("friendScreen");
+
+let x=worlds[w];
+
+$("friendEmoji").textContent=x.fe;
+
+$("friendName").textContent=
+`${x.friend} が力を貸してくれる！`;
+
+$("friendBox").textContent=
+`${x.friend} がタイチとハナを応援してくれる！
+
+ゼロ「二人とも、気をつけて進もう！」
+
+ステージ ${s+1} の敵を倒そう！`;
+
+show("friend");
 }
+
+
+/* =========================
+   BATTLE
+   りょうちゃんは敵。
+   味方には絶対入れない。
+========================= */
 
 function startBattle(){
- battleBusy=false;ryoUsed=false;
- const w=worlds[currentWorld];
- const boss=currentStage===4;
- enemyMaxHp=(boss?260:100)+currentWorld*45+currentStage*28+level*10;
- enemyHp=enemyMaxHp;
- taichiMaxHp=120+(level-1)*22;hanaMaxHp=120+(level-1)*22;
- taichiHp=taichiMaxHp;hanaHp=hanaMaxHp;
- $("enemyEmoji").textContent=boss?w.enemyEmoji:(currentStage===0?w.enemyEmoji:["🐛","🦀","👻","🌪️","👾"][currentStage-1]);
- $("enemyName").textContent=boss?w.enemy:`${w.name}の${["バグモンスター","まもりびと","いたずらモンスター","強化バグ"][currentStage-1]||w.enemy}`;
- $("battleWorld").textContent=currentWorld+1;$("battleStage").textContent=currentStage+1;$("battleLevel").textContent=level;
- $("battleStageName").textContent=`${w.name}　${currentStage+1}/5`;
- battleMessage(`${$("enemyName").textContent} が現れた！`);
- updateBattle();setBattleButtons(false);showScreen("battleScreen");
+
+let x=worlds[w];
+
+let boss=s===4;
+
+maxEnemy=
+(boss?260:100)
++w*45
++s*28
++lv*10;
+
+enemy=maxEnemy;
+
+maxHp=120+(lv-1)*22;
+
+th=maxHp;
+hh=maxHp;
+
+busy=false;
+
+/*
+りょうちゃんは全ワールドに登場。
+ただしボスステージではボス優先。
+*/
+
+let ryoAppears;
+
+if(boss){
+ryoAppears=false;
+}else{
+ryoAppears=(Math.random()<0.42);
 }
-function updateBattle(){
- $("enemyHp").style.width=Math.max(0,enemyHp/enemyMaxHp*100)+"%";
- $("taichiHp").style.width=Math.max(0,taichiHp/taichiMaxHp*100)+"%";
- $("hanaHp").style.width=Math.max(0,hanaHp/hanaMaxHp*100)+"%";
+
+if(ryoAppears){
+
+$("enemyEmoji").textContent="😂";
+
+$("enemyName").textContent=
+"りょうちゃん（ザコ敵）";
+
+}else{
+
+$("enemyEmoji").textContent=
+boss
+?x.be
+:(s===0
+?x.be
+:["🐛","🦀","👻","🌪️"][s-1]);
+
+$("enemyName").textContent=
+boss
+?x.boss
+:`${x.name}の${
+["バグモンスター",
+"まもりびと",
+"いたずらモンスター",
+"強化バグ"][s-1]||"モンスター"
+}`;
+
 }
-function setBattleButtons(disabled){["attackButton","skillButton","healButton","supportButton","runButton"].forEach(id=>$(id).disabled=disabled)}
+
+$("bw").textContent=w+1;
+$("bs").textContent=s+1;
+$("bl").textContent=lv;
+
+$("battleName").textContent=
+`${x.name}　${s+1}/5`;
+
+if(ryoAppears){
+
+message(
+"😂 りょうちゃんが現れた！\n\n"+
+"りょうちゃん「今回は本気だからな！」\n"+
+"ゼロ「どうせ弱いだろ……」"
+);
+
+}else{
+
+message(
+`${$("enemyName").textContent} が現れた！\n`+
+`ゼロ「タイチ、勝手に突っ込むなよ！」`
+);
+
+}
+
+update();
+disable(false);
+show("battle");
+}
+
+function update(){
+
+$("ehp").style.width=
+Math.max(0,enemy/maxEnemy*100)+"%";
+
+$("thp").style.width=
+Math.max(0,th/maxHp*100)+"%";
+
+$("hhp").style.width=
+Math.max(0,hh/maxHp*100)+"%";
+
+}
+
+function disable(v){
+
+document.querySelectorAll(".cmd")
+.forEach(x=>x.disabled=v);
+
+}
+
+function message(t){
+$("log").textContent=t;
+}
+
 function attack(){
- if(battleBusy)return;battleBusy=true;setBattleButtons(true);
- const damage=random(20,35)+level*4;enemyHp-=damage;
- battleMessage(`⚔️ タイチとハナのこうげき！\n${damage} ダメージ！`);updateBattle();setTimeout(checkEnemy,650);
+
+if(busy)return;
+
+busy=true;
+disable(true);
+
+let d=rnd(20,35)+lv*4;
+
+enemy-=d;
+
+if($("enemyName").textContent.includes("りょうちゃん")){
+
+message(
+`😂 タイチとハナのこうげき！\n`+
+`${d} ダメージ！\n\n`+
+`りょうちゃん「えっ、もう！？」`
+);
+
+}else{
+
+message(
+`⚔️ タイチとハナのこうげき！\n`+
+`${d} ダメージ！`
+);
+
 }
+
+update();
+
+setTimeout(checkEnemy,500);
+}
+
 function skill(){
- if(battleBusy)return;battleBusy=true;setBattleButtons(true);
- const damage=random(45,70)+level*6;enemyHp-=damage;
- battleMessage(`✨ 友情パワー発動！！\n仲間たちの力が集まった！\n${damage} ダメージ！！`);updateBattle();setTimeout(checkEnemy,750);
+
+if(busy)return;
+
+busy=true;
+disable(true);
+
+let d=rnd(45,70)+lv*6;
+
+enemy-=d;
+
+message(
+`✨ 友情パワー！！\n`+
+`ゼロ「タイチ、ちゃんと狙え！」\n`+
+`${d} ダメージ！！`
+);
+
+update();
+
+setTimeout(checkEnemy,600);
 }
+
 function heal(){
- if(battleBusy)return;battleBusy=true;setBattleButtons(true);
- const amount=random(28,45)+level*3;taichiHp=Math.min(taichiMaxHp,taichiHp+amount);hanaHp=Math.min(hanaMaxHp,hanaHp+amount);
- battleMessage(`💖 ハナのふしぎなパワー！\n二人のHPが ${amount} 回復した！`);updateBattle();setTimeout(enemyAttack,650);
+
+if(busy)return;
+
+busy=true;
+disable(true);
+
+let d=rnd(28,45)+lv*3;
+
+th=Math.min(maxHp,th+d);
+hh=Math.min(maxHp,hh+d);
+
+message(
+`💖 ハナのふしぎなパワー！\n`+
+`二人のHPが ${d} 回復！`
+);
+
+update();
+
+setTimeout(enemyAttack,500);
 }
-function ryoSupport(){
- if(battleBusy||ryoUsed)return;battleBusy=true;setBattleButtons(true);ryoUsed=true;
- const roll=random(1,3);
- if(roll===1){enemyHp=Math.max(0,enemyHp-60);battleMessage("😂 りょうちゃんの謎パワー！\nなぜか敵に60ダメージ！");}
- else if(roll===2){taichiHp=Math.min(taichiMaxHp,taichiHp+35);hanaHp=Math.min(hanaMaxHp,hanaHp+35);battleMessage("😂 りょうちゃんが応援した！\n二人のHPが35回復！");}
- else{battleMessage("😂 りょうちゃんが変なことをした！\n……敵が一瞬ひるんだ！");enemyHp=Math.max(0,enemyHp-25)}
- updateBattle();setTimeout(checkEnemy,700);
+
+function checkEnemy(){
+
+if(enemy<=0){
+
+enemy=0;
+update();
+win();
+
+}else{
+
+enemyAttack();
+
 }
-function checkEnemy(){if(enemyHp<=0){enemyHp=0;updateBattle();winBattle()}else enemyAttack()}
+
+}
+
 function enemyAttack(){
- const damage=random(12,24)+currentWorld*3+currentStage*2;
- if(Math.random()<.5){taichiHp=Math.max(0,taichiHp-damage);battleMessage(`敵の攻撃！\nタイチに ${damage} ダメージ！`)}
- else{hanaHp=Math.max(0,hanaHp-damage);battleMessage(`敵の攻撃！\nハナに ${damage} ダメージ！`)}
- updateBattle();setTimeout(checkPlayer,600);
+
+let d=rnd(8,18)+w*2+s*2;
+
+if($("enemyName").textContent.includes("りょうちゃん")){
+
+d=Math.max(3,Math.floor(d/2));
+
+if(Math.random()<0.5){
+
+th=Math.max(0,th-d);
+
+message(
+`😂 りょうちゃんの攻撃！\n`+
+`……でも弱い！\n`+
+`タイチに ${d} ダメージ！`
+);
+
+}else{
+
+hh=Math.max(0,hh-d);
+
+message(
+`😂 りょうちゃんの攻撃！\n`+
+`ハナ「ぜんぜん痛くない！」\n`+
+`ハナに ${d} ダメージ！`
+);
+
 }
-function checkPlayer(){
- if(taichiHp<=0&&hanaHp<=0){battleMessage("二人は力を使い切ってしまった……\nもう一度挑戦しよう！");setTimeout(startBattle,1200);return}
- battleBusy=false;setBattleButtons(false);
+
+}else{
+
+if(Math.random()<0.5){
+
+th=Math.max(0,th-d);
+
+message(
+`敵の攻撃！\n`+
+`タイチに ${d} ダメージ！`
+);
+
+}else{
+
+hh=Math.max(0,hh-d);
+
+message(
+`敵の攻撃！\n`+
+`ハナに ${d} ダメージ！`
+);
+
 }
-function winBattle(){
- const gainedExp=35+currentWorld*20+currentStage*12;
- exp+=gainedExp;
- let levelUps=0;
- while(exp>=level*100){exp-=level*100;level++;levelUps++}
- if(currentStage<4){
-  unlockedStages[currentWorld]=Math.max(unlockedStages[currentWorld],currentStage+1);
- }else if(currentWorld<6){
-  unlockedStages[currentWorld]=5;
-  unlockedWorld=Math.max(unlockedWorld,currentWorld+1);
-  unlockedStages[currentWorld]=Math.max(unlockedStages[currentWorld],0);
- }
- saveGame();
- const boss=currentStage===4;
- $("resultTitle").textContent=boss?"👑 ボス撃破！":"🎉 ステージクリア！";
- $("resultEmoji").textContent=boss?worlds[currentWorld].icon:worlds[currentWorld].friendEmoji;
- $("resultText").textContent=`${$("enemyName").textContent} を倒した！\n\nEXP ${gainedExp} を獲得！\nLv.${level}${levelUps?`（${levelUps}回レベルアップ！）`:""}\n\n${boss&&currentWorld<6?`🌍 ${worlds[currentWorld+1].name} が解放された！`:""}`;
- showScreen("resultScreen");
+
 }
+
+update();
+
+setTimeout(()=>{
+
+if(th<=0&&hh<=0){
+
+message(
+"二人は力を使い切ってしまった……\n"+
+"もう一度挑戦しよう！"
+);
+
+setTimeout(startBattle,900);
+
+}else{
+
+busy=false;
+disable(false);
+
+}
+
+},500);
+
+}
+
+function win(){
+
+let gain=35+w*20+s*12;
+
+xp+=gain;
+
+while(xp>=lv*100){
+
+xp-=lv*100;
+lv++;
+
+}
+
+if(s<4){
+
+us[w]=Math.max(us[w],s+1);
+
+}else if(w<6){
+
+us[w]=5;
+uw=Math.max(uw,w+1);
+
+}
+
+save();
+
+let boss=s===4;
+
+$("resultTitle").textContent=
+boss
+?"👑 ボス撃破！"
+:"🎉 ステージクリア！";
+
+$("resultEmoji").textContent=
+$("enemyName").textContent.includes("りょうちゃん")
+?"😂"
+:boss
+?"🏆"
+:worlds[w].fe;
+
+let extra="";
+
+if($("enemyName").textContent.includes("りょうちゃん")){
+
+extra=
+"\n\n😂りょうちゃん「また負けたー！」"+
+"\n🤖ゼロ「知ってた。」";
+
+}
+
+$("resultText").textContent=
+`${$("enemyName").textContent} を倒した！\n\n`+
+`EXP ${gain} を獲得！\n`+
+`Lv.${lv}`+
+extra+
+(boss&&w<6
+?`\n\n🌍 ${worlds[w+1].name} が解放された！`
+:"");
+
+show("result");
+}
+
 function resultNext(){
- if(currentWorld===6&&currentStage===4){localStorage.removeItem(SAVE_KEY);$("continueButton").style.display="none";showScreen("endingScreen");return}
- if(currentStage<4){currentStage++;saveGame();enterStage(currentStage)}
- else{currentWorld++;currentStage=0;saveGame();showStageSelect(currentWorld)}
+
+if(w===6&&s===4){
+
+localStorage.removeItem(KEY);
+$("continue").style.display="none";
+
+show("ending");
+
+return;
 }
-function runAway(){if(battleBusy)return;showToast("💨 うまく逃げ切った！");setTimeout(()=>showStageSelect(),500)}
-function showStageSelectFromStory(){showStageSelect()}
-function battleMessage(text){$("battleLog").textContent=text}
-function showToast(message){const t=$("toast");t.textContent=message;t.style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display="none",1800)}
-function restartGame(){localStorage.removeItem(SAVE_KEY);resetProgress();$("continueButton").style.display="none";showScreen("titleScreen")}
+
+if(s<4){
+
+s++;
+save();
+enterStage(s);
+
+}else{
+
+w++;
+s=0;
+
+save();
+showStages(w);
+
+}
+
+}
+
+function runAway(){
+
+if(busy)return;
+
+toast("💨 うまく逃げ切った！");
+
+setTimeout(()=>{
+showStages();
+},450);
+
+}
+
+function restart(){
+
+localStorage.removeItem(KEY);
+
+$("continue").style.display="none";
+
+w=0;
+s=0;
+story=0;
+lv=1;
+xp=0;
+uw=0;
+us=Array(7).fill(0);
+
+show("title");
+
+}
+
+function toast(t){
+
+let e=$("toast");
+
+e.textContent=t;
+e.style.display="block";
+
+clearTimeout(window._t);
+
+window._t=setTimeout(()=>{
+e.style.display="none";
+},1600);
+
+}
+
+window.onload=()=>{
+
+if(localStorage.getItem(KEY)){
+$("continue").style.display="block";
+}
+
+};
+
 </script>
+
 </body>
 </html>

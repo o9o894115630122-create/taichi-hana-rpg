@@ -123,141 +123,91 @@ function pixelEnemy(name){
   const svg = `
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 96 128"
+  viewBox="0 0 128 144"
   shape-rendering="crispEdges">
 
-  <rect
-    x="0"
-    y="0"
-    width="96"
-    height="128"
-    fill="none"/>
+  <!-- 影 -->
+  <rect x="24" y="132" width="80" height="6" fill="#111827"/>
+  <rect x="32" y="138" width="64" height="3" fill="#1f2937"/>
 
-  <!-- 頭 -->
-  <rect
-    x="28"
-    y="8"
-    width="40"
-    height="40"
-    fill="${outline}"/>
+  <!-- 足 -->
+  <rect x="35" y="106" width="22" height="28" fill="${outline}"/>
+  <rect x="71" y="106" width="22" height="28" fill="${outline}"/>
 
-  <rect
-    x="34"
-    y="14"
-    width="28"
-    height="28"
-    fill="${skin}"/>
+  <rect x="29" y="128" width="31" height="9" fill="${accent}"/>
+  <rect x="68" y="128" width="31" height="9" fill="${accent}"/>
 
-  <!-- 髪 -->
-  <rect
-    x="34"
-    y="14"
-    width="28"
-    height="8"
-    fill="${color1}"/>
-
-  <!-- 目 -->
-  <rect
-    x="39"
-    y="28"
-    width="6"
-    height="6"
-    fill="${outline}"/>
-
-  <rect
-    x="51"
-    y="28"
-    width="6"
-    height="6"
-    fill="${outline}"/>
-
-  <!-- 口 -->
-  <rect
-    x="42"
-    y="38"
-    width="12"
-    height="4"
-    fill="${outline}"/>
-
-  <!-- 胴体 -->
-  <rect
-    x="22"
-    y="48"
-    width="52"
-    height="42"
-    fill="${color1}"/>
+  <!-- 体の外枠 -->
+  <rect x="25" y="55" width="78" height="57" fill="${outline}"/>
 
   <!-- 服 -->
-  <rect
-    x="28"
-    y="54"
-    width="40"
-    height="30"
-    fill="${color2}"/>
+  <rect x="32" y="62" width="64" height="43" fill="${color1}"/>
+  <rect x="38" y="69" width="52" height="30" fill="${color2}"/>
+
+  <!-- ベルト -->
+  <rect x="32" y="96" width="64" height="9" fill="${accent}"/>
+  <rect x="58" y="96" width="12" height="9" fill="${outline}"/>
 
   <!-- 左腕 -->
-  <rect
-    x="12"
-    y="54"
-    width="16"
-    height="10"
-    fill="${outline}"/>
-
-  <rect
-    x="18"
-    y="64"
-    width="10"
-    height="26"
-    fill="${outline}"/>
+  <rect x="14" y="63" width="18" height="39" fill="${outline}"/>
+  <rect x="8" y="70" width="13" height="23" fill="${skin}"/>
+  <rect x="9" y="92" width="15" height="10" fill="${outline}"/>
 
   <!-- 右腕 -->
-  <rect
-    x="68"
-    y="54"
-    width="16"
-    height="10"
-    fill="${outline}"/>
+  <rect x="96" y="63" width="18" height="39" fill="${outline}"/>
+  <rect x="107" y="70" width="13" height="23" fill="${skin}"/>
+  <rect x="104" y="92" width="15" height="10" fill="${outline}"/>
 
-  <rect
-    x="68"
-    y="64"
-    width="10"
-    height="26"
-    fill="${outline}"/>
+  <!-- 首 -->
+  <rect x="51" y="45" width="26" height="18" fill="${skin}"/>
+  <rect x="47" y="54" width="34" height="10" fill="${outline}"/>
 
-  <!-- 左足 -->
-  <rect
-    x="30"
-    y="90"
-    width="14"
-    height="30"
-    fill="${outline}"/>
+  <!-- 頭の外枠 -->
+  <rect x="30" y="8" width="68" height="49" fill="${outline}"/>
 
-  <!-- 右足 -->
-  <rect
-    x="52"
-    y="90"
-    width="14"
-    height="30"
-    fill="${outline}"/>
+  <!-- 顔 -->
+  <rect x="36" y="16" width="56" height="37" fill="${skin}"/>
 
-  <!-- 靴 -->
-  <rect
-    x="26"
-    y="116"
-    width="20"
-    height="8"
-    fill="${accent}"/>
+  <!-- 髪 -->
+  <rect x="36" y="12" width="56" height="13" fill="${color1}"/>
+  <rect x="42" y="8" width="44" height="8" fill="${color1}"/>
+  <rect x="32" y="18" width="9" height="23" fill="${color1}"/>
+  <rect x="87" y="18" width="9" height="20" fill="${color1}"/>
 
-  <rect
-    x="50"
-    y="116"
-    width="20"
-    height="8"
-    fill="${accent}"/>
+  <!-- 前髪 -->
+  <rect x="43" y="21" width="12" height="9" fill="${color1}"/>
+  <rect x="57" y="18" width="10" height="12" fill="${color1}"/>
+  <rect x="69" y="21" width="12" height="9" fill="${color1}"/>
+
+  <!-- 眉 -->
+  <rect x="43" y="30" width="12" height="4" fill="${outline}"/>
+  <rect x="73" y="30" width="12" height="4" fill="${outline}"/>
+
+  <!-- 目 -->
+  <rect x="44" y="35" width="8" height="8" fill="#ffffff"/>
+  <rect x="76" y="35" width="8" height="8" fill="#ffffff"/>
+
+  <rect x="47" y="37" width="5" height="6" fill="${outline}"/>
+  <rect x="76" y="37" width="5" height="6" fill="${outline}"/>
+
+  <!-- 鼻 -->
+  <rect x="61" y="39" width="6" height="5" fill="#b56f52"/>
+
+  <!-- 口 -->
+  <rect x="52" y="46" width="25" height="5" fill="${outline}"/>
+  <rect x="57" y="46" width="15" height="2" fill="${accent}"/>
+
+  <!-- ほっぺ -->
+  <rect x="38" y="44" width="7" height="4" fill="${accent}"/>
+  <rect x="83" y="44" width="7" height="4" fill="${accent}"/>
+
+  <!-- 胸のマーク -->
+  <rect x="57" y="72" width="14" height="14" fill="${accent}"/>
+  <rect x="61" y="68" width="6" height="22" fill="${accent}"/>
+  <rect x="53" y="76" width="22" height="6" fill="${accent}"/>
 
 </svg>
-  `;
+`;
 
   return `
     <img

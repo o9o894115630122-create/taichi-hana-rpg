@@ -9,10 +9,323 @@
 #gallery{background:#07142d}.gallery{padding:12px;max-width:950px;margin:auto}.gallery img{display:block;width:100%;height:auto;border:4px solid #6ca9e5;border-radius:18px;background:#fff;box-shadow:0 10px 30px #0007}
 #result{background:linear-gradient(#071b38,#0b3764 50%,#f2b76d);color:#fff;align-items:center;justify-content:center}#result.active{display:flex}.resultCard{width:min(92vw,650px);background:#07172feF;border:4px solid #7bb9ee;border-radius:22px;padding:20px;text-align:center;box-shadow:0 12px 40px #0008}.resultTitle{font-size:30px;font-weight:1000;color:#ffd86e}.resultText{font-weight:900;line-height:1.8;white-space:pre-line}.endingImg{width:100%;border-radius:14px;margin-top:10px}
 @media(max-width:650px){.stageGrid{gap:5px}.stage{min-height:78px;font-size:11px;padding:4px}.mapHero{min-height:600px}.worldNode{min-width:125px;font-size:12px}.storyScene{min-height:300px}.arena{height:300px}.enemyArt{width:60%;height:76%}.party{grid-template-columns:1fr 1fr}.storyChars{bottom:19%}.storyChar{width:27%}.dialog{font-size:15px}}
-</style></head><body>
+/* ===== 旅のはじまりの町 ===== */
+
+#explore{
+  background:linear-gradient(#5fb9ff 0%,#8edbff 45%,#58b957 45%,#287a32 100%);
+  color:#fff;
+}
+
+.townWrap{
+  width:min(94vw,760px);
+  margin:auto;
+  padding:10px;
+}
+
+.townMap{
+  position:relative;
+  width:100%;
+  height:430px;
+  overflow:hidden;
+  border:5px solid #3c2415;
+  border-radius:18px;
+  background:
+    linear-gradient(90deg,transparent 48%,#d6b47b 48%,#d6b47b 52%,transparent 52%),
+    linear-gradient(0deg,transparent 47%,#d6b47b 47%,#d6b47b 53%,transparent 53%),
+    #68b84d;
+  box-shadow:0 8px 0 #183d1b,0 12px 25px #0008;
+}
+
+.townTitle{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+  background:#14243b;
+  border:3px solid #ffd86e;
+  border-radius:12px;
+  padding:6px 14px;
+  font-weight:1000;
+  white-space:nowrap;
+  box-shadow:0 4px 0 #0008;
+}
+
+.townHouse{
+  position:absolute;
+  width:80px;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  background:#d7a66a;
+  border:4px solid #5b321d;
+  border-radius:8px;
+  box-shadow:0 6px 0 #3b2417;
+}
+
+.house1{
+  left:12%;
+  top:22%;
+}
+
+.house2{
+  right:12%;
+  top:24%;
+}
+
+.townTree{
+  position:absolute;
+  font-size:52px;
+  filter:drop-shadow(0 5px 0 #254d1c);
+}
+
+.tree1{
+  left:7%;
+  bottom:12%;
+}
+
+.tree2{
+  right:7%;
+  bottom:12%;
+}
+
+.tree3{
+  left:45%;
+  top:17%;
+}
+
+.townNpc{
+  position:absolute;
+  z-index:7;
+  border:0;
+  background:transparent;
+  font-size:48px;
+  cursor:pointer;
+  filter:drop-shadow(0 4px 0 #0008);
+}
+
+.townNpc span{
+  display:block;
+  margin-top:-4px;
+  font-size:12px;
+  background:#16243a;
+  color:#fff;
+  border:2px solid #ffd86e;
+  border-radius:8px;
+  padding:2px 6px;
+  font-weight:900;
+}
+
+.npc1{
+  left:39%;
+  top:29%;
+}
+
+.npc2{
+  right:31%;
+  bottom:23%;
+}
+
+.townChest{
+  position:absolute;
+  z-index:8;
+  right:17%;
+  bottom:12%;
+  border:0;
+  background:transparent;
+  font-size:48px;
+  cursor:pointer;
+  filter:drop-shadow(0 4px 0 #0008);
+}
+
+.townPlayer{
+  position:absolute;
+  z-index:10;
+  left:50%;
+  top:50%;
+  font-size:52px;
+  transition:transform .18s ease;
+  filter:drop-shadow(0 5px 0 #0008);
+  pointer-events:none;
+}
+
+.townDialog{
+  margin-top:10px;
+  min-height:72px;
+  padding:12px;
+  background:#101b2c;
+  border:4px solid #74bfff;
+  border-radius:14px;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  line-height:1.6;
+  white-space:pre-line;
+  box-shadow:0 6px 0 #06101d;
+}
+
+.townControls{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  max-width:330px;
+  margin:12px auto 8px;
+}
+
+.townControls button{
+  min-height:54px;
+  border:3px solid #526b86;
+  border-radius:12px;
+  background:linear-gradient(#ffffff,#b8d0e5);
+  color:#10243b;
+  font-size:25px;
+  font-weight:1000;
+  box-shadow:0 5px 0 #24364a;
+}
+
+.townControls button:nth-child(1){
+  grid-column:1;
+  grid-row:2;
+}
+
+.townControls button:nth-child(2){
+  grid-column:2;
+  grid-row:1;
+}
+
+.townControls button:nth-child(3){
+  grid-column:2;
+  grid-row:2;
+}
+
+.townControls button:nth-child(4){
+  grid-column:3;
+  grid-row:2;
+}
+
+.townControls button:active{
+  transform:translateY(4px);
+  box-shadow:0 1px 0 #24364a;
+}
+
+.townTalk,
+.townStart{
+  width:100%;
+  margin-top:7px;
+}
+
+.townStart{
+  background:linear-gradient(#72df72,#258d32);
+  border-color:#b9ffb9;
+}
+
+/* スマホ用 */
+@media(max-width:650px){
+
+  .townWrap{
+    padding:7px;
+  }
+
+  .townMap{
+    height:390px;
+  }
+
+  .townTitle{
+    font-size:13px;
+  }
+
+  .townHouse{
+    width:65px;
+    height:58px;
+    font-size:42px;
+  }
+
+  .townTree{
+    font-size:42px;
+  }
+
+  .townNpc{
+    font-size:40px;
+  }
+
+  .townNpc span{
+    font-size:10px;
+  }
+
+  .townChest{
+    font-size:40px;
+  }
+
+  .townPlayer{
+    font-size:44px;
+  }
+
+  .townDialog{
+    font-size:14px;
+    min-height:68px;
+  }
+
+}</style></head><body>
 <section id="title" class="screen active"><div class="titleArt"><img src="" data-asset="A0" alt="タイチとハナの大冒険"><div class="titleShade"></div></div><div class="titleBtns"><button class="titleBtn" onclick="newGame()">▶ はじめから</button><button id="continueBtn" class="titleBtn" style="display:none;background:linear-gradient(#4ba8ff,#1769d1)" onclick="continueGame()">📖 つづきから</button><button class="titleBtn alt" onclick="showGallery()">📚 キャラクター図鑑</button></div></section>
-<section id="map" class="screen"><div class="top"><button class="btn" onclick="show('title')">← タイトル</button><b>🌍 ワールドマップ</b><span class="pill">Lv <span id="mapLv">1</span></span></div><div class="wrap"><h2 style="text-align:center">7つの世界を冒険しよう！</h2><div class="mapHero"><div class="island i1"></div><div class="island i2"></div><div class="island i3"></div><div class="island i4"></div><div class="island i5"></div><div class="island i6"></div><div class="island i7"></div><button class="worldNode wn1" onclick="openWorld(0)">🌳 ① モリモリの森</button><button class="worldNode wn2" onclick="openWorld(1)">🌊 ② シャーキュンの海</button><button class="worldNode wn3" onclick="openWorld(2)">🔥 ③ 灼熱ファイヤーランド</button><button class="worldNode wn4" onclick="openWorld(3)">☁️ ④ フワフワ天空島</button><button class="worldNode wn5" onclick="openWorld(4)">🌙 ⑤ ユメユメの世界</button><button class="worldNode wn6" onclick="openWorld(5)">🌀 ⑥ ゆがんだ時空</button><button class="worldNode wn7" onclick="openWorld(6)">🏰 ⑦ ますみん城</button></div></div></section>
-<section id="stages" class="screen"><div class="top"><button class="btn" onclick="show('map')">← マップ</button><b id="worldTitle"></b><span class="pill">Lv <span id="stageLv">1</span></span></div><div class="wrap"><div class="heading" id="heading"></div><div class="stageGrid" id="stageGrid"></div><div class="info"><div>📜 この世界の目的</div><p id="worldDesc"></p></div></div></section>
+<section id="map" class="screen"><div class="top"><button class="btn" onclick="show('title')">← タイトル</button><b>🌍 ワールドマップ</b><span class="pill">Lv <span id="mapLv">1</span></span></div><div class="wrap"><h2 style="text-align:center">7つの世界を冒険しよう！</h2><div class="mapHero"><div class="island i1"></div><div class="island i2"></div><div class="island i3"></div><div class="island i4"></div><div class="island i5"></div><div class="island i6"></div><div class="island i7"></div><button class="worldNode wn1" onclick="openWorld(0)">🌳 ① モリモリの森</button><button class="worldNode wn2" onclick="openWorld(1)">🌊 ② シャーキュンの海</button><button class="worldNode wn3" onclick="openWorld(2)">🔥 ③ 灼熱ファイヤーランド</button><button class="worldNode wn4" onclick="openWorld(3)">☁️ ④ フワフワ天空島</button><button class="worldNode wn5" onclick="openWorld(4)">🌙 ⑤ ユメユメの世界</button><button class="worldNode wn6" onclick="openWorld(5)">🌀 ⑥ ゆがんだ時空</button><button class="worldNode wn7" onclick="openWorld(6)">🏰 ⑦ ますみん城</button><button class="townEntrance" onclick="openTown()">🏠 旅のはじまりの町</button></div></div></section>
+<section id="explore" class="screen">
+<div class="top">
+<button class="btn" onclick="show('map')">← ワールドマップ</button>
+<b>🏠 旅のはじまりの町</b>
+<span class="pill">Lv <span id="exploreLv">1</span></span>
+</div>
+
+<div class="townWrap">
+
+<div class="townMap">
+
+<div class="townTitle">🏠 旅のはじまりの町</div>
+
+<div class="townHouse house1">🏠</div>
+<div class="townHouse house2">🏡</div>
+
+<div class="townTree tree1">🌳</div>
+<div class="townTree tree2">🌳</div>
+<div class="townTree tree3">🌲</div>
+
+<button class="townNpc npc1" onclick="talkNpc('村長')">
+👴<span>村長</span>
+</button>
+
+<button class="townNpc npc2" onclick="talkNpc('ハナの友だち')">
+👧<span>ハナの友だち</span>
+</button>
+
+<button id="townChest" class="townChest" onclick="openChest()">
+🎁
+</button>
+
+<div id="townPlayer" class="townPlayer">🧒</div>
+
+</div>
+
+<div class="townDialog" id="townDialog">
+町を自由に歩いてみよう！<br>
+💬 人に話しかけると情報が聞けるよ。
+</div>
+
+<div class="townControls">
+<button onclick="moveTown(-1,0)">◀</button>
+<button onclick="moveTown(0,-1)">▲</button>
+<button onclick="moveTown(0,1)">▼</button>
+<button onclick="moveTown(1,0)">▶</button>
+</div>
+
+<button class="btn townTalk" onclick="talkNearby()">💬 近くを調べる</button>
+
+<button class="btn townStart" onclick="townBattle()">
+🌳 森へ出発する！
+</button>
+
+</div>
+</section><section id="stages" class="screen"><div class="top"><button class="btn" onclick="show('map')">← マップ</button><b id="worldTitle"></b><span class="pill">Lv <span id="stageLv">1</span></span></div><div class="wrap"><div class="heading" id="heading"></div><div class="stageGrid" id="stageGrid"></div><div class="info"><div>📜 この世界の目的</div><p id="worldDesc"></p></div></div></section>
 <section id="story" class="screen"><div class="top"><button class="btn" onclick="show('stages')">← ステージ</button><b id="storyTitle"></b><span class="pill">W<span id="sw"></span>-<span id="ss"></span></span></div><div class="wrap"><div class="storyScene"><img id="storyBg" class="storyBg"><div class="storyShade"></div><div class="storyChars"><img id="storyTa" class="storyChar"><img id="storyHa" class="storyChar"><img id="storyRyo" class="storyChar"></div></div><div class="dialog"><div class="speaker" id="speaker"></div><div id="dialogText"></div></div><button class="btn" style="width:100%;margin-top:9px" onclick="nextStory()">つぎへ ▶</button></div></section>
 <section id="battle" class="screen"><div class="top"><button class="btn" onclick="show('stages')">← 戻る</button><b>⚔️ バトル</b><span class="pill">W<span id="bw"></span>-<span id="bs"></span></span></div><div class="battleWrap"><div class="arena"><img id="arenaBg" class="arenaBg"><div id="enemyTag" class="enemyTag"></div><div id="enemySprite" class="enemySprite" aria-label="敵キャラクター"></div><div id="fx"></div></div><div class="party"><div class="stat">🧒 タイチ HP <span id="hp1"></span><div class="bar"><i id="bar1"></i></div></div><div class="stat">👧 ハナ HP <span id="hp2"></span><div class="bar"><i id="bar2"></i></div></div><div class="stat">🤖 ゼロ HP <span id="hp3"></span><div class="bar"><i id="bar3"></i></div></div></div><div class="log" id="battleLog"></div><div class="cmds"><button class="cmd attack" onclick="attack()">⚔️ こうげき</button><button class="cmd skill" onclick="skill()">✨ なかよしパワー</button><button class="cmd heal" onclick="heal()">💚 かいふく</button><button class="cmd item" onclick="item()">🧪 どうぐ</button><button class="cmd flee" onclick="flee()">🏃 にげる</button></div></div></section>
 <section id="gallery" class="screen"><div class="top"><button class="btn" onclick="show('title')">← 戻る</button><b>📚 確定キャラクター図鑑</b><span></span></div><div class="gallery"><img src="" data-asset="A1" alt="タイチ"><img src="" data-asset="A2" alt="ハナ"><img src="" data-asset="A15" alt="ゼロ"><img src="" data-asset="A3" alt="りょうちゃん"><img src="" data-asset="A4" alt="パリピタイタイ"><img src="" data-asset="A5" alt="レインボー"><img src="" data-asset="A6" alt="ますみん"><img src="" data-asset="A7" alt="村"><img src="" data-asset="A8" alt="ダンジョン"><img src="" data-asset="A9" alt="城"><img src="" data-asset="A10" alt="エンディング"></div></section>
@@ -432,7 +745,99 @@ function flee(){if(turnLock)return;show('stages')}
 function win(){const gain=25+w*12+s*9;exp+=gain;if(exp>=100){level=Math.min(50,level+1);exp-=100;fx('⬆️ LEVEL UP!')}save();$('resultTitle').textContent=s===4?'👑 ボス撃破！':'🎉 ステージクリア！';let txt=WORLDS[w][3]+' を倒した！\nEXP '+gain+' 獲得！\nLv.'+level;if(s===4&&w===6)txt+='\n\nますみん「ずっと、ふたりの成長を見守っていたよ……。」\nりょうちゃん「なんか俺も一緒に帰るわ！」';$('resultText').textContent=txt;$('endingImg').style.display=(s===4&&w===6)?'block':'none';show('result')}
 function nextAfterResult(){if(s<4){s++;enterStage(s)}else if(w<6){w++;s=0;renderStages();show('stages');save()}else{$('resultTitle').textContent='🌅 エンディング';$('resultText').textContent='冒険は終わった。\nでも、タイチとハナの物語はこれからも続いていく。\n\nどんな世界でも、いっしょなら行ける！';$('endingImg').style.display='block';$('endingImg').src=ASSETS.ending;show('result')}}
 if(load())$('continueBtn').style.display='block';updateMap();
-</script><script>const __ASSETS={"A1":"data:image/webp;base64,UklGRjQKAABXRUJQVlA4ICgKAABQMQCdASpkAJUAP12WuViyqqUjtRt9UlAriWwAxQv77DeGaNG2aa7vMkA/Zv//P1wmJylvLX974m2TXZy+eXlp2mlTaLCvnhnN+B7QxiV62Wqb9Md+VigufJAknn152W3iRUXlODc7eLmZNF2GOTscKQU3OkPAghrDVRYFx6NXDQqzeC00b9I5jWuRcKx4210+J+mzc1dL9PsXks9LWgPIdSDpC82UqqNiTKJnAe1v/ABAJz5Ycabn6VUKsC9ePsyk/8YLHau8zGWtHN8Lb2ukVrl3fak6l5RDNxu4l+3/G7BbOOsPK9EwXnDwZ/3bbPiXO0qxIdd8k9ffO4ysyl2IlZ5m3BXJA2veL8FpzOe50kteO27zJrNu+WRkNL01jCQihEISkG25AhYvTVTX0YEdigw2fID3WYFvVESuJ9YtA/N/RB2miPhN/AUtLinCw+i2PYjWdBLgN+0MEY+Bm9aWb+PVroyOPisGkCJzIfDRjugTSWcSbAoNbJ7l2NUTXgTq8dCkOCXNFPunCDffmiG103QAAP3EHoK4JfiJAcgje1VekADFxbBq10o3WLP2IAndQVG1pvSaWvPwvQU3KWJtKjLkGPJXRZE7bg/xdFDW/FHujUv3zvfVM30joD2Kw11YbRGcxEozC69O3p1KvuI9y7fGkcKFwkKI" +
+let townX=0;
+let townY=0;
+let townChestOpened=false;
+
+function openTown(){
+  townX=0;
+  townY=0;
+  townChestOpened=false;
+
+  $('exploreLv').textContent=level;
+  $('townPlayer').style.transform='translate(0,0)';
+  $('townChest').style.opacity='1';
+
+  $('townDialog').textContent=
+    'タイチ「ここが旅のはじまりの町か！」\n'+
+    '町を自由に歩いてみよう！';
+
+  show('explore');
+}
+
+function moveTown(dx,dy){
+  townX+=dx;
+  townY+=dy;
+
+  if(townX>3)townX=3;
+  if(townX<-3)townX=-3;
+  if(townY>3)townY=3;
+  if(townY<-3)townY=-3;
+
+  $('townPlayer').style.transform=
+    'translate('+townX*42+'px,'+townY*38+'px)';
+
+  $('townDialog').textContent=
+    'タイチ「この町には何があるんだろう？」';
+}
+
+function talkNpc(name){
+  if(name==='村長'){
+    $('townDialog').textContent=
+      '村長「よく来たね、タイチ。」\n'+
+      '村長「この先の森で、最近なにか不思議なことが起きているんじゃ。」';
+  }else{
+    $('townDialog').textContent=
+      'ハナの友だち「森にはクワガタがいるかも！」\n'+
+      '「タイチなら見つけられるよ！」';
+  }
+}
+
+function talkNearby(){
+  if(Math.abs(townX-1)<=1 && Math.abs(townY)<=1){
+    talkNpc('村長');
+    return;
+  }
+
+  if(Math.abs(townX+1)<=1 && Math.abs(townY-1)<=1){
+    talkNpc('ハナの友だち');
+    return;
+  }
+
+  if(townX===2 && townY===2){
+    openChest();
+    return;
+  }
+
+  $('townDialog').textContent=
+    'タイチ「ここには何もないみたいだ。」';
+}
+
+function openChest(){
+  if(townChestOpened){
+    $('townDialog').textContent=
+      '宝箱は空っぽだ。';
+    return;
+  }
+
+  townChestOpened=true;
+  inventory++;
+
+  $('townChest').style.opacity='.35';
+
+  $('townDialog').textContent=
+    '🎁 宝箱を開けた！\n'+
+    'やくそうを1個手に入れた！\n'+
+    'どうぐ：'+inventory+'個';
+
+  save();
+}
+
+function townBattle(){
+  w=0;
+  s=0;
+  enterStage(0);
+}</script><script>const __ASSETS={"A1":"data:image/webp;base64,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" +

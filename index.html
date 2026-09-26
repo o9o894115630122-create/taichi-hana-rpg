@@ -37,7 +37,212 @@ function show(id){document.querySelectorAll('.screen').forEach(e=>e.classList.re
 function save(){localStorage.setItem('th_save',JSON.stringify({w,s,level,exp,inventory}));$('continueBtn').style.display='block';}
 function load(){try{return JSON.parse(localStorage.getItem('th_save'))}catch(e){return null}}
 function newGame(){w=0;s=0;level=1;exp=0;inventory=3;save();show('map');updateMap();}
-function continueGame(){const d=load();if(!d)return newGame();Object.assign(window,{w:d.w||0,s:d.s||0,level:d.level||1,exp:d.exp||0,inventory:d.inventory||3});show('map');updateMap();}
+function continueGame(){const d=load();if(!d)return newGame();Object.assign(window,{w:d.w||0,s:d.s||0,level:d.level||1,exp:d.exp||0,inventory:d.inventory||3});show('map');updateMap();}function updateMap(){
+  $('mapLv').textContent=level;
+}
+
+function openWorld(worldIndex){
+  w=worldIndex;
+  $('worldTitle').textContent=WORLDS[w][0]+' '+WORLDS[w][1];
+  $('heading').textContent='⚔️ '+WORLDS[w][0];
+  $('worldDesc').textContent=WORLDS[w][2];
+  $('stageLv').textContent=level;
+  const grid=$('stageGrid');
+  grid.innerHTML='';
+  WORLDS[w][4].forEach((name,i)=>{
+    const b=document.createElement('button');
+    b.className='stage';
+    b.innerHTML=(i===4?'👑 ':'⭐ ')+(i+1)+'. '+name;
+    b.onclick=()=>enterStage(i);
+    grid.appendChild(b);
+  });
+  show('stages');
+}
+
+function enterStage(stageIndex){
+  s=stageIndex;
+  dialogIndex=0;
+  $('sw').textContent=w+1;
+  $('ss').textContent=s+1;
+  $('storyTitle').textContent=WORLDS[w][0]+' ― '+STAGES[s];
+  show('story');
+  renderStory();
+}
+
+function renderStory(){
+  const set=storySets[w]||[];
+  const d=set[dialogIndex]||set[0];
+  if(!d)return;
+  $('speaker').textContent=d[0];
+  $('dialogText').textContent=d[1]+'\n'+d[2];
+}
+
+function nextStory(){
+  const set=storySets[w]||[];
+  dialogIndex++;
+  if(dialogIndex<set.length){
+    renderStory();
+    return;
+  }
+  if(s===4){
+    startBattle();
+  }else{
+    startBattle();
+  }
+}
+
+function startBattle(){
+  enemyHP=100;
+  playerHP=120;
+  turnLock=false;
+  $('bw').textContent=w+1;
+  $('bs').textContent=s+1;
+  $('hp1').textContent=120;
+  $('hp2').textContent=100;
+  $('hp3').textContent=90;
+  $('bar1').style.width='100%';
+  $('bar2').style.width='100%';
+  $('bar3').style.width='100%';
+  $('enemyTag').textContent='⚔️ '+WORLDS[w][3];
+  $('enemySprite').textContent=getEnemyEmoji(w);
+  $('battleLog').textContent='敵が現れた！\nどうする？';
+  show('battle');
+}
+
+function getEnemyEmoji(world){
+  return ['🦗','🦈','🔥','☁️','🌙','🤪','👑'][world]||'👾';
+}
+
+function attack(){
+  if(turnLock)return;
+  turnLock=true;
+  const damage=15+Math.floor(Math.random()*16);
+  enemyHP=Math.max(0,enemyHP-damage);
+  $('battleLog').textContent='タイチのこうげき！\n'+damage+'ダメージ！';
+  if(enemyHP<=0){
+    winBattle();
+    return;
+  }
+  setTimeout(enemyTurn,600);
+}
+
+function skill(){
+  if(turnLock)return;
+  turnLock=true;
+  const damage=25+Math.floor(Math.random()*21);
+  enemyHP=Math.max(0,enemyHP-damage);
+  $('battleLog').textContent='✨ なかよしパワー！\n'+damage+'ダメージ！';
+  if(enemyHP<=0){
+    winBattle();
+    return;
+  }
+  setTimeout(enemyTurn,600);
+}
+
+function heal(){
+  if(turnLock)return;
+  turnLock=true;
+  playerHP=Math.min(120,playerHP+30);
+  $('hp1').textContent=playerHP;
+  $('bar1').style.width=(playerHP/120*100)+'%';
+  $('battleLog').textContent='💚 タイチは回復した！\nHP +30';
+  setTimeout(enemyTurn,600);
+}
+
+function item(){
+  if(turnLock)return;
+  if(inventory<=0){
+    $('battleLog').textContent='🧪 どうぐがない！';
+    return;
+  }
+  turnLock=true;
+  inventory--;
+  playerHP=Math.min(120,playerHP+40);
+  $('hp1').textContent=playerHP;
+  $('bar1').style.width=(playerHP/120*100)+'%';
+  $('battleLog').textContent='🧪 やくそうを使った！\nHP +40';
+  setTimeout(enemyTurn,600);
+}
+
+function flee(){
+  if(turnLock)return;
+  if(s===4){
+    $('battleLog').textContent='ボス戦からは逃げられない！';
+    return;
+  }
+  $('battleLog').textContent='🏃 逃げ出した！';
+  setTimeout(()=>show('stages'),500);
+}
+
+function enemyTurn(){
+  const damage=5+Math.floor(Math.random()*11);
+  playerHP=Math.max(0,playerHP-damage);
+  $('hp1').textContent=playerHP;
+  $('bar1').style.width=(playerHP/120*100)+'%';
+  if(playerHP<=0){
+    $('battleLog').textContent='タイチたちは力尽きた……';
+    setTimeout(()=>show('stages'),900);
+    turnLock=false;
+    return;
+  }
+  $('battleLog').textContent+=' \n敵のこうげき！ '+damage+'ダメージ！';
+  turnLock=false;
+}
+
+function winBattle(){
+  $('battleLog').textContent='🎉 たおした！\n経験値を獲得した！';
+  exp+=20;
+  if(exp>=100){
+    level++;
+    exp=0;
+    $('battleLog').textContent+=' \n⭐ レベルアップ！ Lv '+level;
+  }
+  save();
+  setTimeout(()=>{
+    if(s===4){
+      showResult();
+    }else{
+      show('stages');
+    }
+  },1000);
+}
+
+function showResult(){
+  $('resultTitle').textContent='🎉 ステージクリア！';
+  $('resultText').textContent=
+    WORLDS[w][0]+'を突破した！\n\n'+
+    'タイチ Lv.'+level+'\n'+
+    '次の冒険へ進もう！';
+  $('endingImg').style.display='none';
+  show('result');
+}
+
+function nextAfterResult(){
+  if(s<4){
+    s++;
+    enterStage(s);
+  }else if(w<6){
+    w++;
+    openWorld(w);
+  }else{
+    showEnding();
+  }
+}
+
+function showEnding(){
+  $('resultTitle').textContent='🏆 ぼうけんクリア！';
+  $('resultText').textContent=
+    'タイチとハナの大冒険\n\n'+
+    '7つの世界を越えて、\n'+
+    'ついに最後の答えへたどり着いた！\n\n'+
+    'ますみん「ずっと見ていたよ……。」\n\n'+
+    '―― つづく ――';
+  show('result');
+}
+
+function showGallery(){
+  show('gallery');
+}
 function showGallery(){show('gallery')}
 function updateMap(){$('mapLv').textContent=level}
 function openWorld(i){w=i;renderStages();show('stages')}
